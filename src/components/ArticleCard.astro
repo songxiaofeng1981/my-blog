@@ -1,0 +1,47 @@
+---
+import type { CollectionEntry } from 'astro:content';
+
+interface Props {
+  post: CollectionEntry<'posts'>;
+}
+
+const { post } = Astro.props;
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+
+const formattedDate = new Intl.DateTimeFormat('zh-CN', {
+  year: 'numeric',
+  month: 'long',
+  day: 'numeric',
+}).format(post.data.date);
+---
+
+<article class="group relative flex flex-col rounded-xl border border-navy-600 bg-navy-800 p-6 transition-all duration-200 hover:border-gold-500 hover:shadow-lg hover:shadow-gold-500/5">
+  {post.data.tags.length > 0 && (
+    <div class="mb-3 flex flex-wrap gap-2">
+      {post.data.tags.map(tag => (
+        <span class="rounded-md bg-navy-700 px-2 py-0.5 text-xs font-medium text-gold-400 ring-1 ring-navy-600">
+          {tag}
+        </span>
+      ))}
+    </div>
+  )}
+
+  <h2 class="mb-2 text-lg font-bold leading-snug text-slate-100 group-hover:text-gold-400 transition-colors sm:text-xl">
+    <a href={`${base}/posts/${post.slug}`} class="before:absolute before:inset-0">
+      {post.data.title}
+    </a>
+  </h2>
+
+  <p class="mb-4 flex-1 text-sm leading-relaxed text-slate-400">
+    {post.data.description}
+  </p>
+
+  <div class="flex items-center justify-between">
+    <time datetime={post.data.date.toISOString()} class="text-xs text-slate-500">
+      {formattedDate}
+    </time>
+    <span class="text-xs font-medium text-gold-500 group-hover:text-gold-300 transition-colors">
+      阅读全文 &rarr;
+    </span>
+  </div>
+</article>

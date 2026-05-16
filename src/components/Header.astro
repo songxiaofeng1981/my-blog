@@ -1,0 +1,29 @@
+---
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const navLinks = [
+  { label: '首页', href: base },
+  { label: '文章', href: `${base}#articles` },
+];
+---
+
+<header class="sticky top-0 z-50 border-b border-navy-700 bg-navy-900/90 backdrop-blur-md">
+  <div class="mx-auto max-w-5xl px-4 sm:px-6">
+    <div class="flex h-16 items-center justify-between">
+      <a href={base} class="flex items-center gap-2">
+        <span class="text-gold-400 font-bold text-xl tracking-tight">投资思考</span>
+        <span class="hidden sm:inline text-slate-500 text-sm font-light">/ 逻辑与数据驱动</span>
+      </a>
+
+      <nav class="flex items-center gap-1">
+        {navLinks.map(link => (
+          <a
+            href={link.href}
+            class="rounded-md px-3 py-1.5 text-sm text-slate-300 transition-colors hover:bg-navy-700 hover:text-gold-400"
+          >
+            {link.label}
+          </a>
+        ))}
+      </nav>
+    </div>
+  </div>
+</header>

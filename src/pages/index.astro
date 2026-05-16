@@ -1,0 +1,115 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import ArticleCard from '../components/ArticleCard.astro';
+import { getCollection } from 'astro:content';
+
+const allPosts = await getCollection('posts', ({ data }) => !data.draft);
+const posts = allPosts.sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+
+const philosophyItems = [
+  {
+    label: '逻辑先于情绪',
+    desc: '每一笔交易都需要清晰的逻辑支撑。数据和框架优先，情绪靠边站。',
+    icon: 'M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z',
+  },
+  {
+    label: '深度研究驱动',
+    desc: '投资于你真正理解的生意，而不是听来的故事。理解护城河，理解现金流。',
+    icon: 'M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z',
+  },
+  {
+    label: '风险管理优先',
+    desc: '先想最坏的情况，再想最好的情况。活下去才能等到好机会。',
+    icon: 'M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z',
+  },
+];
+---
+
+<BaseLayout title="首页">
+  <!-- Hero -->
+  <section class="relative overflow-hidden py-20 sm:py-28">
+    <div class="absolute inset-0 bg-gradient-to-b from-navy-800 via-navy-900 to-navy-950 -z-10"></div>
+    <div class="absolute inset-0 opacity-20 -z-10"
+      style="background-image: radial-gradient(circle at 20% 50%, #f59e0b22 0%, transparent 50%), radial-gradient(circle at 80% 20%, #1e4f8c33 0%, transparent 50%);">
+    </div>
+
+    <div class="mx-auto max-w-5xl px-4 sm:px-6 text-center">
+      <div class="mb-4 inline-flex items-center gap-2 rounded-full border border-gold-500/30 bg-gold-500/10 px-4 py-1.5 text-xs font-medium text-gold-400">
+        <span class="h-1.5 w-1.5 rounded-full bg-gold-400"></span>
+        逻辑与数据驱动的投资思考
+      </div>
+
+      <h1 class="mt-6 text-4xl font-bold tracking-tight text-white sm:text-5xl lg:text-6xl">
+        在不确定性中<br />
+        <span class="text-gold-400">寻找确定性</span>
+      </h1>
+
+      <p class="mx-auto mt-6 max-w-2xl text-base leading-relaxed text-slate-400 sm:text-lg">
+        市场充满噪音，真正的信号藏在基本面里。这里记录我的投资框架、行业研究与市场思考，
+        用严谨的逻辑对抗情绪，用长期主义对抗短期波动。
+      </p>
+
+      <div class="mt-8 flex flex-col sm:flex-row items-center justify-center gap-4">
+        <a
+          href="#articles"
+          class="rounded-lg bg-gold-500 px-6 py-2.5 text-sm font-semibold text-navy-950 shadow-lg shadow-gold-500/20 transition-all hover:bg-gold-400 hover:shadow-gold-400/30"
+        >
+          浏览文章
+        </a>
+        <a
+          href="#philosophy"
+          class="rounded-lg border border-navy-600 px-6 py-2.5 text-sm font-medium text-slate-300 transition-colors hover:border-gold-500 hover:text-gold-400"
+        >
+          投资理念
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Philosophy -->
+  <section id="philosophy" class="border-y border-navy-700 bg-navy-900/50 py-16">
+    <div class="mx-auto max-w-5xl px-4 sm:px-6">
+      <h2 class="mb-2 text-center text-xs font-semibold uppercase tracking-widest text-gold-500">
+        Investment Philosophy
+      </h2>
+      <h3 class="mb-10 text-center text-2xl font-bold text-white sm:text-3xl">核心投资理念</h3>
+
+      <div class="grid gap-6 sm:grid-cols-3">
+        {philosophyItems.map(item => (
+          <div class="rounded-xl border border-navy-600 bg-navy-800 p-6 transition-colors hover:border-gold-500/50">
+            <div class="mb-4 flex h-10 w-10 items-center justify-center rounded-lg bg-gold-500/10 ring-1 ring-gold-500/20">
+              <svg class="h-5 w-5 text-gold-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d={item.icon} />
+              </svg>
+            </div>
+            <h4 class="mb-2 font-semibold text-slate-100">{item.label}</h4>
+            <p class="text-sm leading-relaxed text-slate-400">{item.desc}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Articles -->
+  <section id="articles" class="py-16">
+    <div class="mx-auto max-w-5xl px-4 sm:px-6">
+      <div class="mb-8 flex items-center justify-between">
+        <div>
+          <h2 class="text-xs font-semibold uppercase tracking-widest text-gold-500">Latest Posts</h2>
+          <h3 class="mt-1 text-2xl font-bold text-white sm:text-3xl">最新文章</h3>
+        </div>
+        <span class="text-sm text-slate-500">{posts.length} 篇</span>
+      </div>
+
+      {posts.length === 0 ? (
+        <div class="rounded-xl border border-navy-700 bg-navy-800/50 p-12 text-center">
+          <p class="text-slate-500">文章准备中，敬请期待。</p>
+        </div>
+      ) : (
+        <div class="grid gap-5 sm:grid-cols-2 lg:grid-cols-2">
+          {posts.map(post => <ArticleCard post={post} />)}
+        </div>
+      )}
+    </div>
+  </section>
+</BaseLayout>
