@@ -24,3 +24,11 @@
   ::-webkit-scrollbar-thumb { background: #d1d5db; border-radius: 9999px; }
   ::-webkit-scrollbar-thumb:hover { background: #1e4db7; }
 }
+
+/* 表格移动端横向滚动 — 工程层统一处理，无需在 Markdown 中嵌套 HTML */
+@layer components {
+  .prose table {
+    display: block;
+    overflow-x: auto;
+  }
+}
