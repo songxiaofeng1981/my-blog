@@ -1,0 +1,765 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>八层穿透分析 · 天齐锂业 (002466.SZ / 9696.HK)</title>
+<style>
+  :root{
+    --bg:#fafaf7;
+    --ink:#1c1c1c;
+    --muted:#6b6b6b;
+    --accent:#8b1a1a;
+    --soft:#efeae0;
+    --line:#d8d2c4;
+    --warn:#b04a1a;
+    --ok:#3f6b3a;
+  }
+  *{box-sizing:border-box}
+  body{
+    margin:0;
+    font-family:"PingFang SC","Hiragino Sans GB","Microsoft YaHei",serif;
+    background:var(--bg);
+    color:var(--ink);
+    line-height:1.7;
+    font-size:15px;
+  }
+  .layout{
+    display:grid;
+    grid-template-columns:240px 1fr;
+    max-width:1200px;
+    margin:0 auto;
+  }
+  nav.toc{
+    position:sticky;
+    top:0;
+    align-self:start;
+    height:100vh;
+    overflow-y:auto;
+    padding:28px 18px;
+    border-right:1px solid var(--line);
+    background:var(--soft);
+    font-size:13.5px;
+  }
+  nav.toc h2{
+    font-size:13px;
+    letter-spacing:2px;
+    color:var(--muted);
+    margin:0 0 14px;
+    text-transform:uppercase;
+  }
+  nav.toc ol{
+    list-style:none;
+    padding:0;
+    margin:0;
+  }
+  nav.toc li{margin:6px 0}
+  nav.toc a{
+    display:block;
+    padding:6px 10px;
+    color:var(--ink);
+    text-decoration:none;
+    border-left:2px solid transparent;
+    transition:all .15s;
+  }
+  nav.toc a:hover{
+    background:#fff;
+    border-left-color:var(--accent);
+    color:var(--accent);
+  }
+  nav.toc .meta{
+    margin-top:20px;
+    padding-top:16px;
+    border-top:1px solid var(--line);
+    color:var(--muted);
+    font-size:12px;
+  }
+  main{padding:36px 44px 80px;max-width:880px}
+  h1{
+    font-size:28px;
+    margin:0 0 8px;
+    color:var(--accent);
+    border-bottom:2px solid var(--accent);
+    padding-bottom:12px;
+  }
+  .subtitle{color:var(--muted);font-size:14px;margin:4px 0 26px}
+  h2.layer{
+    font-size:22px;
+    margin:48px 0 16px;
+    padding:10px 14px;
+    background:var(--accent);
+    color:#fff;
+    border-radius:3px;
+  }
+  h2.layer .no{
+    display:inline-block;
+    background:#fff;
+    color:var(--accent);
+    width:30px;
+    height:30px;
+    line-height:30px;
+    text-align:center;
+    border-radius:50%;
+    margin-right:10px;
+    font-weight:700;
+  }
+  h3{
+    font-size:16px;
+    margin:24px 0 8px;
+    color:var(--accent);
+    border-left:4px solid var(--accent);
+    padding-left:10px;
+  }
+  .keybox{
+    background:#fff;
+    border:1px solid var(--line);
+    border-radius:4px;
+    padding:16px 20px;
+    margin:18px 0 28px;
+    font-size:14px;
+  }
+  .keybox table{width:100%;border-collapse:collapse}
+  .keybox td{padding:5px 8px;vertical-align:top}
+  .keybox td:first-child{color:var(--muted);width:34%}
+  .factbox{
+    background:#fff;
+    border-left:3px solid var(--ok);
+    padding:10px 14px;
+    margin:10px 0;
+    font-size:14px;
+  }
+  .question{
+    font-style:italic;
+    color:var(--muted);
+    border-left:2px solid var(--line);
+    padding:4px 12px;
+    margin:8px 0 12px;
+  }
+  ul.check{list-style:none;padding-left:0;margin:8px 0}
+  ul.check li{
+    padding:4px 0 4px 24px;
+    position:relative;
+  }
+  ul.check li::before{
+    content:"☐";
+    position:absolute;
+    left:0;
+    color:var(--accent);
+  }
+  ul.check li.done::before{content:"☑";color:var(--ok)}
+  .src{
+    font-size:12px;
+    color:var(--muted);
+    display:inline-block;
+    margin-left:4px;
+  }
+  .src a{color:var(--muted);text-decoration:underline dotted}
+  .redflag{
+    background:#fff4ee;
+    border-left:3px solid var(--warn);
+    padding:10px 14px;
+    margin:12px 0;
+    font-size:14px;
+  }
+  .redflag::before{
+    content:"🚩 红旗 · ";
+    font-weight:700;
+    color:var(--warn);
+  }
+  .verdict{
+    background:#f2efe5;
+    padding:12px 16px;
+    margin:14px 0;
+    border-radius:3px;
+    font-size:14px;
+  }
+  .verdict::before{
+    content:"评估 · ";
+    font-weight:700;
+    color:var(--accent);
+  }
+  .miss{color:#999;font-style:italic}
+  .synthesis{
+    margin-top:60px;
+    padding:24px;
+    background:#fff;
+    border:2px solid var(--accent);
+    border-radius:4px;
+  }
+  .synthesis h2{
+    margin-top:0;
+    color:var(--accent);
+    font-size:22px;
+  }
+  table.cmp{
+    width:100%;
+    border-collapse:collapse;
+    margin:10px 0;
+    font-size:13.5px;
+  }
+  table.cmp th,table.cmp td{
+    border:1px solid var(--line);
+    padding:8px 10px;
+    text-align:left;
+  }
+  table.cmp th{background:var(--soft)}
+  .anchor-offset{
+    position:relative;
+    top:-10px;
+  }
+  blockquote{
+    margin:14px 0;
+    padding:8px 16px;
+    border-left:3px solid var(--line);
+    color:var(--muted);
+    background:#fff;
+    font-size:13.5px;
+  }
+  code{
+    background:var(--soft);
+    padding:1px 5px;
+    border-radius:3px;
+    font-size:13px;
+  }
+</style>
+</head>
+<body>
+<div class="layout">
+
+<nav class="toc">
+  <h2>目录 · TOC</h2>
+  <ol>
+    <li><a href="#l0">⊙ 概要 / 关键事实</a></li>
+    <li><a href="#l1">① 现象 Narrative</a></li>
+    <li><a href="#l2">② 商业 Contract</a></li>
+    <li><a href="#l3">③ 战略 Counterparty</a></li>
+    <li><a href="#l4">④ 时间 Time</a></li>
+    <li><a href="#l5">⑤ 生态 Sunk Cost</a></li>
+    <li><a href="#l6">⑥ 估值 Pricing</a></li>
+    <li><a href="#l7">⑦ 类比 Pattern</a></li>
+    <li><a href="#l8">⑧ 结构 Structure</a></li>
+    <li><a href="#syn">⊙ 八层联立 Synthesis</a></li>
+    <li><a href="#src">⊙ 信息源清单</a></li>
+  </ol>
+  <div class="meta">
+    分析框架来自 <code>CLAUDE.md</code><br>
+    标的 · 天齐锂业 002466.SZ / 09696.HK<br>
+    生成日期 · 2026-05-17<br>
+    本报告为研究骨架,不构成投资建议
+  </div>
+</nav>
+
+<main>
+<h1>八层穿透分析 · 天齐锂业</h1>
+<div class="subtitle">A 股 002466.SZ · 港股 09696.HK · 截至 2026-05-17 数据快照</div>
+
+<section id="l0">
+<h2 class="layer"><span class="no">⊙</span>关键事实 · 报告读前先看</h2>
+
+<div class="keybox">
+<table>
+<tr><td>A 股股价 / 市值</td><td>74.38 元(2026-05-13 收) · 总市值约 1,313.4 亿元 <span class="src">[stockstar.com / sohu.com]</span></td></tr>
+<tr><td>H 股股价</td><td>约 65.82 港元(2026-05-12 大行增持价) · 52 周区间 20.90 – 60.30 港元 <span class="src">[sina.com.cn]</span></td></tr>
+<tr><td>2024 年报</td><td>营收 130.63 亿(YoY -67.75%) · 归母 <b>-79.05 亿</b>(由盈转亏,上市以来最大亏) <span class="src">[jiemian.com / stcn.com]</span></td></tr>
+<tr><td>2025 中报</td><td>营收 48.33 亿(YoY -24.71%) · 归母 <b>+8.44 亿</b>(扭亏,SQM 贡献投资收益 23.5 亿) <span class="src">[nbd.com.cn]</span></td></tr>
+<tr><td>2025 全年</td><td>归母 <b>+4.63 亿</b>(YoY +105.85% 扭亏) <span class="src">[sina.com.cn 2026-03-28]</span></td></tr>
+<tr><td>2026 Q1</td><td>营收 51.28 亿(YoY +98.44%) · 归母 <b>+18.76 亿</b>(YoY +1699.12%) <span class="src">[stcn.com]</span></td></tr>
+<tr><td>核心资产</td><td>① Greenbushes(全球最大在产硬岩锂矿)间接权益 26.01%;② SQM(全球最大盐湖)22.16% 联营 <span class="src">[talisonlithium.com / mrjjxw.com]</span></td></tr>
+<tr><td>当前锂价</td><td>电池级碳酸锂现货约 26,278 美元/吨(2026-01 末) · BMI 2026 年均预测 17,000 美元/吨 <span class="src">[investingnews.com / miningweekly.com]</span></td></tr>
+</table>
+</div>
+
+<div class="redflag">2026 Q1 业绩同比暴增 17 倍是锂价反弹 + 包销定价模式由"季均"改"月均"双重叠加,基数极低,不可线性外推。市场已在 Q4'25 至 Q1'26 把这部分预期定价进去。</div>
+</section>
+
+<!-- ============ L1 现象 ============ -->
+<section id="l1">
+<h2 class="layer"><span class="no">1</span>现象 · Narrative</h2>
+<div class="question">公司/标的在讲什么故事?这个故事的核心论点是什么?</div>
+
+<h3>1.1 一句话总结</h3>
+<div class="factbox">
+"全球锂资源端绑定最深的中国玩家——Greenbushes(硬岩第一)+ SQM(盐湖第一)双锚,享受锂周期下一轮反转的 Beta,等 SQM 分红与一体化加工业务释放利润。"
+</div>
+
+<h3>1.2 核心论点拆解(几个? 哪个是基石?)</h3>
+<ul class="check">
+  <li class="done"><b>基石</b>:Greenbushes 是全球边际成本最低的硬岩锂矿(C1 现金成本约 380-500 澳元/吨 SC6),只要锂价不跌破 6 万人民币/吨,这块基本永远赚钱。<span class="src">[IGO Q 报 / Talison]</span></li>
+  <li class="done"><b>基石</b>:SQM 持股 22.16%,SQM 是全球最低成本盐湖,正常年份贡献 20-30 亿投资收益。 <span class="src">[2024 年报 / nbd.com.cn]</span></li>
+  <li class="done"><b>装饰</b>:奎纳纳/张家港的一体化加工——长期讲一体化,实际利润率薄,二期已被砍。 <span class="src">[91jinshu.com 2025-01]</span></li>
+  <li class="done"><b>装饰</b>:固态电池(硫化锂中试)、磷酸铁锂副产品综合利用等新故事。 <span class="src">[2025 中报]</span></li>
+</ul>
+
+<h3>1.3 故事来源:公司主动还是市场归因</h3>
+<p>资源故事是公司主动且持续讲了 10 年(2014 年收购 Talison)的故事;锂周期 Beta 故事是市场反向归因。SQM 公私合营事件之后,"被国家化风险"是市场反向加上去的叙事。</p>
+
+<h3>1.4 最大受益者</h3>
+<ul class="check">
+  <li class="done">实控人蒋卫平家族(2022 年 H 股上市时套现部分股权)。</li>
+  <li class="done">IGO(2020 年以 14 亿美元入股 TLEA 49%,目前仍在分红回收)。 <span class="src">[mining-technology.com]</span></li>
+  <li class="done">Albemarle(同为 Greenbushes 49% 直接股东 + 主要包销客户)。</li>
+</ul>
+
+<h3>1.5 反问 · "如果不是这样会怎样"</h3>
+<ul class="check">
+  <li class="done"><b>如果锂价中枢留在 8 万人民币以下?</b> 答:公司加工业务仍微利,Greenbushes 仍盈利但分红下降,故事退化为"资源股+周期下行"。</li>
+  <li class="done"><b>如果 SQM 公私合营终审败诉?</b> 答:SQM 持股稀释为少数股东,投资收益贡献减半甚至消失;这是"基石"裂缝。</li>
+  <li class="done"><b>如果竞争对手成本追上?</b> 答:盐湖端 SQM 仍在最低成本带,硬岩端 Greenbushes 因资源品位天然领先 5-10 美元/吨 LCE。</li>
+  <li class="done"><b>如果故事推迟 2 年?</b> 答:中信/中金 2026 年 EPS 预期 2.63 元,现价对应 28 倍 forward;若兑现推迟到 2028,估值需打 6 折。</li>
+</ul>
+
+<div class="redflag">"全球最低成本资源"叙事用了 10 年,但 2022-2024 周期中天齐净利从 +241 亿 → -79 亿,说明"低成本"并不能对冲价格周期。市场可能反复用这套叙事,但不要把它当作"防御"。</div>
+</section>
+
+<!-- ============ L2 商业 ============ -->
+<section id="l2">
+<h2 class="layer"><span class="no">2</span>商业 · Contract</h2>
+<div class="question">故事里提到的合作/独占/优势,有没有合同保障?</div>
+
+<h3>2.1 关键合同清单</h3>
+<table class="cmp">
+<tr><th>合同/协议</th><th>对手方</th><th>关键条款</th><th>披露程度</th></tr>
+<tr><td>Talison 股东协议</td><td>Albemarle(49%) / IGO(49% 入股 TLEA)</td><td>51%-49% 股权 / 各自包销;2024-01 起包销定价由季均改月均</td><td>结构公开,详细条款未披露 <span class="src">[stcn.com 2024-01]</span></td></tr>
+<tr><td>SQM 股东协议</td><td>SQM / Pampa Group</td><td>核心争议点:重大合营事项是否需股东大会决议</td><td>已被 Codelco 协议事实绕开 <span class="src">[nbd.com.cn 2025-11]</span></td></tr>
+<tr><td>奎纳纳氢氧化锂长单</td><td>SKI、Ecopro、LG 化学、Northvolt</td><td>期限 / 数量 / 定价机制均未公开披露</td><td>仅披露客户名单 <span class="src">[2024 年报]</span></td></tr>
+<tr><td>张家港 3 万吨氢氧化锂</td><td>未披露客户</td><td>2025-07 进入联合试车</td><td>未披露 <span class="src">[2025 中报]</span></td></tr>
+<tr><td>2024 第一大客户合同</td><td><b>雅保(Albemarle)</b></td><td><span class="miss">注:网络资料引用"雅保贡献 261.7 亿 / 64.62%"对应 2022 年报,2024 年具体数字未在官方摘要披露,需以年报附注为准</span></td><td>待核实 <span class="src">[industrysourcing.cn]</span></td></tr>
+</table>
+
+<h3>2.2 独占性条款的法律措辞</h3>
+<p>Greenbushes 矿端是"按持股比例分配/包销",<b>不是排他</b>——Albemarle 拿走 49% 精矿走自己的氢氧化锂厂(美国 Kemerton);天齐 + IGO 拿 51% 进入张家港、奎纳纳。这意味着竞品(Albemarle)<b>同矿同价</b>,天齐的"资源独占"实际是"资源共享、份额最大"。</p>
+
+<h3>2.3 合同期限与续约</h3>
+<ul class="check">
+  <li class="done">Greenbushes 矿权:Talison 持有,矿山寿命预计可采至 2050+(储量 13 亿吨)。 <span class="src">[miningdataonline.com]</span></li>
+  <li class="done">SQM 智利 Atacama 盐湖租约:原 2030 到期 → 在 Codelco 合营协议下展期至 2060。 <span class="src">[mrjjxw.com 2025-12]</span></li>
+  <li class="done">客户长单(奎纳纳):具体年限<span class="miss">未查到</span>,行业惯例为 3-5 年。</li>
+</ul>
+
+<h3>2.4 违约成本对谁更高</h3>
+<ul class="check">
+  <li class="done">Greenbushes 端:三方深度绑定(Albemarle 既是股东也是客户)。任何一方违约都会摧毁该合营,违约成本对天齐和 Albemarle 同等高。</li>
+  <li class="done">SQM 端:天齐是<b>财务投资人</b>(无控制权),违约的边际成本远低于智利政府。这就是 2025-11 一审败诉的根本原因——法律层面天齐没有股东大会决议权。</li>
+</ul>
+
+<h3>2.5 反向锁定机制(MFN / 变更控制 / 终止)</h3>
+<p>已知信息中均<span class="miss">未查到</span>明确条款。SQM 事件恰恰证明"反向锁定机制缺失"——若有"重大合营须股东大会通过"条款,Codelco 协议根本签不下来。</p>
+
+<div class="verdict">天齐的"商业合同护城河"<b>分层异质</b>:Greenbushes 端是<b>真锁定</b>(股权 + 包销 + 长期协议三重);SQM 端实质是<b>财务持仓</b>,法律强度由强→弱(股东协议 → 当地法律 → 政治意志)。</div>
+
+<div class="redflag">2024-01 包销定价由"季均"改"月均",意味着锂价波动直接、快速地传导到天齐 P&L。上涨期是利好(如 2026 Q1),下跌期是利空。这是把<b>天齐的财务结构从"缓冲器"变成"放大器"</b>。 <span class="src">[stcn.com 2024-01-29]</span></div>
+</section>
+
+<!-- ============ L3 战略 ============ -->
+<section id="l3">
+<h2 class="layer"><span class="no">3</span>战略 · Counterparty</h2>
+<div class="question">站在交易对手视角看,他们的利益是什么?</div>
+
+<h3>3.1 三类核心交易对手</h3>
+
+<h4>① 大客户 / 战略合营方:Albemarle</h4>
+<ul class="check">
+  <li class="done">同时是 Greenbushes 49% 股东 + 主要包销方 + 第一大客户(2022 年占营收 64.62%,2024 数字需以年报附注核实)。</li>
+  <li class="done">为什么选/留?<b>因为没得选</b>——Greenbushes 49% 股权和精矿是其美国氢氧化锂厂的命根子,转出成本极高。</li>
+  <li class="done">备选方案?Albemarle 自己持有智利 Atacama 锂盐湖 + Wodgina 矿(与 Mineral Resources 合营),理论上可以"去 Greenbushes 化",但短中期不现实。</li>
+</ul>
+
+<h4>② 战略股东:IGO Limited(澳大利亚)</h4>
+<ul class="check">
+  <li class="done">2020 年以 14 亿美元入股 TLEA 49%,是天齐"债务危机救火队"。<span class="src">[mining-technology.com]</span></li>
+  <li class="done">为什么留?TLEA 是 IGO 锂资产唯一来源,2022-23 巨额分红已经回本。</li>
+  <li class="done">议价权:IGO 在 TLEA 层面是少数股东,但<b>有否决权</b>(具体条款<span class="miss">未查到</span>,但行业惯例如此)。</li>
+</ul>
+
+<h4>③ 直接竞争对手:赣锋锂业、Albemarle、SQM、Pilbara、Arcadium</h4>
+<table class="cmp">
+<tr><th>对手</th><th>对天齐威胁点</th><th>天齐相对优势</th></tr>
+<tr><td>赣锋锂业</td><td>加工产能更大、客户更分散、海外资源更多元</td><td>Greenbushes 单矿成本与品位无解</td></tr>
+<tr><td>Albemarle</td><td>同矿同股,且加工技术更成熟</td><td>Albemarle 占 49%,天齐 51%,主导权在天齐</td></tr>
+<tr><td>SQM</td><td>2025-12 Codelco 入主后,定价权与扩产受智利政府控制</td><td>天齐仍持股 22.16%,享受分红</td></tr>
+<tr><td>Pilbara/Arcadium</td><td>纯硬岩竞争者,成本高于 Greenbushes 但产能在扩</td><td>资源品位 + 资本结构优势</td></tr>
+</table>
+
+<h3>3.2 收入/成本相互占比</h3>
+<ul class="check">
+  <li class="done">雅保对天齐:第一大客户,占比高(2022 年 64.62%,2024 数字<span class="miss">待核实</span>)。</li>
+  <li class="done">天齐对雅保:雅保 2023 年财报中,Greenbushes 精矿是其锂业务最关键的原料来源之一,无法快速替代。</li>
+  <li class="done">SQM 对天齐:2024 年贡献 -8.85 亿(全年亏),2025 H1 贡献 +23.5 亿。<b>权益法,非现金</b>。 <span class="src">[2024 年报 / 2025 中报]</span></li>
+</ul>
+
+<h3>3.3 谁更需要谁?关系破裂谁损失更大?</h3>
+<div class="verdict">
+<b>Greenbushes 三方</b>:对称依赖,谁离开谁都重伤。<br>
+<b>天齐 ↔ SQM</b>:严重不对称——SQM 与 Codelco 重组完全不需要天齐同意,2025-11 法院判决证明这一点。
+</div>
+
+<div class="redflag">雅保既是大客户又是同矿股东,这种"既是甲方也是合伙人"的关系在锂价上行期是稳定器,但若雅保自有矿(Wodgina/Atacama)产能加速放量,它可能逐步"去依赖化"。需要每季度跟踪 Albemarle 业绩会议上关于 Greenbushes 占比的指引。</div>
+</section>
+
+<!-- ============ L4 时间 ============ -->
+<section id="l4">
+<h2 class="layer"><span class="no">4</span>技术/物理 · Time</h2>
+<div class="question">故事的兑现需要多长的物理时间?这个时间能不能被压缩?</div>
+
+<h3>4.1 关键时间表</h3>
+<table class="cmp">
+<tr><th>项目</th><th>真实时间</th><th>当前状态</th><th>物理约束</th></tr>
+<tr><td>Greenbushes CGP3 扩产 50 万吨</td><td>2025-12 投产,总产能升至 210 万吨/年 SC6</td><td>已建成,处于爬坡</td><td>选矿厂建设 ~36 个月 <span class="src">[discoveryalert.com.au]</span></td></tr>
+<tr><td>奎纳纳一期 2.4 万吨氢氧化锂</td><td>2017 立项 → 2022 商业化 → 2025 H1 达 50%+ 利用率</td><td>爬坡 6 年仍未满产</td><td>客户验证 + 工艺调试 <span class="src">[21jingji.com / 2025 中报]</span></td></tr>
+<tr><td>奎纳纳二期 2.4 万吨</td><td>原计划 2024 投产</td><td><b>2025-01 终止,沉没成本 14.12 亿</b> <span class="src">[91jinshu.com]</span></td><td>加工经济性失效</td></tr>
+<tr><td>张家港 3 万吨氢氧化锂</td><td>2025-07 联合试车</td><td>爬坡中</td><td>国内建设节奏快,1-2 年</td></tr>
+<tr><td>SQM-Codelco 合营至 2060</td><td>2025-12 协议生效(待终审)</td><td>合营公司 NovaAndinoLitio Spa 已成立</td><td>智利国家协议 / 25-35 年长约</td></tr>
+</table>
+
+<h3>4.2 物理时间约束分解</h3>
+<ul class="check">
+  <li class="done"><b>矿端</b>:发现 → 勘探 → 可研 → 建设 → 投产 全周期 8-12 年。对手要复制 Greenbushes 至少要找到同等品位(2.0%+ Li₂O)的硬岩矿——这种矿全球总共不超过 5 处。</li>
+  <li class="done"><b>盐湖端</b>:卤水提锂技术成熟,但智利/阿根廷牌照获取 + 当地政治环境 5-10 年。</li>
+  <li class="done"><b>加工端</b>:氢氧化锂工艺已成熟,中国玩家平均建设周期 18-24 个月。</li>
+  <li class="done"><b>客户验证</b>:动力电池厂 1-2 年,固态电池 2-3 年。</li>
+</ul>
+
+<h3>4.3 历史上有没有人压缩这个时间</h3>
+<ul class="check">
+  <li class="done">压缩失败案例:<b>天齐自己</b>——奎纳纳一期 2017 立项,原计划 2019 投产,实际 2022 商业化,爬坡又用 3 年。</li>
+  <li class="done">压缩成功案例:江西碳酸锂玩家用云母提锂 18 个月建成投产,但成本 6-8 万/吨,比 Greenbushes 高 1 倍以上。<span class="src">[caifuhao.eastmoney.com 2025]</span></li>
+  <li class="done">绿地新矿压缩失败:Bald Hill、Mt Marion 等澳洲新矿的实际产量普遍低于可研报告 20-40%。</li>
+</ul>
+
+<h3>4.4 对手追赶时间</h3>
+<div class="factbox">
+对手要复制天齐的"Greenbushes 26.01% 间接权益 + SQM 22.16% 持股"组合,在<b>资源层面物理上不可能</b>——这两块资产都是已被三方/智利国家锁定的特殊机会,过去 20 年才出现过 1 次,且天齐用了一次几乎致命的财务杠杆(2018-2020 债务危机)拿到的。
+</div>
+
+<h3>4.5 评估 · 护城河真实宽度</h3>
+<table class="cmp">
+<tr><th>护城河层级</th><th>天齐的位置</th><th>宽度评级</th></tr>
+<tr><td>物理时间护城河</td><td>Greenbushes 是已开发 25 年的矿,SQM 是 30 年盐湖</td><td><b>极宽</b> · 不可复制</td></tr>
+<tr><td>技术 know-how</td><td>氢氧化锂工艺平均水平,落后于赣锋</td><td>窄</td></tr>
+<tr><td>品牌/渠道</td><td>大宗品无品牌护城河</td><td>无</td></tr>
+</table>
+
+<div class="redflag">资源护城河极宽,但<b>加工护城河接近为零</b>。一旦故事重心从"资源"切到"一体化加工",天齐的相对优势会迅速消失——这正是 2022-2024 锂价高位时市场已经验证过的现象。</div>
+</section>
+
+<!-- ============ L5 生态 ============ -->
+<section id="l5">
+<h2 class="layer"><span class="no">5</span>生态 · Sunk Cost</h2>
+<div class="question">利益相关方有多深的沉没成本?切换的边际成本是多少?</div>
+
+<h3>5.1 客户在天齐上的沉没投入</h3>
+<ul class="check">
+  <li class="done">电池厂对锂盐供应商的认证周期:1-2 年(动力)、2-3 年(储能)、3-5 年(固态电池前期合作)。一旦认证完成,短期不会轻易切换。</li>
+  <li class="done">长单客户(SKI、Ecopro、LG、Northvolt)在天齐奎纳纳的<b>数据/工艺定制</b>沉没成本<span class="miss">未查到具体金额</span>,但行业惯例为几百万至千万美元级别。</li>
+  <li class="done">Albemarle 作为同矿股东 + 包销方,沉没成本最高——其美国 Kemerton 厂的设计就是基于 Greenbushes 精矿规格。</li>
+</ul>
+
+<h3>5.2 切换成本</h3>
+<table class="cmp">
+<tr><th>客户类型</th><th>一次性切换成本</th><th>持续成本</th><th>心理/决策成本</th></tr>
+<tr><td>动力电池厂</td><td>认证再走 1-2 年</td><td>同类锂盐价差通常 ±5%</td><td>低——电池厂同时认证 3-5 家供应商</td></tr>
+<tr><td>Albemarle</td><td>极高(股权+股东协议)</td><td>无法走开</td><td>不存在</td></tr>
+<tr><td>储能客户</td><td>较低</td><td>低</td><td>低</td></tr>
+</table>
+
+<h3>5.3 心理成本与决策风险</h3>
+<p>锂盐属于<b>大宗品/标准化产品</b>。下游对锂盐的真实需求是"碳酸锂 99.5% + 氢氧化锂 56.5%"两个标准规格,只要质量合格,谁家货都能用。这是天齐(以及所有锂盐玩家)的本质短板。</p>
+
+<h3>5.4 生态正反馈</h3>
+<ul class="check">
+  <li class="done">天齐<b>没有生态正反馈</b>——卖锂盐不像卖软件,更多客户不会带来更多开发者,也不会让产品变得更好。</li>
+  <li class="done">勉强能讲的"正反馈"是:大客户(LG、SKI)的认证背书,可以帮助拿其他新客户。</li>
+</ul>
+
+<h3>5.5 评估 · 锁定类型</h3>
+<table class="cmp">
+<tr><th>锁定层级</th><th>对应业务</th><th>类比</th></tr>
+<tr><td>真锁定</td><td>Albemarle 在 Greenbushes 的股权</td><td>类似台积电客户</td></tr>
+<tr><td>半锁定</td><td>奎纳纳长单客户</td><td>类似 Salesforce</td></tr>
+<tr><td>伪锁定</td><td>散单/储能客户</td><td>类似消费品牌</td></tr>
+</table>
+
+<div class="redflag">天齐生态层面最大的隐患:大客户(雅保)既是合作方又是潜在竞品(其在 Wodgina、Atacama 的自有资源在持续扩产)。这是"对方主动去依赖化"的典型动机。</div>
+</section>
+
+<!-- ============ L6 估值 ============ -->
+<section id="l6">
+<h2 class="layer"><span class="no">6</span>估值 · Pricing</h2>
+<div class="question">当前价格定价了哪个阶段的故事?后续里程碑是什么?</div>
+
+<h3>6.1 当前市值隐含什么样的未来</h3>
+<table class="cmp">
+<tr><th>指标</th><th>数值</th><th>来源</th></tr>
+<tr><td>A 股市值</td><td>~1,313 亿元 RMB</td><td>2026-05-13 收盘 <span class="src">[sohu.com]</span></td></tr>
+<tr><td>H 股市值</td><td>叠加 H 股配售后摊薄</td><td>2026-02 配股 + 可转债募 58.29 亿港元 <span class="src">[longbridge.com]</span></td></tr>
+<tr><td>PB (LTM)</td><td>约 2.5x(每股净资产 ~35.30 RMB)</td><td><span class="src">[gilin.com.cn]</span></td></tr>
+<tr><td>PE (LTM)</td><td>用 2025 全年 4.63 亿净利算约 <b>283x</b>(显然不能用)</td><td>需用 forward</td></tr>
+<tr><td>2026 EPS 预期</td><td>2.63 元(卖方共识)</td><td><span class="src">[gilin.com.cn]</span></td></tr>
+<tr><td>2026 Forward PE</td><td>74.38 / 2.63 ≈ <b>28x</b></td><td>本报告测算</td></tr>
+</table>
+
+<h3>6.2 反向 DCF 推导</h3>
+<div class="factbox">
+按当前市值 1,313 亿 + 2026 Forward PE 28x → 市场隐含<b>锂价中枢 12-15 万元 RMB/吨(对应碳酸锂)</b>。如果实际 2026-27 锂价均值维持在 8-10 万,EPS 大概率打 6-7 折,股价回落到 50 元附近;如果均值升到 15-18 万,EPS 上修空间 30-50%。
+</div>
+
+<h3>6.3 阶段性里程碑</h3>
+<ul class="check">
+  <li class="done"><b>已被定价</b>:① 2026 Q1 锂价反弹的 EPS 同比暴增(已发布);② Greenbushes CGP3 投产(已完成);③ 张家港 3 万吨试车(已完成)。</li>
+  <li class="done"><b>未充分定价</b>:① SQM-Codelco 终审结果(2026 上半年);② SQM 在新合营框架下的分红水平变化;③ 2026 全年锂价中枢能否站上 15 万。</li>
+  <li class="done"><b>风险催化</b>:① 印尼/津巴布韦等新供给放量;② 美国 IRA 进一步限制中国锂;③ SQM 终审败诉。</li>
+</ul>
+
+<h3>6.4 最坏情况下行</h3>
+<table class="cmp">
+<tr><th>情景</th><th>锂价中枢</th><th>EPS</th><th>合理股价</th><th>下行空间</th></tr>
+<tr><td>悲观</td><td>6-8 万/吨 + SQM 终审败诉</td><td>-0.5 至 0</td><td>30-40 元(PB 1x)</td><td><b>-46%</b></td></tr>
+<tr><td>中性</td><td>10-13 万/吨</td><td>1.8-2.2</td><td>55-65 元</td><td>-20%</td></tr>
+<tr><td>乐观</td><td>15-18 万/吨 + SQM 胜诉</td><td>4-5</td><td>120-140 元</td><td><b>+70%</b></td></tr>
+</table>
+
+<h3>6.5 评估 · 赔率与节奏</h3>
+<div class="verdict">
+<b>赔率</b>:上行 ~70% / 下行 ~46% ≈ 1.5:1,<b>不满足框架要求的 3:1 最低门槛</b>。<br>
+<b>节奏</b>:下一个 6 个月的关键催化是 SQM 终审(可能 2026 Q2-Q3)+ 半年报锂价兑现度。<br>
+<b>催化剂可见性</b>:中等。
+</div>
+
+<div class="redflag">2026 Q1 业绩同比 +1699% 已经把短期反弹定价完了,从历史经验看,锂股 PE 高点通常出现在锂价反弹的<b>第二个季度</b>(即 2026 Q2 业绩公告前后),之后即使锂价继续涨,股价也容易因"估值切换到下一年"而震荡。</div>
+</section>
+
+<!-- ============ L7 类比 ============ -->
+<section id="l7">
+<h2 class="layer"><span class="no">7</span>类比 · Pattern</h2>
+<div class="question">历史上有没有类似剧本?那个剧本怎么演的?</div>
+
+<h3>7.1 三个最接近的历史案例</h3>
+
+<h4>案例 A · 天齐自己的 2015-2016 周期</h4>
+<ul class="check">
+  <li class="done">背景:碳酸锂从 4 万涨到 17 万/吨。</li>
+  <li class="done">天齐股价从 ~30 元涨到 ~110 元(前复权),约 3.5x。</li>
+  <li class="done">兑现节奏:股价高点出现在锂价高点<b>之前</b> 3-4 个月。</li>
+  <li class="done">差异点:那时天齐只有 Talison,没有 SQM 这个"国有化风险源"。</li>
+</ul>
+
+<h4>案例 B · 天齐自己的 2020-2022 周期</h4>
+<ul class="check">
+  <li class="done">背景:碳酸锂从 4 万涨到 60 万。</li>
+  <li class="done">天齐 A 股从 18 元涨到 154 元(2021-09,前复权),~8.5x;但 H 股 2022 上市后只有半段。</li>
+  <li class="done">兑现节奏:股价高点出现在锂价高点(2022-11)<b>提前 14 个月</b>。</li>
+  <li class="done">下行节奏:从 154 → 30(2024 底),跌幅 80%。</li>
+  <li class="done">差异点:本轮已经经历过一次完整的"故事破产→重建"。</li>
+</ul>
+
+<h4>案例 C · Albemarle 2018-2023</h4>
+<ul class="check">
+  <li class="done">最相似的国际对照:同矿同股,2018 高点 130 美元 → 2020 低点 50 美元 → 2022 高点 330 美元 → 2024 低点 70 美元。</li>
+  <li class="done">兑现节奏:每一轮 PE 顶部都出现在<b>锂价 EBITDA 同比仍正但增速下滑</b>的时点。</li>
+</ul>
+
+<h3>7.2 历史案例兑现了多少?用了多长?</h3>
+<div class="factbox">
+2015-16 周期上行 ~24 个月,下行 ~30 个月。<br>
+2020-22 周期上行 ~24 个月,下行 ~28 个月。<br>
+本轮(2024 H2 见底)若严格类比,上行 24 个月意味着锂价高点出现在 2026 Q4-2027 Q1,股价高点提前 ~12 个月,即 <b>2026 年内</b>。
+</div>
+
+<h3>7.3 哪些环节出意外 vs 超预期</h3>
+<ul class="check">
+  <li class="done"><b>历史意外(向坏)</b>:① 2018 SDLA(智利盐湖)股权纠纷;② 2018-2020 收购 SQM 后的债务危机;③ 2025-12 SQM 公私合营。</li>
+  <li class="done"><b>历史超预期(向好)</b>:① 2021 锂价超预期上涨速度;② 2022 H 股上市补流;③ 2025 H1 SQM 投资收益超预期回暖。</li>
+</ul>
+
+<h3>7.4 与历史案例的关键差异</h3>
+<table class="cmp">
+<tr><th>维度</th><th>2020-22 周期</th><th>当前 2025-27 周期</th><th>差异倾向</th></tr>
+<tr><td>需求 Beta</td><td>EV 渗透率从 5% → 14%</td><td>EV 渗透率 30% → 45%,边际增长放缓</td><td>变差</td></tr>
+<tr><td>新能源新需求</td><td>纯 EV</td><td>EV + BESS(储能) + 钠电分流</td><td>中性</td></tr>
+<tr><td>供给端</td><td>新矿少</td><td>非洲、印尼新供给在路上</td><td>变差</td></tr>
+<tr><td>SQM 风险</td><td>无</td><td>智利国有化进行时</td><td>变差</td></tr>
+<tr><td>包销定价</td><td>季均</td><td><b>月均(更激进)</b></td><td>变好(上涨期) / 变差(下跌期)</td></tr>
+</table>
+
+<h3>7.5 评估 · 概率分布先验</h3>
+<div class="verdict">
+两轮历史样本都显示:<b>锂股股价上行幅度 = 锂价上涨幅度 × 1.5-3 倍</b>,但回撤幅度也是 70-80%。说明锂股本质是<b>非常高 Beta 的周期股</b>,任何"长持"叙事在这个层面都需要打折。当前与 2020-22 周期相比,需求 Beta 衰减、新供给在路上、SQM 风险新增——大部分关键变量倾向变差。
+</div>
+
+<div class="redflag">市场最爱说的"这次不一样,因为有 BESS 储能"——是的,BESS 在加,但<b>LFP 路线对锂的需求强度比 NCM 低 30%+,且钠电正在分流低端 BESS</b>。"这次不一样"的方向是<b>更温和而不是更陡峭</b>。</div>
+</section>
+
+<!-- ============ L8 结构 ============ -->
+<section id="l8">
+<h2 class="layer"><span class="no">8</span>结构 · Industry Structure</h2>
+<div class="question">产业结构允许几个玩家?标的占哪个位置?</div>
+
+<h3>8.1 终局格局</h3>
+<table class="cmp">
+<tr><th>环节</th><th>当前格局</th><th>终局判断</th></tr>
+<tr><td>上游资源</td><td>SQM/Albemarle/Arcadium 三大 CR3 ≈ 40%;天齐/赣锋 CR2 ≈ 25-30%</td><td>5-7 家寡头</td></tr>
+<tr><td>中游冶炼</td><td>中国 + 韩国 + 智利 100+ 家</td><td>10-15 家有效玩家,长尾持续出清</td></tr>
+<tr><td>下游回收</td><td>极度分散</td><td>2030 后才会整合</td></tr>
+</table>
+
+<h3>8.2 决定结构的底层力量</h3>
+<ul class="check">
+  <li class="done"><b>规模经济(强)</b>:Greenbushes 因为品位 + 露天开采,边际成本远低于次级矿。这是"自然垄断"的来源。</li>
+  <li class="done"><b>资源稀缺性(强)</b>:全球可经济开采的锂矿就那么几处,资源端是 1-2 家说话的市场。</li>
+  <li class="done"><b>监管牌照(中)</b>:智利、阿根廷、玻利维亚都倾向资源民族主义,牌照变成政治资产。</li>
+  <li class="done"><b>技术标准(弱)</b>:锂盐是大宗,无技术壁垒。</li>
+  <li class="done"><b>网络效应(无)</b>:卖锂盐没有网络效应。</li>
+</ul>
+
+<h3>8.3 当前竞争阶段</h3>
+<div class="factbox">
+2018-2022:混战期(疯狂扩产)<br>
+2023-2024:出清期(锂价崩、云母矿停产、Pilbara/Core Lithium 减产)<br>
+<b>2025-2026:第一轮整合期</b>——头部并购增加(IGO 已在收 ASX 锂股),云母提锂玩家在退出<br>
+2027+:可能进入稳态(CR5 上升至 60%+)
+</div>
+
+<h3>8.4 天齐的结构位置</h3>
+<table class="cmp">
+<tr><th>环节</th><th>天齐排名</th><th>位置稳定性</th></tr>
+<tr><td>硬岩资源</td><td><b>#1(以单矿权益计)</b></td><td>极稳</td></tr>
+<tr><td>盐湖资源</td><td>#2-3(经 SQM 22.16% 持股)</td><td>不稳,受 SQM-Codelco 协议影响</td></tr>
+<tr><td>氢氧化锂加工</td><td>#3-5(落后赣锋、Albemarle)</td><td>中等</td></tr>
+<tr><td>碳酸锂加工</td><td>#5-8</td><td>中等</td></tr>
+<tr><td>全球锂业综合</td><td><b>#3-4</b>(在 SQM/Albemarle/Ganfeng 之后)</td><td>稳定</td></tr>
+</table>
+
+<h3>8.5 评估 · 底层确定性来源</h3>
+<div class="verdict">
+<b>结构对天齐有利的部分</b>:上游已经接近寡头格局,Greenbushes 单矿地位无法挑战。<br>
+<b>结构对天齐不利的部分</b>:① 中国 IRA 限制压制北美定价权;② 智利国家化趋势压制 SQM 定价权;③ 加工端仍处混战。<br>
+<b>位置决定份额</b>:即使在寡头格局成型后,天齐作为 #3-4 的 EV/EBITDA 估值通常只有 #1(SQM)的 60-80%。
+</div>
+
+<div class="redflag">最容易被低估的结构性风险:<b>美国 IRA(及其后续版本)</b>对"非友好国家锂矿"的限制,使得天齐在 Greenbushes 51% 主导权的<b>政治价值</b>正在贬值。Albemarle 持股 49% 的策略性意义反而在上升——美国客户(LGES、SK)更愿意通过 Albemarle 间接消化 Greenbushes 精矿。</div>
+</section>
+
+<!-- ============ Synthesis ============ -->
+<section id="syn">
+<div class="synthesis">
+<h2>⊙ 八层联立 · Synthesis</h2>
+
+<h3>一致性检验</h3>
+<ul class="check">
+  <li class="done"><b>一致的论点链</b>:L4(物理时间)+ L8(寡头结构)联立 → 天齐的资源端护城河长期成立。这条链是核心多头逻辑。</li>
+  <li class="done"><b>矛盾点</b>:L1 故事说"低成本对冲周期",L7 类比却证明"低成本无法对冲股价 80% 回撤"。市场反复用这个故事但反复被周期教训。</li>
+  <li class="done"><b>提前透支</b>:L6 估值 28x 2026 Forward PE,但 L7 类比和 L8 结构都提示本轮锂价上行 Beta 可能弱于 2020-22。</li>
+</ul>
+
+<h3>最弱环 · 核心风险变量</h3>
+<div class="factbox" style="border-left-color:var(--warn)">
+<b>最弱环 = L2(商业)中的 SQM 股东协议被绕过 + L8 中的智利国家化趋势。</b><br>
+若 2026 智利最高法院终审天齐败诉,SQM 持股从"22.16% 联营公司"变成"少数财务投资",新合营条款下分红极可能下降 30-50%。这一个变量崩盘,L6 估值的乐观情景直接消失,赔率从 1.5:1 跌至 1:1。<br>
+<b>需持续跟踪:智利最高法院进程(2026 Q2-Q3)。</b>
+</div>
+
+<h3>下一步研究 · 待解决问题</h3>
+<ol>
+  <li>核实<b>2024 年报附注</b>中第一大客户的实际营收占比(网络资料引用的 64.62% 是 2022 数据,2024 数字需查年报全文)。</li>
+  <li>跟踪 SQM-Codelco 新合营框架下,<b>NovaAndinoLitio Spa</b> 的实际分红政策与股权稀释幅度。</li>
+  <li>测算 Greenbushes CGP3 投产后,2026-27 精矿过剩对自身销售价格的反向影响。</li>
+  <li>评估美国 IRA "外国实体" 条款实际落地节奏,会不会让 Albemarle 加快"去 Greenbushes 化"。</li>
+  <li>研究<b>钠电池</b>在 BESS 中的渗透节奏——这是本轮锂周期需求 Beta 的最大对冲变量。</li>
+</ol>
+
+<h3>结论(框架结论,非投资建议)</h3>
+<p>
+天齐锂业是一个<b>资源端极硬、加工端中等、财务联系国有化风险偏高</b>的标的。其本质仍是<b>高 Beta 锂周期股</b>,叠加 SQM 国有化的<b>独特风险敞口</b>。
+</p>
+<p>
+当前 2026 年 5 月时点:<b>L6 赔率 1.5:1 不达框架 3:1 门槛</b>,L7 周期类比提示位置接近 2021 年 8 月级别的"上行中段",L8 结构面有变好(整合期)也有变差(IRA + 智利国有化)的因素。
+</p>
+<p>
+<b>八层联立结论:故事仍然成立,但当前价格已经定价了上行情景的中前段,且未充分定价 SQM 终审的尾部风险。</b> 适合作为锂价反弹时的高 Beta 配置,不适合作为"低估值价值股"长期持有。
+</p>
+</div>
+</section>
+
+<!-- ============ Sources ============ -->
+<section id="src">
+<h2 class="layer"><span class="no">⊙</span>信息源清单</h2>
+
+<h3>公司公告 / 年报</h3>
+<ul>
+<li><a href="http://file.finance.sina.com.cn/211.154.219.97:9494/MRGG/CNSESZ_STOCK/2025/2025-3/2025-03-27/10811561.PDF">天齐锂业 2024 年度报告摘要(新浪财经)</a></li>
+<li><a href="https://disc.static.szse.cn/download/disc/disk03/finalpage/2025-08-30/403c2b7c-33b2-4b86-98c7-15e666a00e8a.PDF">天齐锂业 2025 年半年度报告摘要(深交所)</a></li>
+<li><a href="https://file.finance.qq.com/finance/hs/pdf/2025/11/25/1224822850.PDF">关于全资子公司提起诉讼的进展公告(2025-11)</a></li>
+<li><a href="https://file.finance.qq.com/finance/hs/pdf/2025/12/30/1224904358.PDF">关于公司重要参股公司签署重大合同的进展公告(2025-12)</a></li>
+<li><a href="https://www1.hkexnews.hk/listedco/listconews/sehk/2025/1229/2025122901858_c.pdf">港交所披露公告 2025-12-29</a></li>
+</ul>
+
+<h3>财经媒体</h3>
+<ul>
+<li><a href="https://www.jiemian.com/article/12527096.html">界面新闻:天齐锂业 2024 年净利润 -79.05 亿</a></li>
+<li><a href="https://stcn.com/article/detail/1614577.html">证券时报:2024 年阶段性承压亏损 79 亿</a></li>
+<li><a href="https://www.stcn.com/article/detail/3843673.html">证券时报:锂价上涨带飞业绩,天齐锂业一季度盈利暴增近 17 倍</a></li>
+<li><a href="https://stock.stockstar.com/RB2026050600038768.shtml">证券之星:2026-05-06 资金流向</a></li>
+<li><a href="https://www.sohu.com/a/1022180095_121319643">搜狐:天齐锂业 2026-05-13 报 74.38 元</a></li>
+<li><a href="https://www.nbd.com.cn/articles/2025-12-29/4200415.html">每经:海外参股企业公私合营已完成</a></li>
+<li><a href="https://www.nbd.com.cn/articles/2025-11-13/4141531.html">每经:天齐锂业称 SQM 公私合营绕开股东会</a></li>
+<li><a href="https://www.nbd.com.cn/articles/2025-08-30/4043216.html">每经:2025 上半年净利同比增超 100%</a></li>
+<li><a href="https://wallstreetcn.com/articles/3764481">华尔街见闻:SQM 业绩回暖贡献利润增量</a></li>
+<li><a href="https://finance.sina.com.cn/jjxw/2026-03-28/doc-inhsprys4424159.shtml">新浪财经:2025 全年归母 4.63 亿</a></li>
+<li><a href="https://www.stcn.com/article/detail/1107796.html">证券时报:Greenbushes 长协模式生变(2024-01)</a></li>
+<li><a href="https://www.stcn.com/article/detail/3308541.html">证券时报:锂王上半年扭亏为盈</a></li>
+<li><a href="https://news.91jinshu.com/lidian/202501/73005.html">91 金属:终止奎纳纳二期</a></li>
+<li><a href="https://m.21jingji.com/article/20221205/herald/b849eacd2eab558e5d962c128dee98fd_ths.html">21 财经:奎纳纳一期商业化</a></li>
+<li><a href="https://finance.sina.com.cn/stock/hkstock/marketalerts/2026-05-12/doc-inhxrwqf8226870.shtml">新浪财经:大摩 65.82 港元增持 H 股</a></li>
+</ul>
+
+<h3>行业与产能</h3>
+<ul>
+<li><a href="https://www.talisonlithium.com/capacity-expansion-projects">Talison Lithium 官方:扩产规划</a></li>
+<li><a href="https://discoveryalert.com.au/hard-rock-lithium-extraction-technologies-2025/">Discovery Alert:Greenbushes 2025 产能</a></li>
+<li><a href="https://miningdataonline.com/property/829/Greenbushes-Mine.aspx">Mining Data Online:Greenbushes 矿山数据</a></li>
+<li><a href="https://www.igo.com.au/site/operations/lithium-holdco-joint-venture">IGO Limited:Lithium HoldCo 合营</a></li>
+<li><a href="https://www.mining-technology.com/news/igo-stake-lithium-holdco/">Mining Technology:IGO 入股 Lithium HoldCo</a></li>
+<li><a href="https://en.wikipedia.org/wiki/Greenbushes_mine">Wikipedia:Greenbushes 矿</a></li>
+</ul>
+
+<h3>锂价与宏观</h3>
+<ul>
+<li><a href="https://investingnews.com/daily/resource-investing/battery-metals-investing/lithium-investing/lithium-forecast/">Investing News:Q1 2026 Lithium Market</a></li>
+<li><a href="https://www.miningweekly.com/article/bmi-revises-lithium-price-forecast-upwards-amid-tightening-supply-2026-04-24">Mining Weekly:BMI 上调 2026 锂价至 $17,000/t</a></li>
+<li><a href="https://www.spglobal.com/energy/en/news-research/latest-news/metals/010926-commodities-2026-lithium-carbonate-surplus-to-narrow-energy-storage-to-drive-growth">S&P Global:2026 锂市场盈余收窄</a></li>
+<li><a href="https://carboncredits.com/lithium-prices-surge-amid-strong-demand-forecasts-could-reach-up-to-28000-ton-by-2026-nili/">Carbon Credits:2026 锂价可能达 $28,000/t</a></li>
+</ul>
+
+<h3>估值与对照</h3>
+<ul>
+<li><a href="https://www.gilin.com.cn/news/11328-research">金灵 AI:天齐 vs 赣锋财务估值与 2026 ROE 前景</a></li>
+<li><a href="https://cn.investing.com/pro/SZSE:002466/explorer/pe_ltm">Investing.com:002466 PE TTM</a></li>
+<li><a href="https://reportify-1252068037.cos.ap-beijing.myqcloud.com/media/production/s_f184e330_f184e33000beffd7a2beaabea083ae91.pdf">天齐锂业公司研究报告(2024-06)</a></li>
+<li><a href="https://m.gelonghui.com/p/2777714">格隆汇:2025 全球基础锂市场占有率</a></li>
+<li><a href="https://www.industrysourcing.cn/article/466255">荣格:储能电池企业 2024 年报透视</a></li>
+</ul>
+
+<h3>SQM / 智利相关</h3>
+<ul>
+<li><a href="https://m.21jingji.com/article/20240808/herald/d68b19065fc50fd7f98a1033e60043a5_zaker.html">21 世纪经济报道:起诉智利金融委员会</a></li>
+<li><a href="https://paper.cnstock.com/html/2024-06/22/content_1933662.htm">上海证券报:智利项目"公私合营"计划继续</a></li>
+<li><a href="https://www.mrjjxw.com/articles/2025-12-29/4200415.html">每经:海外参股公私合营已完成</a></li>
+</ul>
+
+<div class="meta" style="margin-top:30px;padding:14px;background:var(--soft);border-radius:3px;font-size:12px;color:var(--muted)">
+<b>未查到字段汇总(本框架要求不编造,以下为本次研究中明确"未查到"的字段)</b>:
+<ul>
+<li>Greenbushes 包销协议中三方对技术级 vs 化学级精矿的具体分配比例细节</li>
+<li>奎纳纳长单(SKI/Ecopro/LG/Northvolt)的具体期限、数量、定价公式</li>
+<li>TLEA 合营协议中 IGO 是否拥有具体否决权清单</li>
+<li>张家港 3 万吨项目的具体客户</li>
+<li>2024 年报中前五大客户的具体占比数字(网络资料引用 64.62% 为 2022 数据,2024 数字待以年报附注核实)</li>
+<li>2025 H1 / 2025 全年 H 股摊薄后的最新流通市值</li>
+</ul>
+</div>
+
+</section>
+
+</main>
+</div>
+</body>
+</html>

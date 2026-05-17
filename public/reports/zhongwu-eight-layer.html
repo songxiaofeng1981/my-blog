@@ -1,0 +1,1158 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>中钨高新 (000657) 八层穿透分析报告</title>
+<style>
+  * { box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+    margin: 0;
+    background: #fafaf8;
+    color: #222;
+    line-height: 1.7;
+  }
+
+  /* Layout */
+  .layout { display: flex; }
+  .toc {
+    position: fixed;
+    left: 0; top: 0;
+    width: 260px;
+    height: 100vh;
+    background: #1f2937;
+    color: #e5e7eb;
+    padding: 24px 16px;
+    overflow-y: auto;
+    box-shadow: 2px 0 8px rgba(0,0,0,0.05);
+  }
+  .toc h2 {
+    font-size: 15px;
+    color: #9ca3af;
+    margin: 0 0 16px 0;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    border-bottom: 1px solid #374151;
+    padding-bottom: 10px;
+  }
+  .toc ol { list-style: none; padding: 0; margin: 0; }
+  .toc li { margin: 0; }
+  .toc a {
+    display: block;
+    padding: 10px 12px;
+    color: #d1d5db;
+    text-decoration: none;
+    border-radius: 6px;
+    font-size: 14px;
+    transition: all 0.15s;
+    border-left: 3px solid transparent;
+  }
+  .toc a:hover { background: #374151; color: #fff; border-left-color: #60a5fa; }
+  .toc .num {
+    display: inline-block;
+    width: 24px;
+    color: #60a5fa;
+    font-weight: 600;
+    font-family: ui-monospace, monospace;
+  }
+  .toc .meta {
+    font-size: 12px;
+    color: #6b7280;
+    padding: 12px;
+    margin-top: 16px;
+    border-top: 1px solid #374151;
+    line-height: 1.5;
+  }
+
+  .content {
+    margin-left: 260px;
+    padding: 40px 56px 80px 56px;
+    max-width: 1000px;
+  }
+
+  /* Header card */
+  .header-card {
+    background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
+    color: #fff;
+    padding: 32px;
+    border-radius: 12px;
+    margin-bottom: 32px;
+  }
+  .header-card h1 {
+    font-size: 28px;
+    margin: 0 0 6px 0;
+    font-weight: 700;
+  }
+  .header-card .subtitle { color: #94a3b8; font-size: 14px; margin-bottom: 20px; }
+  .stat-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+    margin-top: 16px;
+  }
+  .stat {
+    background: rgba(255,255,255,0.06);
+    padding: 14px;
+    border-radius: 8px;
+    border: 1px solid rgba(255,255,255,0.08);
+  }
+  .stat .label { font-size: 11px; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.8px; }
+  .stat .value { font-size: 20px; font-weight: 700; color: #fff; margin-top: 4px; }
+  .stat .delta { font-size: 12px; color: #f87171; margin-top: 2px; }
+  .stat .delta.green { color: #4ade80; }
+
+  /* Sections */
+  section {
+    background: #fff;
+    padding: 36px 40px;
+    border-radius: 12px;
+    margin-bottom: 28px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+    scroll-margin-top: 20px;
+  }
+  section h2 {
+    font-size: 22px;
+    margin: 0 0 24px 0;
+    padding-bottom: 12px;
+    border-bottom: 2px solid #f1f5f9;
+    color: #0f172a;
+  }
+  section h2 .num {
+    display: inline-block;
+    background: #1f2937;
+    color: #fff;
+    font-size: 14px;
+    padding: 3px 10px;
+    border-radius: 4px;
+    margin-right: 12px;
+    font-family: ui-monospace, monospace;
+    vertical-align: middle;
+  }
+  section h3 {
+    font-size: 16px;
+    color: #1e293b;
+    margin: 24px 0 12px 0;
+    padding-left: 10px;
+    border-left: 3px solid #60a5fa;
+  }
+  section h4 {
+    font-size: 14px;
+    color: #475569;
+    margin: 14px 0 6px 0;
+  }
+
+  .question-box {
+    background: #f0f9ff;
+    border-left: 4px solid #0ea5e9;
+    padding: 14px 18px;
+    margin-bottom: 24px;
+    border-radius: 0 6px 6px 0;
+    font-size: 15px;
+    color: #0c4a6e;
+  }
+  .question-box .q-label {
+    font-weight: 700;
+    color: #0369a1;
+    margin-right: 6px;
+  }
+
+  ul { padding-left: 24px; }
+  ul li { margin-bottom: 6px; }
+  .checklist { list-style: none; padding-left: 0; }
+  .checklist li {
+    padding: 4px 0 4px 28px;
+    position: relative;
+  }
+  .checklist li::before {
+    content: "▸";
+    position: absolute;
+    left: 8px;
+    color: #60a5fa;
+    font-weight: 700;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 12px 0;
+    font-size: 14px;
+  }
+  th, td {
+    padding: 10px 12px;
+    text-align: left;
+    border-bottom: 1px solid #e5e7eb;
+  }
+  th { background: #f8fafc; font-weight: 600; color: #334155; }
+  tr:hover { background: #fafbfc; }
+
+  .red-flag {
+    background: #fef2f2;
+    border-left: 4px solid #ef4444;
+    padding: 14px 18px;
+    margin: 18px 0;
+    border-radius: 0 6px 6px 0;
+    font-size: 14px;
+  }
+  .red-flag-label {
+    color: #b91c1c;
+    font-weight: 700;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 6px;
+    display: block;
+  }
+
+  .verdict {
+    background: #fefce8;
+    border-left: 4px solid #eab308;
+    padding: 14px 18px;
+    margin: 18px 0;
+    border-radius: 0 6px 6px 0;
+  }
+  .verdict-label {
+    color: #854d0e;
+    font-weight: 700;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 6px;
+    display: block;
+  }
+
+  .ok-box {
+    background: #f0fdf4;
+    border-left: 4px solid #22c55e;
+    padding: 14px 18px;
+    margin: 18px 0;
+    border-radius: 0 6px 6px 0;
+  }
+  .ok-label {
+    color: #15803d;
+    font-weight: 700;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 6px;
+    display: block;
+  }
+
+  .sources {
+    margin-top: 28px;
+    padding: 16px 20px;
+    background: #f8fafc;
+    border-radius: 8px;
+    font-size: 13px;
+  }
+  .sources-label {
+    color: #64748b;
+    font-weight: 700;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 8px;
+  }
+  .sources ul { margin: 0; padding-left: 18px; }
+  .sources li { color: #475569; margin-bottom: 4px; }
+  .sources a { color: #2563eb; text-decoration: none; word-break: break-all; }
+  .sources a:hover { text-decoration: underline; }
+
+  .unknown { color: #94a3b8; font-style: italic; }
+
+  .footer {
+    text-align: center;
+    color: #94a3b8;
+    font-size: 12px;
+    padding: 40px 0 20px 0;
+    border-top: 1px solid #e5e7eb;
+    margin-top: 40px;
+  }
+
+  /* Score badge */
+  .score-row {
+    display: flex;
+    gap: 8px;
+    margin: 16px 0;
+    flex-wrap: wrap;
+  }
+  .score-badge {
+    padding: 6px 12px;
+    border-radius: 16px;
+    font-size: 13px;
+    font-weight: 600;
+  }
+  .score-strong { background: #dcfce7; color: #166534; }
+  .score-mid { background: #fef9c3; color: #854d0e; }
+  .score-weak { background: #fee2e2; color: #991b1b; }
+
+  blockquote {
+    margin: 16px 0;
+    padding: 12px 20px;
+    border-left: 4px solid #cbd5e1;
+    background: #f8fafc;
+    color: #475569;
+    font-style: italic;
+    border-radius: 0 6px 6px 0;
+  }
+
+  /* Mobile */
+  @media (max-width: 900px) {
+    .toc { position: static; width: 100%; height: auto; }
+    .content { margin-left: 0; padding: 20px; }
+    .stat-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+</style>
+</head>
+<body>
+
+<aside class="toc">
+  <h2>八层导航</h2>
+  <ol>
+    <li><a href="#l1"><span class="num">L1</span>现象 Narrative</a></li>
+    <li><a href="#l2"><span class="num">L2</span>商业 Contract</a></li>
+    <li><a href="#l3"><span class="num">L3</span>战略 Counterparty</a></li>
+    <li><a href="#l4"><span class="num">L4</span>技术/物理 Time</a></li>
+    <li><a href="#l5"><span class="num">L5</span>生态 Sunk Cost</a></li>
+    <li><a href="#l6"><span class="num">L6</span>估值 Pricing</a></li>
+    <li><a href="#l7"><span class="num">L7</span>类比 Pattern</a></li>
+    <li><a href="#l8"><span class="num">L8</span>结构 Industry</a></li>
+    <li><a href="#synth"><span class="num">▣</span>八层联立</a></li>
+    <li><a href="#sources-all"><span class="num">📚</span>全部数据来源</a></li>
+  </ol>
+  <div class="meta">
+    标的：<b>000657</b><br>
+    中钨高新材料<br>
+    分析时点：2026-05-17<br>
+    框架版本：八层穿透 v1
+  </div>
+</aside>
+
+<div class="content">
+
+<div class="header-card">
+  <h1>中钨高新 (000657.SZ)</h1>
+  <div class="subtitle">钨业一体化龙头 · 中国五矿集团旗下 · 全球硬质合金 #1（市占率 30%）</div>
+  <div class="stat-grid">
+    <div class="stat">
+      <div class="label">收盘价 (5/8)</div>
+      <div class="value">¥59.9</div>
+      <div class="delta">当日 -5.21%</div>
+    </div>
+    <div class="stat">
+      <div class="label">总市值</div>
+      <div class="value">1365 亿</div>
+      <div class="delta green">流通市值 870 亿</div>
+    </div>
+    <div class="stat">
+      <div class="label">动态 PE / PB</div>
+      <div class="value">37 / 13.6×</div>
+      <div class="delta">行业均值 PE ~40</div>
+    </div>
+    <div class="stat">
+      <div class="label">12 个月涨幅</div>
+      <div class="value">+436%</div>
+      <div class="delta">已发警示公告</div>
+    </div>
+  </div>
+</div>
+
+<!-- =========== L1 现象 =========== -->
+<section id="l1">
+  <h2><span class="num">L1</span>第一层 · 现象 (Narrative)</h2>
+
+  <div class="question-box">
+    <span class="q-label">现象问题：</span>公司在讲什么故事？核心论点是什么？
+  </div>
+
+  <h3>一句话总结</h3>
+  <p><b>"全球最大硬质合金生产商 + 五矿集团钨矿资产持续注入 + 钨价进入战略稀缺涨价周期 + 光伏钨丝/军工/PCB 微钻多点共振，从'加工'升级为'资源 + 加工'一体化龙头。"</b></p>
+
+  <h3>核心论点拆解</h3>
+  <table>
+    <tr><th width="38%">论点</th><th width="14%">类型</th><th>说明 / 当前进度</th></tr>
+    <tr>
+      <td><b>① 钨价持续上涨</b></td>
+      <td>周期 + 资源</td>
+      <td>2026 年初 70% 黑钨精矿 70.5 万/吨，年初至 2/24 上涨 53.26%；APT 105 万/吨，+56.72%</td>
+    </tr>
+    <tr>
+      <td><b>② 五矿钨矿资产持续注入</b></td>
+      <td>事件驱动</td>
+      <td>2024.12 柿竹园 100% 注入（51.95 亿）；2025.12 远景钨业 99.97% 注入（8.21 亿）；仍有 3 家托管</td>
+    </tr>
+    <tr>
+      <td><b>③ 资源自给率从 ~30% → 70%</b></td>
+      <td>结构变化</td>
+      <td>柿竹园 + 远景注入后，钨精矿自给率从原来 ~30% 提升到 70%（行业最高）</td>
+    </tr>
+    <tr>
+      <td><b>④ 光伏钨丝 + 军工 + PCB 微钻共振</b></td>
+      <td>成长</td>
+      <td>光伏钨丝渗透率 2024 年 20% → 2025 年 60%；PCB 微钻在建产能 1.3 亿 + 0.63 亿支/年</td>
+    </tr>
+    <tr>
+      <td><b>⑤ 全球硬质合金龙头地位</b></td>
+      <td>护城河</td>
+      <td>2024 年产量 1.4 万吨（全球第一）；数控刀片 1.4 亿片（国内 10%）</td>
+    </tr>
+  </table>
+
+  <h3>谁是最大受益者？</h3>
+  <ul>
+    <li><b>实控人 中国五矿</b>（持股 65.55%）：股价上行 + 资产注入溢价同时获利</li>
+    <li><b>定增对象</b>：2025/1 增发 6.93 亿股，发行价相对当时偏低</li>
+    <li><b>二级市场后续买入者</b>：从已实现 436% 涨幅看，前期持有者已大幅获利</li>
+  </ul>
+
+  <h3>评估：论点经不经得起反问？</h3>
+  <table>
+    <tr><th>反问</th><th>影响</th></tr>
+    <tr><td>钨价回调 30% 怎么办？</td><td>柿竹园弹性巨大（其净利率 19.7% 主要靠钨价）—— 业绩弹性会反向</td></tr>
+    <tr><td>香炉山、新田岭、瑶岗仙不能按时注入？</td><td>承诺到期日为定增完成后 5 年内（约 2030.1）—— 不是硬约束，但是市场已经定价了"还会注入"</td></tr>
+    <tr><td>光伏行业进入下行 / 钨丝被新工艺替代？</td><td>2025 年钨丝需求 8300 吨占总钨消费 ~8%，回撤对量影响有限，但情绪影响大</td></tr>
+    <tr><td>硬质合金加工端利润率被原料挤压？</td><td>2024 年公司扣非净利同比 -51.4% 已经验证过这一点 —— 2024 年靠柿竹园救命</td></tr>
+  </table>
+
+  <div class="red-flag">
+    <span class="red-flag-label">⚠ 红旗</span>
+    论点 ①+③+④ 已经被市场充分讲述（"战争金属""下一个稀土"），形容词密度极高。论点 ⑤ 的"全球第一"是吨位口径，刀片国内市占率 10%、海外只占硬质合金市场 25% —— 在<b>高端数控刀片</b>市场上仍属第三梯队，与山特维克/伊斯卡/肯纳有代差。
+  </div>
+
+  <div class="sources">
+    <div class="sources-label">数据来源</div>
+    <ul>
+      <li>财中社 2025-04《中钨高新 2024 年报点评》<a href="https://m.caizhongshe.cn/article-7321430410805311404.html">链接</a></li>
+      <li>每经网 2025-10-26《中钨高新前三季度净利约 8.46 亿》<a href="https://www.nbd.com.cn/articles/2025-10-26/4107299.html">链接</a></li>
+      <li>财联社 2026-03《"战争金属"钨价飙涨》<a href="https://www.cls.cn/detail/2290319">链接</a></li>
+    </ul>
+  </div>
+</section>
+
+<!-- =========== L2 商业 =========== -->
+<section id="l2">
+  <h2><span class="num">L2</span>第二层 · 商业 (Contract)</h2>
+
+  <div class="question-box">
+    <span class="q-label">现象问题：</span>故事里提到的合作、独占、优势，有没有合同保障？
+  </div>
+
+  <h3>关键"合同"清单</h3>
+  <table>
+    <tr><th>合同/承诺</th><th>当事方</th><th>强度</th><th>当前状态</th></tr>
+    <tr>
+      <td>资产注入承诺函（2017.5.11）</td>
+      <td>中国五矿 → 上市公司</td>
+      <td><span class="score-badge score-mid">强承诺 / 弱时点</span></td>
+      <td>承诺将柿竹园、瑶岗仙、新田岭、香炉山、远景注入，<b>未承诺具体时点</b></td>
+    </tr>
+    <tr>
+      <td>柿竹园 100% 股权收购协议</td>
+      <td>五矿钨业、沃溪 → 上市公司</td>
+      <td><span class="score-badge score-strong">已交割</span></td>
+      <td>2024-12-27 完成交割，作价 51.95 亿（评估溢价 ~3 倍）</td>
+    </tr>
+    <tr>
+      <td>远景钨业 99.97% 股权收购</td>
+      <td>五矿钨业 → 上市公司</td>
+      <td><span class="score-badge score-strong">已交割</span></td>
+      <td>2025-12-12 完成，作价 8.21 亿</td>
+    </tr>
+    <tr>
+      <td>香炉山 / 新田岭 / 瑶岗仙 注入</td>
+      <td>五矿系 → 上市公司</td>
+      <td><span class="score-badge score-mid">5 年承诺窗口</span></td>
+      <td>承诺"自交易完成之日起 5 年内"（约 <b>2030-01</b> 前）以注入/关停/转让方式解决同业竞争，<b>非强制注入</b></td>
+    </tr>
+    <tr>
+      <td>钨出口管制（商务部 2025 第 10 号公告）</td>
+      <td>中国政府</td>
+      <td><span class="score-badge score-strong">行政约束</span></td>
+      <td>2025-02-04 起对 25 种钨物项实施出口管制；2026 年仅 15 家企业获钨品出口资质</td>
+    </tr>
+    <tr>
+      <td>下游客户长单（光伏 / 军工 / PCB）</td>
+      <td>公司 ↔ 客户</td>
+      <td class="unknown">未查到</td>
+      <td>公司未披露主要客户合同期限/排他性条款，行业默认非长协</td>
+    </tr>
+    <tr>
+      <td>欧洲十大刀具品牌地位</td>
+      <td>市场地位</td>
+      <td><span class="score-badge score-weak">无合同支撑</span></td>
+      <td>来源为公司自述，无第三方合约或排他渠道支撑</td>
+    </tr>
+  </table>
+
+  <h3>独占性条款的语言分析</h3>
+  <blockquote>
+    五矿 2017 承诺函原文措辞为"在符合监管法律法规的前提下，<b>采取包括但不限于注入上市公司、关停、注销、对外转让</b>等方式解决同业竞争"——这是<b>"或"的逻辑而非"且"</b>。五矿如果将瑶岗仙以"清理低效资产"理由对外转让而非注入上市公司，承诺即履行。
+  </blockquote>
+
+  <h3>合同对称性 / 违约成本</h3>
+  <ul>
+    <li>柿竹园已收购 → 合同已履行完毕，无后续违约空间</li>
+    <li>瑶岗仙："存在职工股代持需进一步完善" → 五矿可以技术性延迟</li>
+    <li>香炉山："下属探矿权正在开展探转采相关工作需要一定周期" → 客观时间约束</li>
+  </ul>
+
+  <div class="red-flag">
+    <span class="red-flag-label">⚠ 红旗</span>
+    市场预期"5 年内 3 个矿都会注入"，但<b>承诺文本明确允许"关停 / 转让"作为替代方案</b>。如果钨价继续上涨，五矿层面有强烈动机以更高估值定价才注入，注入节奏可能慢于市场期待。
+  </div>
+
+  <div class="ok-box">
+    <span class="ok-label">✓ 强约束亮点</span>
+    出口管制是<b>真正的政策护城河</b>——2026 年 1 月中国钨品出口量同比 -40%，而中钨高新是 15 家获出口资质企业之一，事实上享受"准入门槛红利"。
+  </div>
+
+  <div class="sources">
+    <div class="sources-label">数据来源</div>
+    <ul>
+      <li>巨潮 2024-12-17《柿竹园收购预案》<a href="https://www.minmetalstungsten.com/tzzgx_7928/gsgg/202412/P020241217585379576165.pdf">链接</a></li>
+      <li>东方财富网 2025-12《中国五矿剩余 4 家托管的钨矿山企业》<a href="https://caifuhao.eastmoney.com/news/20251209053135992334650">链接</a></li>
+      <li>商务部公告 2025 第 10 号《对钨等相关物项实施出口管制》<a href="https://www.mofcom.gov.cn/zwgk/zcfb/art/2025/art_e623090907fc4e1092f0a4db72f57b95.html">链接</a></li>
+      <li>时代周报《拟溢价三倍吞下钨矿柿竹园》<a href="https://time-weekly.com/post/316311">链接</a></li>
+    </ul>
+  </div>
+</section>
+
+<!-- =========== L3 战略 =========== -->
+<section id="l3">
+  <h2><span class="num">L3</span>第三层 · 战略 (Counterparty)</h2>
+
+  <div class="question-box">
+    <span class="q-label">现象问题：</span>站在交易对手（客户、供应商、竞争对手）视角看，他们的利益是什么？
+  </div>
+
+  <h3>三类核心交易对手</h3>
+
+  <h4>① 上游：钨矿 / APT 供应商</h4>
+  <ul>
+    <li>柿竹园 + 远景已自有（自给率 70%），剩余 30% 主要外采</li>
+    <li>外采价格随市场，无长协议保护</li>
+    <li>主要外部供应：江西钨业、章源钨业、其他独立小矿</li>
+  </ul>
+
+  <h4>② 中游同业 / 竞争对手</h4>
+  <table>
+    <tr><th>公司</th><th>2025Q3 营收</th><th>2025Q3 净利</th><th>资源自给率</th><th>差异化</th></tr>
+    <tr><td><b>厦门钨业 (600549)</b></td><td>320 亿</td><td>25.8 亿</td><td>20-30%</td><td>光伏钨丝全球 80%+ 份额、稀土、磁材</td></tr>
+    <tr><td><b>中钨高新 (000657)</b></td><td>127.55 亿</td><td>8.46 亿</td><td><b>70% (行业最高)</b></td><td>硬质合金全球 30% 份额、数控刀具</td></tr>
+    <tr><td><b>章源钨业 (002378)</b></td><td>38.78 亿</td><td>1.9 亿</td><td>60%+</td><td>资源储备丰富、规模较小</td></tr>
+    <tr><td><b>翔鹭钨业 (002842)</b></td><td>未查到</td><td>未查到</td><td>~0%</td><td>无自有矿，弹性最大也最脆弱</td></tr>
+  </table>
+
+  <h4>③ 下游：刀具 / 终端制造业 / 国际刀具厂</h4>
+  <ul>
+    <li><b>国内数控刀片市场</b>：株洲钻石（中钨子公司）102.8 百万片 # 第一；欧科亿 80.97 百万片；华锐精密 79.59 百万片 —— CR3 仅 15.7%</li>
+    <li><b>国际竞争对手</b>：山特维克 (瑞典)、伊斯卡 (以色列)、肯纳 (美)、三菱综合材料 / 京瓷 / 特固克</li>
+    <li><b>海外业务</b>：占硬质合金 ~25%，约 30 亿/年，刀具产品位列欧洲十大品牌之一（公司自述）</li>
+  </ul>
+
+  <h3>对手视角分析：他们为什么/是否会留下？</h3>
+
+  <table>
+    <tr><th>对手</th><th>选择中钨的理由</th><th>备选方案</th><th>不对称性</th></tr>
+    <tr>
+      <td>欧美汽车制造商（中端）</td>
+      <td>性价比 + 25% 海外占比已经形成认知</td>
+      <td>山特维克、肯纳、伊斯卡</td>
+      <td><b>我方弱势</b>—— 客户随时可以切回欧美品牌</td>
+    </tr>
+    <tr>
+      <td>光伏硅片厂（钨丝）</td>
+      <td>钨丝替代金刚线，主要供应商：厦门钨业 + 中钨</td>
+      <td>厦门钨业（80%+ 份额）</td>
+      <td><b>我方相对弱势</b>—— 厦门钨业才是光伏钨丝霸主</td>
+    </tr>
+    <tr>
+      <td>军工 / 航天</td>
+      <td>国资央企背景，符合自主可控要求</td>
+      <td>株洲硬质合金 (中钨子公司)、其他军工合格供应商</td>
+      <td><b>我方较强</b>—— 央企背景 + 出口管制名单是双重壁垒</td>
+    </tr>
+    <tr>
+      <td>PCB 微钻客户</td>
+      <td>新进入者，价格优势</td>
+      <td>日韩主导（住友、东芝）</td>
+      <td>未查到 —— 在建产能尚未投产</td>
+    </tr>
+  </table>
+
+  <h3>评估：相互依赖是否对称</h3>
+  <ul>
+    <li><b>对上游</b>：自给率 70% 后已经基本不需要外采依赖，方向上转为<b>对称 → 我方强势</b></li>
+    <li><b>对中游同业</b>：双龙头格局（厦门钨业 + 中钨高新），<b>"互不取代"的对称竞争</b></li>
+    <li><b>对下游</b>：客户分散，但<b>高端市场仍由欧美日韩垄断</b>，国内厂商在中低端混战，下游议价权强</li>
+  </ul>
+
+  <div class="red-flag">
+    <span class="red-flag-label">⚠ 红旗</span>
+    在<b>高端刀具</b>这一最具品牌附加值的环节，中钨高新仍处第三梯队。公司海外营收占比 25% 是在中低端市场赚来的，毛利率被山特维克们碾压。"硬质合金全球第一"的吨位口径掩盖了"高端市场仍是追赶者"的事实。
+  </div>
+
+  <div class="sources">
+    <div class="sources-label">数据来源</div>
+    <ul>
+      <li>新浪财经 2026-03-03《钨业上演狂飙行情》<a href="https://finance.sina.com.cn/roll/2026-03-03/doc-inhptein4603774.shtml">链接</a></li>
+      <li>OFweek 智能制造网《欧科亿、华锐精密、株洲钻石对比》<a href="https://m.ofweek.com/im/2021-04/ART-201929-8500-30494846_2.html">链接</a></li>
+      <li>同花顺 中钨高新 F10<a href="http://m.10jqka.com.cn/20250711/c669570992.shtml">海外市场占 25%</a></li>
+    </ul>
+  </div>
+</section>
+
+<!-- =========== L4 技术/物理 =========== -->
+<section id="l4">
+  <h2><span class="num">L4</span>第四层 · 技术 / 物理 (Time)</h2>
+
+  <div class="question-box">
+    <span class="q-label">现象问题：</span>故事的兑现需要多长的物理时间？能不能被压缩？
+  </div>
+
+  <h3>关键物理时间表</h3>
+  <table>
+    <tr><th>环节</th><th>物理时间</th><th>是否可压缩</th><th>护城河等级</th></tr>
+    <tr>
+      <td>钨矿勘探 → 探转采</td>
+      <td><b>5-8 年</b>（含审批）</td>
+      <td>极难，受国家矿业权管理约束</td>
+      <td>⭐⭐⭐⭐⭐ 最硬</td>
+    </tr>
+    <tr>
+      <td>钨开采指标分配</td>
+      <td>每年由自然资源部下达</td>
+      <td>不可压缩（行政分配）</td>
+      <td>⭐⭐⭐⭐⭐ 最硬</td>
+    </tr>
+    <tr>
+      <td>APT 冶炼产能扩张</td>
+      <td>2-3 年</td>
+      <td>可，但环评是瓶颈</td>
+      <td>⭐⭐⭐ 中</td>
+    </tr>
+    <tr>
+      <td>硬质合金 know-how</td>
+      <td>5-10 年技术积累</td>
+      <td>可挖人 / 逆向</td>
+      <td>⭐⭐⭐ 中</td>
+    </tr>
+    <tr>
+      <td>数控刀片高端涂层工艺</td>
+      <td>10+ 年（山特维克累积百年）</td>
+      <td>专利保护强</td>
+      <td>⭐⭐⭐⭐ 较硬</td>
+    </tr>
+    <tr>
+      <td>光伏钨丝拉丝工艺</td>
+      <td>2-3 年量产爬坡</td>
+      <td>已基本被厦钨/中钨掌握</td>
+      <td>⭐⭐ 偏软</td>
+    </tr>
+    <tr>
+      <td>PCB 微钻量产</td>
+      <td>2-3 年</td>
+      <td>设备 + 良率攻关</td>
+      <td>⭐⭐ 偏软</td>
+    </tr>
+    <tr>
+      <td>军工资质认证</td>
+      <td>3-5 年</td>
+      <td>极难压缩，央企背景天然受益</td>
+      <td>⭐⭐⭐⭐ 较硬</td>
+    </tr>
+  </table>
+
+  <h3>"对手追赶时间"评估</h3>
+  <ul>
+    <li><b>翔鹭钨业（无矿）</b>：要复制中钨"自给率 70%"模式，需要外购矿权（5 年）或建立联盟（不可控），<b>结构性追不上</b></li>
+    <li><b>章源钨业（自给 60%+，但小）</b>：规模差距是 5-8 倍，要追上需要新一轮整合，<b>时间窗口 5 年以上</b></li>
+    <li><b>厦门钨业（双龙头）</b>：在<b>光伏钨丝</b>上中钨追不上厦钨（80% 份额），在<b>硬质合金</b>上厦钨追不上中钨（30% 份额）—— 双方各守一城</li>
+    <li><b>欧美刀具厂（山特维克等）</b>：硬合金 know-how 优势<b>5-10 年内不会改变</b>，但中国市场国产替代会持续蚕食</li>
+  </ul>
+
+  <h3>这一层的核心结论</h3>
+  <div class="ok-box">
+    <span class="ok-label">✓ 真护城河</span>
+    第四层是这只票最硬的一层：<br>
+    1. <b>资源端</b>：钨矿不是钱能买到的，柿竹园是全球在产最大单体钨矿（公司 0.78 万吨 + 远景 0.26 万吨 = 1.04 万吨钨精矿/年），按全球年消费 ~9.8 万吨算，单一标的占比 ~10%<br>
+    2. <b>出口资质</b>：15 家白名单，新进入者基本不可能<br>
+    3. <b>军工资质</b>：央企背景天然壁垒
+  </div>
+
+  <div class="red-flag">
+    <span class="red-flag-label">⚠ 红旗</span>
+    硬质合金（加工端）的护城河比矿端弱得多 —— 厦门金鹭、欧科亿、华锐精密都在同一赛道，价格战风险持续存在。2024 年公司扣非净利同比 -51.4% 就是这一层失守的预警信号 —— <b>不要把"资源股"和"加工股"混为一谈给估值</b>。
+  </div>
+
+  <div class="sources">
+    <div class="sources-label">数据来源</div>
+    <ul>
+      <li>财中社《2024 年报：柿竹园净利 7.05 亿占公司 70%》<a href="https://m.caizhongshe.cn/article-7321430410805311404.html">链接</a></li>
+      <li>东方财富 中邮证券《有色金属行业资产重组预期梳理》<a href="https://aigc.idigital.com.cn/djyanbao/%E3%80%90%E4%B8%AD%E9%82%AE%E8%AF%81%E5%88%B8%E3%80%91%E6%9C%89%E8%89%B2%E9%87%91%E5%B1%9E%E8%A1%8C%E4%B8%9A%EF%BC%9A%E5%AD%98%E5%9C%A8%E8%B5%84%E4%BA%A7%E9%87%8D%E7%BB%84%E9%A2%84%E6%9C%9F%E4%B8%8A%E5%B8%82%E5%85%AC%E5%8F%B8%E6%A2%B3%E7%90%86-2025-02-06.pdf">链接</a></li>
+    </ul>
+  </div>
+</section>
+
+<!-- =========== L5 生态 =========== -->
+<section id="l5">
+  <h2><span class="num">L5</span>第五层 · 生态 (Sunk Cost)</h2>
+
+  <div class="question-box">
+    <span class="q-label">现象问题：</span>利益相关方有多深的沉没成本？切换的边际成本是多少？
+  </div>
+
+  <h3>沉没成本结构</h3>
+  <table>
+    <tr><th>利益相关方</th><th>沉没成本类型</th><th>切换成本</th><th>锁定强度</th></tr>
+    <tr>
+      <td>欧洲汽车 / 通用机械客户（中端刀具）</td>
+      <td>认证 + 加工参数标定</td>
+      <td>中（重新认证 6-12 个月）</td>
+      <td><b>半锁定</b></td>
+    </tr>
+    <tr>
+      <td>军工客户</td>
+      <td>资质认证 + 涉密体系绑定</td>
+      <td>极高（替换需重新过验证）</td>
+      <td><b>真锁定</b></td>
+    </tr>
+    <tr>
+      <td>光伏硅片厂（钨丝）</td>
+      <td>设备适配（金刚线 → 钨丝改造）</td>
+      <td>低（钨丝标准化）</td>
+      <td><b>伪锁定</b></td>
+    </tr>
+    <tr>
+      <td>PCB 厂（微钻）</td>
+      <td>设备调试 + 良率匹配</td>
+      <td>低-中</td>
+      <td><b>半锁定</b></td>
+    </tr>
+    <tr>
+      <td>国内大型矿山 / 工程机械 (耐磨件)</td>
+      <td>历史合作 + 服务体系</td>
+      <td>中</td>
+      <td><b>半锁定</b></td>
+    </tr>
+  </table>
+
+  <h3>正反馈生态评估</h3>
+  <ul>
+    <li><b>是否有"更多客户 → 更多研发投入 → 更好产品 → 更多客户"</b>？<br>
+        部分有 —— 公司近 4 年研发投入 17+ 亿，碳化钨粉 + 钨丝项目 2025 年研发投入同比增 0.31 亿。但研发投入在硬合金行业属于"维持入场券"，不是真正的网络效应</li>
+    <li><b>是否有"更多产能 → 单位成本下降 → 价格优势 → 更多份额"</b>？<br>
+        资源端是 yes（柿竹园规模效应明显，净利率 19.7%），加工端是 no（同行小厂能用更灵活的报价抢单）</li>
+  </ul>
+
+  <h3>结论：三种锁定的分布</h3>
+  <div class="score-row">
+    <span class="score-badge score-strong">真锁定：军工业务（约 5-10%）</span>
+    <span class="score-badge score-mid">半锁定：中端刀具 + 矿用工具 (约 50%)</span>
+    <span class="score-badge score-weak">伪锁定：光伏钨丝 + 大宗 APT 销售 (约 35%)</span>
+  </div>
+
+  <div class="red-flag">
+    <span class="red-flag-label">⚠ 红旗</span>
+    第五层暴露公司的核心短板：<b>客户切换成本整体不高</b>。这也解释了为什么 2024 年扣非净利能跌 51.4% —— 在没有"真锁定"的领域，原料涨价无法 100% 转嫁给客户。市场把"钨价上涨 + 资源自给率提升"等同于"无限定价权"是错的。
+  </div>
+
+  <div class="sources">
+    <div class="sources-label">数据来源</div>
+    <ul>
+      <li>新浪财经《中钨高新近 4 年投超 17 亿研发》<a href="https://finance.sina.com.cn/roll/2024-11-19/doc-incwpyiy3125384.shtml">链接</a></li>
+      <li>证券之星《2026 年 PCB 微钻产能扩张》<a href="https://stock.stockstar.com/JC2026050600008354.shtml">链接</a></li>
+    </ul>
+  </div>
+</section>
+
+<!-- =========== L6 估值 =========== -->
+<section id="l6">
+  <h2><span class="num">L6</span>第六层 · 估值 (Pricing)</h2>
+
+  <div class="question-box">
+    <span class="q-label">现象问题：</span>当前价格定价了哪个阶段的故事？后续里程碑是什么？
+  </div>
+
+  <h3>当前估值数据卡（截至 2026-05-08）</h3>
+  <table>
+    <tr><th>指标</th><th>数值</th><th>对比 / 解读</th></tr>
+    <tr><td>股价</td><td>59.9 元</td><td>较 2025-04 上涨 436%</td></tr>
+    <tr><td>总市值</td><td>1365 亿</td><td>—</td></tr>
+    <tr><td>流通市值</td><td>870 亿</td><td>流通股 64%</td></tr>
+    <tr><td>滚动 PE（2025 年报）</td><td>~106 倍</td><td>2025 年归母净利 12.81 亿</td></tr>
+    <tr><td>动态 PE（按 Q1 年化）</td><td><b>37 倍</b></td><td>Q1 净利 9-9.5 亿 × 4 = 36-38 亿</td></tr>
+    <tr><td>PB (LF)</td><td>13.6 倍</td><td>有色金属行业均值 ~4-5 倍</td></tr>
+    <tr><td>2026 一致预期净利</td><td>40 亿（估算）</td><td>东吴目标价 70-75 元，对应 PE ~30 倍</td></tr>
+  </table>
+
+  <h3>反向 DCF：当前价格隐含了什么？</h3>
+  <p>市值 1365 亿，假设要求年化回报 8%，未来 10 年现金流贴现要等于市值，则需要稳态净利润约 130 亿/年 才能正向。即使打折按当前一致预期 2026 净利 40 亿：</p>
+  <ul>
+    <li>市场隐含 <b>2030 年净利 70-80 亿</b>（钨价高位 + 三矿全部注入 + 硬合金量价齐升）</li>
+    <li>对应隐含的钨精矿价格假设：维持 60-70 万/吨高位</li>
+    <li>对应隐含的资产注入完成度：香炉山 + 新田岭 + 瑶岗仙 100% 落地</li>
+  </ul>
+
+  <h3>里程碑拆解</h3>
+  <table>
+    <tr><th>里程碑</th><th>触发条件</th><th>影响</th><th>定价进度</th></tr>
+    <tr><td>① 柿竹园注入</td><td>2024-12 完成</td><td>+ 7 亿净利</td><td><span class="score-badge score-strong">已定价</span></td></tr>
+    <tr><td>② 远景钨业注入</td><td>2025-12 完成</td><td>+ 2-3 亿净利</td><td><span class="score-badge score-strong">已定价</span></td></tr>
+    <tr><td>③ 钨价突破 80 万/吨</td><td>2026 年内</td><td>柿竹园利润再 +30-50%</td><td><span class="score-badge score-mid">部分定价</span></td></tr>
+    <tr><td>④ 香炉山注入</td><td>未定（探转采审批）</td><td>+ 储量但短期无利润</td><td><span class="score-badge score-mid">部分定价</span></td></tr>
+    <tr><td>⑤ 新田岭 / 瑶岗仙注入</td><td>未定（5 年承诺窗口）</td><td>潜在 + 3-5 亿净利</td><td><span class="score-badge score-mid">部分定价</span></td></tr>
+    <tr><td>⑥ 钨丝 / PCB 微钻量产</td><td>2026-2027</td><td>+ 5-10 亿营收</td><td><span class="score-badge score-mid">部分定价</span></td></tr>
+    <tr><td>⑦ 出口管制趋严</td><td>持续</td><td>价格 + 份额双正向</td><td><span class="score-badge score-strong">已定价</span></td></tr>
+  </table>
+
+  <h3>赔率评估</h3>
+  <div class="score-row">
+    <span class="score-badge score-weak">上行空间：+25%（隐含目标价 75 元）</span>
+    <span class="score-badge score-weak">下行空间：-40%（PE 回归 25x，估算到 35-40 元）</span>
+    <span class="score-badge score-weak">赔率 1:1.6（远低于 3:1 阈值）</span>
+  </div>
+
+  <div class="red-flag">
+    <span class="red-flag-label">⚠ 红旗 / 关键警示</span>
+    <ul>
+      <li>2026-03-01 公司自己发布<b>股价异动公告</b>提示"显著偏离大盘指数和行业估值水平，存在回调风险"—— 这是央企管理层主动给市场降温，非常罕见</li>
+      <li>PB 13.6 倍 vs 行业均值 4-5 倍 —— 已经吃完资源股全部牛市估值溢价</li>
+      <li>当前价格隐含<b>"钨价不回调 + 三矿都按时注入 + 加工端高毛利持续"</b>三重乐观假设同时成立 —— 任何一个证伪都触发杀估值</li>
+      <li>有股东高位减持公告（21 经济网报道）</li>
+    </ul>
+  </div>
+
+  <div class="sources">
+    <div class="sources-label">数据来源</div>
+    <ul>
+      <li>新浪财经 2026-05-08《中钨高新跌 5.21% 成交额 41.35 亿》<a href="https://finance.sina.com.cn/stock/relnews/cn/2026-05-08/doc-inhxcyyp4560561.shtml">链接</a></li>
+      <li>新浪财经 2026-04-13《一季预盈超 9 亿 一年大涨 436%》<a href="https://finance.sina.com.cn/roll/2026-04-13/doc-inhuihzi9798486.shtml">链接</a></li>
+      <li>21 经济网《钨企股价连创新高 有股东高位减持》<a href="https://www.21jingji.com/article/20260302/herald/61b038af193a796d96d9a9138e32188e.html">链接</a></li>
+      <li>证券市场周刊《钨企百倍估值》<a href="https://static.weeklyonstock.com/26/0301/qdy155923.html">链接</a></li>
+    </ul>
+  </div>
+</section>
+
+<!-- =========== L7 类比 =========== -->
+<section id="l7">
+  <h2><span class="num">L7</span>第七层 · 类比 (Pattern)</h2>
+
+  <div class="question-box">
+    <span class="q-label">现象问题：</span>历史上有没有类似剧本？那个剧本怎么演的？
+  </div>
+
+  <h3>三个最接近的历史类比</h3>
+
+  <h4>类比 ①：北方稀土（2010-2011 & 2021-2022）</h4>
+  <table>
+    <tr><th>维度</th><th>北方稀土</th><th>中钨高新</th></tr>
+    <tr><td>资源属性</td><td>战略小金属 + 国家收储</td><td>战略小金属 + 出口管制 ✓ 类似</td></tr>
+    <tr><td>整合背景</td><td>包钢集团整合内蒙稀土</td><td>五矿集团整合钨产业 ✓ 类似</td></tr>
+    <tr><td>价格催化</td><td>稀土价格 2010-2011 涨 10x</td><td>钨价 2025-2026 涨 ~50% （较温和）</td></tr>
+    <tr><td>股价表现</td><td>2010-2011 涨 6 倍 → 2012-2015 跌 80%</td><td>已涨 4+ 倍 → 后续？</td></tr>
+    <tr><td>估值峰值 PE</td><td>~120 倍 (2011)</td><td>~95 倍 (2026/2)，现降至 37 倍</td></tr>
+    <tr><td>结局</td><td>2015 年估值回归到 30-40x</td><td>—</td></tr>
+  </table>
+  <p><b>启示</b>：资源整合 + 资源涨价的双击行情在 A 股是反复上演的剧本，但<b>峰值估值往往持续不超过 12-18 个月</b>，之后等待业绩验证；如果价格不能继续突破，估值会快速回归至行业均值水平。</p>
+
+  <h4>类比 ②：华友钴业（2017-2018 & 2021-2022）</h4>
+  <table>
+    <tr><th>维度</th><th>华友钴业</th><th>中钨高新</th></tr>
+    <tr><td>商品属性</td><td>钴：新能源需求驱动</td><td>钨：光伏/军工/PCB 需求驱动 ✓ 类似</td></tr>
+    <tr><td>资源整合</td><td>非洲钴矿 + 印尼镍矿一体化</td><td>五矿钨矿陆续注入 ✓ 类似</td></tr>
+    <tr><td>第一轮高点</td><td>2018-03 PE 60x，市值 700 亿</td><td>2026-02 PE 95x，市值 1600 亿+</td></tr>
+    <tr><td>第一轮回调</td><td>2018-03 → 2019-08 跌 80%</td><td>—</td></tr>
+    <tr><td>第二轮</td><td>2020-2022 涨 8 倍创新高</td><td>—</td></tr>
+    <tr><td>现状（2025）</td><td>2025 营收 810 亿，净利 61 亿，PE 14-15x</td><td>—</td></tr>
+  </table>
+  <p><b>启示</b>：资源股的两轮上涨往往中间隔 2-3 年消化估值；最终能再上新高的是"商品长期上行 + 公司持续整合 + 业绩兑现"三者都成立的，否则就是<b>一波流</b>。</p>
+
+  <h4>类比 ③：赣锋锂业（2020-2022）</h4>
+  <table>
+    <tr><th>维度</th><th>赣锋锂业</th><th>中钨高新</th></tr>
+    <tr><td>商品</td><td>锂（新能源）</td><td>钨（多元终端）</td></tr>
+    <tr><td>峰值估值</td><td>2021-09 PE ~80x，市值 3500 亿</td><td>2026-02 PE 95x，市值 1600 亿</td></tr>
+    <tr><td>商品价格高点</td><td>2022-11 电池级碳酸锂 60 万/吨</td><td>钨精矿 70 万/吨 (2026-02)，仍在上行</td></tr>
+    <tr><td>2024-2025 现状</td><td>锂价跌至 8 万/吨，股价从高点 -80%</td><td>—</td></tr>
+  </table>
+  <p><b>启示</b>：资源股<b>商品价格顶 ≠ 股价顶</b>，股价顶往往领先商品顶 12-18 个月。商品价格一旦确认回落，业绩兑现度不足的资源股估值会被快速戴维斯双杀。</p>
+
+  <h3>关键差异：这次哪里不一样？</h3>
+  <ul>
+    <li><b>有利的差异</b>：钨的出口管制是<b>美中战略博弈背景下的强政策护城河</b>，比稀土更敏感；中钨的资源自给率 70% 是行业最高的（北方稀土对标），可以全程享受涨价红利</li>
+    <li><b>不利的差异</b>：钨价涨幅（~50% YoY）远不如稀土（10x）和钴（5x）的历史高峰；下游需求<b>不是单一新能源</b>，难以形成"赛道+商品"双击；硬质合金加工端的国产替代天花板已经临近</li>
+  </ul>
+
+  <div class="red-flag">
+    <span class="red-flag-label">⚠ 类比红旗</span>
+    "这次不一样"的方向往往是变差不是变好。三个类比都告诉你：<b>资源股第一轮顶之后跟着 50-80% 的大回调几乎是规律</b>。现在 PE 已从 95x 修复到 37x —— 这正是市场用 Q1 业绩"消化估值"的开始，但如果钨价回调或注入节奏放缓，估值仍有进一步压缩空间。
+  </div>
+
+  <div class="sources">
+    <div class="sources-label">数据来源</div>
+    <ul>
+      <li>36 氪《市值重回 1000 亿，华友钴业熬过至暗时刻》<a href="https://36kr.com/p/3487239941478530">链接</a></li>
+      <li>东方财富 华友钴业深度分析<a href="https://caifuhao.eastmoney.com/news/20260421224040927134680">链接</a></li>
+    </ul>
+  </div>
+</section>
+
+<!-- =========== L8 结构 =========== -->
+<section id="l8">
+  <h2><span class="num">L8</span>第八层 · 结构 (Industry Structure)</h2>
+
+  <div class="question-box">
+    <span class="q-label">现象问题：</span>产业结构允许几个玩家？标的占哪个位置？
+  </div>
+
+  <h3>钨产业链结构</h3>
+  <table>
+    <tr><th>环节</th><th>终局结构</th><th>关键力量</th><th>中钨位置</th></tr>
+    <tr>
+      <td>钨矿 (上游)</td>
+      <td><b>2-3 家寡头</b>（央企整合后）</td>
+      <td>矿权牌照 + 行政开采指标</td>
+      <td><b>#1（柿竹园全球最大单体矿）</b></td>
+    </tr>
+    <tr>
+      <td>APT 冶炼 (中游)</td>
+      <td>5-10 家分散</td>
+      <td>环评 + 规模经济</td>
+      <td>第一梯队</td>
+    </tr>
+    <tr>
+      <td>硬质合金粉末/坯料</td>
+      <td>3-5 家寡头</td>
+      <td>技术 know-how + 规模</td>
+      <td><b>#1（全球 30%）</b></td>
+    </tr>
+    <tr>
+      <td>数控刀片 (国内)</td>
+      <td>分散（CR3 仅 15.7%）</td>
+      <td>研发 + 客户认证</td>
+      <td>#1（株洲钻石 ~10%）</td>
+    </tr>
+    <tr>
+      <td>数控刀片 (全球高端)</td>
+      <td>5-7 家寡头</td>
+      <td>百年 know-how + 涂层工艺</td>
+      <td>第三梯队</td>
+    </tr>
+    <tr>
+      <td>光伏钨丝</td>
+      <td>2-3 家寡头</td>
+      <td>拉丝工艺 + 客户绑定</td>
+      <td>追赶者（厦钨 80%+）</td>
+    </tr>
+    <tr>
+      <td>PCB 微钻</td>
+      <td>3-5 家寡头</td>
+      <td>设备 + 良率</td>
+      <td>新进入者</td>
+    </tr>
+  </table>
+
+  <h3>结构性的关键判断</h3>
+  <ol>
+    <li><b>资源端</b>：中国政府对钨实行<b>开采总量控制 + 出口管制</b>，结构上类似稀土，但比稀土更分散。中钨高新如果完成全部 5 矿注入，将形成事实上的"全球钨矿巨擎"</li>
+    <li><b>加工端</b>：硬质合金虽然全球 30% 份额，但<b>这是吨位口径</b>；高端市场仍是欧美寡头格局，国内同质化竞争激烈</li>
+    <li><b>下游应用</b>：光伏 / 军工 / PCB 三个新增长点各有各的格局，没有一个是中钨独家</li>
+  </ol>
+
+  <h3>结构变化的方向</h3>
+  <ul>
+    <li><b>正在重塑结构的力量</b>：(a) 钨出口管制（中国把控全球钨流向）(b) 光伏钨丝替代金刚线（新增需求）(c) 央企整合（国内集中度提升）</li>
+    <li><b>市场已经按"准寡头"定价</b>：13.6x PB 在 A 股资源股属于稀土板块顶部水平，但中钨的"准寡头"位置目前主要在资源端，加工端仍是分散竞争</li>
+  </ul>
+
+  <div class="ok-box">
+    <span class="ok-label">✓ 结构性亮点</span>
+    钨行业的<b>战略稀缺定位 + 出口管制 + 央企整合预期</b>三者叠加，使行业结构 alpha 显著高于普通有色金属。中钨高新在资源端已经处于明确的 #1 位置（柿竹园 + 远景 + 未来 3 矿）。
+  </div>
+
+  <div class="red-flag">
+    <span class="red-flag-label">⚠ 结构性问题</span>
+    <b>市场把资源端的高估值溢价错配到了整个公司</b>。如果按资产分部估值：<br>
+    - 矿端（柿竹园 + 远景）：按 1.04 万吨钨精矿/年 + 70 万元/吨 + 净利率 20% = 净利约 14 亿，给 30x PE = 420 亿<br>
+    - 加工端（硬合金 + 刀具）：净利 4-5 亿，给 25x PE = ~120 亿<br>
+    - 合计：540 亿，与当前 1365 亿市值有<b>800 亿差距</b>，这部分是"未注入矿的期权价值 + 钨价继续上涨的乐观假设"
+  </div>
+
+  <div class="sources">
+    <div class="sources-label">数据来源</div>
+    <ul>
+      <li>21 财经《钨业一体化龙头》（含产业链分析）<a href="https://www.21jingji.com/article/20260302/herald/61b038af193a796d96d9a9138e32188e.html">链接</a></li>
+      <li>新浪财经《全球钨消费 9.8 万吨 中国占 42%》<a href="https://finance.sina.com.cn/stock/relnews/cn/2026-02-26/doc-inhpcyyk1459014.shtml">链接</a></li>
+    </ul>
+  </div>
+</section>
+
+<!-- =========== 八层联立 =========== -->
+<section id="synth">
+  <h2><span class="num">▣</span>八层联立 (Synthesis)</h2>
+
+  <h3>一致性检验</h3>
+  <table>
+    <tr><th>层</th><th>结论</th><th>一致 / 矛盾</th></tr>
+    <tr><td>L1 现象</td><td>资源整合 + 涨价共振 + 多点开花</td><td>—</td></tr>
+    <tr><td>L2 商业</td><td>承诺有，但允许"或"逻辑（关停/转让）</td><td><b>与 L1 部分矛盾</b>（市场假设全注入）</td></tr>
+    <tr><td>L3 战略</td><td>高端市场仍是追赶者，下游议价权较强</td><td><b>与 L1 矛盾</b>（"全球第一"是吨位口径）</td></tr>
+    <tr><td>L4 物理时间</td><td>资源端硬护城河，加工端弱护城河</td><td>支持资源端定价，不支持加工端高估值</td></tr>
+    <tr><td>L5 生态</td><td>客户切换成本整体偏低</td><td><b>与 L1 矛盾</b>（解释 2024 扣非 -51%）</td></tr>
+    <tr><td>L6 估值</td><td>赔率 1:1.6 远低于阈值；公司自己警示</td><td>红旗</td></tr>
+    <tr><td>L7 类比</td><td>资源股第一轮顶后跟着 50-80% 回调几乎是规律</td><td>红旗</td></tr>
+    <tr><td>L8 结构</td><td>资源端寡头化 ✓，加工端仍分散</td><td>支持分部估值</td></tr>
+  </table>
+
+  <h3>最弱环 → 核心风险变量</h3>
+  <div class="red-flag">
+    <span class="red-flag-label">⚠ 最弱环：L6 估值</span>
+    八层中，L4（物理时间）和 L8（结构）是基本面最硬的两层，但<b>L6（估值）已经把这两层的所有正面预期透支了</b>。这是典型的"基本面没错，但价格错了"的情形。<br><br>
+    需要持续跟踪：
+    <ul>
+      <li><b>钨精矿价格</b>（黑钨 65%）：是否守住 65 万/吨</li>
+      <li><b>香炉山 / 新田岭注入进度</b>：每季度公告</li>
+      <li><b>2026 中报扣非利润</b>：能否维持 Q1 的 9 亿/季水平</li>
+      <li><b>美中博弈对钨出口管制的强化或弱化</b></li>
+      <li><b>实控人 / 大股东减持公告</b></li>
+    </ul>
+  </div>
+
+  <h3>整体结论：八层穿透后的判断</h3>
+  <div class="verdict">
+    <span class="verdict-label">综合判断</span>
+    <b>这是一只"基本面优秀，但已经被市场充分讲述并过度定价"的资源股。</b><br><br>
+
+    <b>看多方逻辑（强）</b>：钨的战略稀缺地位 + 中国对钨的出口管制 + 五矿系资产持续注入 + 光伏/军工/PCB 三大增长极，长周期看公司有望成为"中国版山特维克 + 中国版稀土集团"的混合体。<br><br>
+
+    <b>看空方逻辑（同样强）</b>：当前价格已经透支了未来 3-5 年的乐观假设；2025 年报扣非 +585% 的高基数效应使 2026 同比预期被打高；PE 已从 95x 修复到 37x 但 PB 13.6x 仍处于历史顶部；公司自己发警示公告罕见；历史类比（稀土、钴、锂）显示资源股第一波高点之后跟着 50%+ 回调几乎是规律。<br><br>
+
+    <b>操作含义</b>：<br>
+    - <b>不追高</b>：当前位置赔率 1:1.6，远低于 3:1 阈值<br>
+    - <b>等回调</b>：参照类比，等待 PB 回到 6-8 倍区间（对应股价约 30-35 元）<br>
+    - <b>看催化</b>：香炉山或新田岭注入预案出台 + Q2-Q3 钨价站稳 70 万/吨 + 出口管制升级，三个触发器若叠加可重新评估<br>
+    - <b>核心仓位不持有</b>，可在中报前观察 8-15% 试探性仓位 + 严格止损
+  </div>
+
+  <h3>八层中需要进一步数据的</h3>
+  <ol>
+    <li><b>L2</b>：下游军工 / 光伏客户的具体合同形式（长协 vs 现货）—— 决定毛利率稳定性</li>
+    <li><b>L3</b>：公司海外 30 亿营收的细分（哪些品类、哪些区域）—— 决定关税/管制影响</li>
+    <li><b>L4</b>：香炉山探转采的具体审批节点 —— 影响下一次注入的时点</li>
+    <li><b>L5</b>：军工业务的具体规模与利润率 —— 这是真锁定的核心</li>
+    <li><b>L6</b>：分部估值（资源端 vs 加工端）的市场共识价格 —— 验证 800 亿溢价合理性</li>
+  </ol>
+</section>
+
+<!-- =========== 全部来源 =========== -->
+<section id="sources-all">
+  <h2><span class="num">📚</span>全部数据来源汇总</h2>
+
+  <h3>公司公告 / 年报</h3>
+  <ul>
+    <li><a href="http://file.finance.sina.com.cn/211.154.219.97:9494/MRGG/CNSESZ_STOCK/2026/2026-4/2026-04-27/12202469.PDF">中钨高新 2025 年度报告全文</a></li>
+    <li><a href="http://static.cninfo.com.cn/finalpage/2025-08-27/1224577056.PDF">中钨高新 2025 年半年度报告全文</a></li>
+    <li><a href="https://www.minmetalstungsten.com/tzzgx_7928/gsgg/202412/P020241217585379576165.pdf">中钨高新发行股份及支付现金购买资产并募集配套资金（柿竹园）</a></li>
+    <li><a href="https://file.finance.qq.com/finance/hs/pdf/2025/10/27/1224733450.PDF">关于收购远景钨业股权暨关联交易的公告（2025-114 号）</a></li>
+    <li><a href="http://file.finance.sina.com.cn/211.154.219.97:9494/MRGG/CNSESZ_STOCK/2025/2025-1/2025-01-20/10716719.PDF">发行股份购买资产暨新增股份上市公告书（2025-01）</a></li>
+  </ul>
+
+  <h3>财务与业绩</h3>
+  <ul>
+    <li><a href="https://m.caizhongshe.cn/article-7321430410805311404.html">财中社：中钨高新 2024 年营收 +15.8% 净利 +93.9%</a></li>
+    <li><a href="https://news.qq.com/rain/a/20251028A014TQ00">腾讯新闻：中钨高新 2025 三季报营收净利双增</a></li>
+    <li><a href="https://www.nbd.com.cn/articles/2025-10-26/4107299.html">每经网：2025 前三季度净利约 8.46 亿</a></li>
+    <li><a href="https://finance.eastmoney.com/a/202604273720514226.html">东方财富：2025 归母净利 +29.20% 2026Q1 +264.44%</a></li>
+    <li><a href="https://stock.stockstar.com/JC2026050600008354.shtml">证券之星：2025 年报、2026 一季报点评：钨自给率稳步提升 PCB 微钻成长性凸显</a></li>
+    <li><a href="https://finance.sina.com.cn/roll/2026-04-29/doc-inhweskw7617875.shtml">新浪财经：远景顺利注入平台化能力再上台阶</a></li>
+    <li><a href="https://finance.sina.com.cn/roll/2026-04-13/doc-inhuihzi9798486.shtml">新浪财经：首季预盈超 9 亿 股价一年大涨 436%</a></li>
+  </ul>
+
+  <h3>股价 / 估值 / 警示</h3>
+  <ul>
+    <li><a href="https://finance.sina.com.cn/stock/relnews/cn/2026-05-08/doc-inhxcyyp4560561.shtml">新浪财经 2026-05-08：跌 5.21% 成交 41.35 亿</a></li>
+    <li><a href="https://static.weeklyonstock.com/26/0301/qdy155923.html">证券市场周刊：钨企股价连创新高 有股东高位减持</a></li>
+    <li><a href="https://www.21jingji.com/article/20260302/herald/61b038af193a796d96d9a9138e32188e.html">21 经济网：战争金属钨价飙涨 冲上百倍估值</a></li>
+    <li><a href="https://finance.sina.com.cn/roll/2026-03-04/doc-inhpusks6945294.shtml">新浪财经：钨价飙涨 中钨高新章源钨业冲上百倍估值</a></li>
+  </ul>
+
+  <h3>行业数据 / 钨价</h3>
+  <ul>
+    <li><a href="https://finance.sina.com.cn/stock/relnews/cn/2026-02-26/doc-inhpcyyk1459014.shtml">新浪财经：钨粉均价突破 174 万/吨</a></li>
+    <li><a href="https://www.cls.cn/detail/2290319">财联社：开年暴涨超 50% 钨价拐点何时到来</a></li>
+    <li><a href="https://list1.m.mysteel.com/zhishi/wjkxqck.html">我的钢铁网：钨精矿每日行情</a></li>
+    <li><a href="http://news.chinatungsten.com/pdf/overview-of-china-tungsten-price-in-2025-and-forecast-for-2026.pdf">中钨在线：2025 年钨价回顾与 2026 年预测</a></li>
+    <li><a href="https://www.cls.cn/detail/2210210">财联社：光伏军工 PCB 钻针新兴需求</a></li>
+  </ul>
+
+  <h3>出口管制 / 政策</h3>
+  <ul>
+    <li><a href="https://www.mofcom.gov.cn/zwgk/zcfb/art/2025/art_e623090907fc4e1092f0a4db72f57b95.html">商务部 2025 第 10 号公告：对钨等实施出口管制</a></li>
+    <li><a href="https://www.mofcom.gov.cn/zwgk/zcfb/art/2025/art_a1cf9c25add141c18876309e1152c131.html">商务部 2025 第 68 号公告：2026-2027 年度钨出口国营贸易企业申报</a></li>
+    <li><a href="http://exportcontrol.mofcom.gov.cn/article/cjwt/202503/1112.html">两用物项常见问题解答（钨、碲）</a></li>
+  </ul>
+
+  <h3>同业 / 类比</h3>
+  <ul>
+    <li><a href="http://basic.10jqka.com.cn/600549/worth.html">同花顺：厦门钨业（600549）盈利预测</a></li>
+    <li><a href="https://caifuhao.eastmoney.com/news/20251106091633749456120">东方财富：钨业争霸 鹿死谁手</a></li>
+    <li><a href="http://www.moneydao.net/%E8%A1%8C%E4%B8%9A%E8%A7%82%E5%AF%9F/25452.html">投资有道：四家上市钨企半年报对比</a></li>
+    <li><a href="https://www.qianzhan.com/analyst/detail/220/220817-3ae5bd40.html">前瞻网：中钨高新 PK 厦门钨业</a></li>
+    <li><a href="https://36kr.com/p/3487239941478530">36 氪：华友钴业熬过至暗时刻</a></li>
+  </ul>
+
+  <h3>行业研究报告</h3>
+  <ul>
+    <li><a href="https://pdf.dfcfw.com/pdf/H3_AP202512301811134476_1.pdf">东方证券：钨业一体化龙头 矿山注入开启新篇章</a></li>
+    <li><a href="https://pdf.dfcfw.com/pdf/H3_AP202404251631282269_1.pdf">东方证券 2024：钨产业链龙头 钨矿资源注入打开成长空间</a></li>
+    <li><a href="https://pdf.dfcfw.com/pdf/H3_AP202602111819880651_1.pdf">东方证券 2026：钨价中枢抬高 聚焦终端需求反馈</a></li>
+    <li><a href="https://aigc.idigital.com.cn/djyanbao/%E3%80%90%E5%9B%BD%E6%B5%B7%E8%AF%81%E5%88%B8%E3%80%91%E9%92%A8%E8%A1%8C%E4%B8%9A%E6%B7%B1%E5%BA%A6%E7%A0%94%E7%A9%B6.pdf">国海证券：钨行业深度研究 重塑钨权</a></li>
+    <li><a href="https://www.fxbaogao.com/detail/4665322">华创证券：中钨高新深度研究 数控刀具+钨丝+PCB 刀具多点开花</a></li>
+    <li><a href="https://finance.sina.com.cn/stock/bxjj/2026-03-04/doc-inhpvihk6827894.shtml">渤海证券：首予中钨高新增持评级</a></li>
+  </ul>
+
+  <h3>下游应用</h3>
+  <ul>
+    <li><a href="https://cj.sina.com.cn/articles/view/7879922977/1d5ae152106801bh90?froms=ggmp">新浪：光伏军工成钨价幕后推手</a></li>
+    <li><a href="https://solar.ofweek.com/2025-12/ART-260001-8420-30677222.html">OFweek：钨价暴涨概念股梳理</a></li>
+    <li><a href="https://m.ofweek.com/im/2021-04/ART-201929-8500-30494846_2.html">OFweek：欧科亿 华锐精密 株洲钻石对比</a></li>
+    <li><a href="http://m.10jqka.com.cn/20250711/c669570992.shtml">同花顺：海外市场占硬质合金约 25% 份额</a></li>
+  </ul>
+</section>
+
+<div class="footer">
+  本报告基于公开信息，依"八层穿透分析框架"整理 · 不构成任何投资建议<br>
+  框架来源：/home/nas/projects/work/stock-eight-method/CLAUDE.md · 分析时点：2026-05-17
+</div>
+
+</div>
+
+<script>
+  // Smooth scroll for TOC
+  document.querySelectorAll('.toc a').forEach(a => {
+    a.addEventListener('click', e => {
+      e.preventDefault();
+      const target = document.querySelector(a.getAttribute('href'));
+      if (target) target.scrollIntoView({behavior: 'smooth', block: 'start'});
+    });
+  });
+
+  // Highlight current section in TOC
+  const sections = document.querySelectorAll('section');
+  const tocLinks = document.querySelectorAll('.toc a');
+  window.addEventListener('scroll', () => {
+    let cur = '';
+    sections.forEach(s => {
+      const top = s.getBoundingClientRect().top;
+      if (top < 200) cur = s.id;
+    });
+    tocLinks.forEach(l => {
+      l.style.background = l.getAttribute('href') === '#' + cur ? '#374151' : '';
+      l.style.color = l.getAttribute('href') === '#' + cur ? '#fff' : '';
+    });
+  });
+</script>
+
+</body>
+</html>
