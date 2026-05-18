@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>天赐材料 002709 股票研究报告 v2.1</title>
+<style>
+  * { box-sizing: border-box; }
+  body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif; margin: 0; background: #fafaf8; color: #222; line-height: 1.7; }
+  .toc { position: fixed; left: 0; top: 0; width: 260px; height: 100vh; background: #1f2937; color: #e5e7eb; padding: 24px 16px; overflow-y: auto; box-shadow: 2px 0 8px rgba(0,0,0,0.05); }
+  .toc h2 { font-size: 15px; color: #9ca3af; margin: 0 0 16px 0; text-transform: uppercase; letter-spacing: 1.5px; border-bottom: 1px solid #374151; padding-bottom: 10px; }
+  .toc ol { list-style: none; padding: 0; margin: 0; }
+  .toc li { margin: 0; }
+  .toc a { display: block; padding: 9px 12px; color: #d1d5db; text-decoration: none; border-radius: 6px; font-size: 14px; transition: all 0.15s; border-left: 3px solid transparent; }
+  .toc a:hover { background: #374151; color: #fff; border-left-color: #34d399; }
+  .toc .num { display: inline-block; width: 28px; color: #34d399; font-weight: 600; font-family: ui-monospace, monospace; }
+  .toc .meta { font-size: 12px; color: #6b7280; padding: 12px; margin-top: 16px; border-top: 1px solid #374151; line-height: 1.5; }
+  .content { margin-left: 260px; padding: 40px 56px 80px 56px; max-width: 1080px; }
+  .header-card { background: linear-gradient(135deg, #064e3b 0%, #0e7490 100%); color: #fff; padding: 32px; border-radius: 12px; margin-bottom: 32px; }
+  .header-card h1 { font-size: 28px; margin: 0 0 6px 0; font-weight: 700; }
+  .header-card .subtitle { color: #a7f3d0; font-size: 14px; margin-bottom: 20px; }
+  .stat-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-top: 16px; }
+  .stat { background: rgba(255,255,255,0.08); padding: 14px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.12); }
+  .stat .label { font-size: 11px; color: #a7f3d0; text-transform: uppercase; letter-spacing: 0.8px; }
+  .stat .value { font-size: 20px; font-weight: 700; color: #fff; margin-top: 4px; }
+  .stat .delta { font-size: 12px; color: #4ade80; margin-top: 2px; }
+  .stat .delta.red { color: #fca5a5; }
+  .stat .delta.yellow { color: #fde68a; }
+  section { background: #fff; padding: 32px 36px; border-radius: 12px; margin-bottom: 24px; box-shadow: 0 1px 3px rgba(0,0,0,0.04); scroll-margin-top: 20px; }
+  section h2 { font-size: 22px; margin: 0 0 22px 0; padding-bottom: 12px; border-bottom: 2px solid #f1f5f9; color: #0f172a; }
+  section h2 .num { display: inline-block; background: #047857; color: #fff; font-size: 14px; padding: 3px 10px; border-radius: 4px; margin-right: 12px; font-family: ui-monospace, monospace; vertical-align: middle; }
+  section h3 { font-size: 16px; color: #1e293b; margin: 22px 0 12px 0; padding-left: 10px; border-left: 3px solid #34d399; }
+  ul { padding-left: 24px; }
+  ul li { margin-bottom: 6px; }
+  table { width: 100%; border-collapse: collapse; margin: 12px 0; font-size: 14px; }
+  th, td { padding: 10px 12px; text-align: left; border-bottom: 1px solid #e5e7eb; vertical-align: top; }
+  th { background: #ecfdf5; font-weight: 600; color: #064e3b; }
+  tr:hover { background: #fafbfc; }
+  .tag { display: inline-block; padding: 3px 10px; border-radius: 12px; font-size: 12px; font-weight: 600; margin: 1px 3px 1px 0; border: 1px solid transparent; }
+  .tag-blue { background: #dbeafe; color: #1e40af; }
+  .tag-green { background: #dcfce7; color: #166534; }
+  .tag-yellow { background: #fef9c3; color: #854d0e; }
+  .tag-red { background: #fee2e2; color: #991b1b; }
+  .tag-purple { background: #ede9fe; color: #5b21b6; }
+  .tag-gray { background: #f1f5f9; color: #475569; }
+  blockquote { margin: 16px 0; padding: 14px 20px; border-left: 4px solid #f59e0b; background: #fffbeb; color: #78350f; border-radius: 0 6px 6px 0; }
+  blockquote.danger { border-left-color: #ef4444; background: #fef2f2; color: #7f1d1d; }
+  blockquote.ok { border-left-color: #22c55e; background: #f0fdf4; color: #14532d; }
+  blockquote.info { border-left-color: #3b82f6; background: #eff6ff; color: #1e3a8a; }
+  .bar { font-family: ui-monospace, monospace; font-size: 14px; color: #475569; background: #f8fafc; padding: 6px 10px; border-radius: 4px; border: 1px solid #e2e8f0; display: inline-block; margin: 4px 0; }
+  .bar .filled { color: #047857; font-weight: 700; }
+  .stars { color: #f59e0b; letter-spacing: 1px; font-size: 16px; }
+  .lamp { display: inline-block; padding: 2px 8px; border-radius: 10px; font-size: 12px; font-weight: 600; }
+  .lamp-green { background: #dcfce7; color: #166534; }
+  .lamp-yellow { background: #fef9c3; color: #854d0e; }
+  .lamp-red { background: #fee2e2; color: #991b1b; }
+  sup.ref { color: #047857; font-weight: 700; font-size: 11px; cursor: help; padding: 0 2px; }
+  .sources { margin-top: 20px; padding: 16px 20px; background: #f8fafc; border-radius: 8px; font-size: 13px; }
+  .sources a { color: #2563eb; text-decoration: none; word-break: break-all; }
+  .sources a:hover { text-decoration: underline; }
+  .unknown { color: #94a3b8; font-style: italic; }
+  .swot { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 16px 0; }
+  .swot-cell { padding: 14px 18px; border-radius: 8px; border: 1px solid #e5e7eb; }
+  .swot-moat { background: #f0fdf4; border-color: #bbf7d0; }
+  .swot-risk { background: #fef2f2; border-color: #fecaca; }
+  .swot h4 { margin: 0 0 8px 0; font-size: 13px; text-transform: uppercase; letter-spacing: 1px; }
+  .swot-moat h4 { color: #166534; }
+  .swot-risk h4 { color: #991b1b; }
+  .swot ul { margin: 0; padding-left: 18px; font-size: 13px; }
+  .swot li { margin-bottom: 8px; }
+  .footer { text-align: center; color: #94a3b8; font-size: 12px; padding: 40px 0 20px 0; border-top: 1px solid #e5e7eb; margin-top: 40px; }
+  @media (max-width: 900px) { .toc { position: static; width: 100%; height: auto; } .content { margin-left: 0; padding: 20px; } .stat-grid { grid-template-columns: repeat(2, 1fr); } .swot { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+
+<aside class="toc">
+  <h2>章节导航</h2>
+  <ol>
+    <li><a href="#ch0"><span class="num">0</span>核心仪表盘</a></li>
+    <li><a href="#ch1"><span class="num">1</span>行业地位 / 天花板</a></li>
+    <li><a href="#ch2"><span class="num">2</span>主业拆解</a></li>
+    <li><a href="#ch3"><span class="num">3</span>财务核心指标</a></li>
+    <li><a href="#ch4"><span class="num">4</span>增长阶段定位</a></li>
+    <li><a href="#ch5"><span class="num">5</span>商业模式透视</a></li>
+    <li><a href="#ch6"><span class="num">6</span>优势 vs 风险</a></li>
+    <li><a href="#ch7"><span class="num">7</span>估值</a></li>
+    <li><a href="#ch8"><span class="num">8</span>外部视角</a></li>
+    <li><a href="#ch9"><span class="num">9</span>催化剂 vs 风险</a></li>
+    <li><a href="#ch10"><span class="num">10</span>结论决策卡</a></li>
+    <li><a href="#pending"><span class="num">⏸</span>待补充字段</a></li>
+    <li><a href="#sources"><span class="num">📚</span>数据来源附录</a></li>
+  </ol>
+  <div class="meta">
+    标的：<b>002709 / 天赐材料</b><br>
+    广州天赐高新材料股份有限公司<br>
+    分析时点：2026-05-18<br>
+    框架版本：CLAUDE.md v2.1
+  </div>
+</aside>
+
+<main class="content">
+
+<div class="header-card">
+  <h1>天赐材料 002709 · 股票研究报告</h1>
+  <div class="subtitle">全球电解液龙头(连续 9 年#1) · 一体化 + 海外双轮 · 周期反转兑现进行时</div>
+  <div class="stat-grid">
+    <div class="stat"><div class="label">收盘价 (2026-05-06)</div><div class="value">¥64.00</div><div class="delta">+5.77%<sup class="ref">[19]</sup></div></div>
+    <div class="stat"><div class="label">总市值 (2026-05-06)</div><div class="value">¥1304.7 亿</div><div class="delta yellow">近 1 年 +270%<sup class="ref">[19][20]</sup></div></div>
+    <div class="stat"><div class="label">2025 营收</div><div class="value">¥166.50 亿</div><div class="delta">+33% YoY<sup class="ref">[3]</sup></div></div>
+    <div class="stat"><div class="label">2025 归母净利</div><div class="value">¥13.62 亿</div><div class="delta">+181.43%<sup class="ref">[3]</sup></div></div>
+    <div class="stat"><div class="label">2026 Q1 营收</div><div class="value">¥66.73 亿</div><div class="delta">+91.29%<sup class="ref">[4]</sup></div></div>
+    <div class="stat"><div class="label">2026 Q1 归母净利</div><div class="value">¥16.54 亿</div><div class="delta">+1005.75% · 单季&gt;2025 全年<sup class="ref">[4]</sup></div></div>
+    <div class="stat"><div class="label">2025 全球电解液份额</div><div class="value">~38%</div><div class="delta">连续 9 年#1<sup class="ref">[10]</sup></div></div>
+    <div class="stat"><div class="label">核心原料自供率</div><div class="value">&gt;97%</div><div class="delta">6F 自供 &gt;98%<sup class="ref">[14][15]</sup></div></div>
+  </div>
+</div>
+
+<!-- ============ Ch.0 ============ -->
+<section id="ch0">
+  <h2><span class="num">0</span>🎯 核心仪表盘 (TL;DR)</h2>
+  <table>
+    <tr><th>公司名称 / 代码</th><td>广州天赐高新材料股份有限公司 / <b>002709.SZ</b><sup class="ref">[1]</sup></td></tr>
+    <tr><th>所属市场</th><td><span class="tag tag-blue">🏷️ A股</span> 深圳中小板</td></tr>
+    <tr><th>细分赛道</th><td>锂离子电池电解液 + 六氟磷酸锂 / LiFSI 锂盐 + 日化材料(卡波姆 / 甜菊糖)</td></tr>
+    <tr><th>一句话定位</th><td>全球电解液出货量 9 连冠的一体化龙头,核心利润来自"电解液销量 × 单吨盈利 + 6F 锂盐外售剪刀差"</td></tr>
+    <tr><th>行业地位</th><td><span class="tag tag-green">🏷️ 绝对龙头</span> 全球电解液 38% / 国内 36%,连续 9 年 #1<sup class="ref">[9][10][11]</sup></td></tr>
+    <tr><th>增长阶段</th><td><span class="tag tag-purple">🏷️ 周期反转 + 一体化兑现</span> 2024 底部 → 2025 反转 → 2026 Q1 利润爆发</td></tr>
+    <tr><th>商业模式打分</th><td><span class="stars">⭐⭐⭐⭐☆</span> (4/5) —— 一体化 + 规模效应 + 长协绑定 CATL/LG 是真壁垒,但本质仍是大宗品周期</td></tr>
+    <tr><th>估值分位(5Y)</th><td><span class="bar"><span class="filled">████████░░</span> ~80%</span> <span class="lamp lamp-red">⚠️ 偏高</span> 静态 PE 74.72(2026-04 口径)<sup class="ref">[22]</sup></td></tr>
+    <tr><th>投资态度</th><td><span class="lamp lamp-yellow">🟡 观望(偏多)</span> 仓位建议 <b>2-5%</b> · 等回调或盈利兑现</td></tr>
+    <tr><th>最关键风险</th><td>2026 H2 六氟磷酸锂价格回落 + 电解液行业新一轮扩产(自家 + 海科 + 比亚迪)导致单吨盈利收缩</td></tr>
+    <tr><th>最关键催化剂</th><td>2026-08 中报兑现东吴 70.3 亿净利预期 + 摩洛哥/德州海外产能 2027 投产时间表确认</td></tr>
+  </table>
+  <blockquote>
+    <strong>💡 一句话看懂:</strong>天赐是这一轮锂电反转里<b>"基本面最硬 + 弹性也最大"</b>的电解液龙头,Q1 已经验证了一体化在涨价周期里的杠杆效应;关键在于市场已经把 2026 全年高景气定到 1300 亿市值,追入的赔率取决于 6F 价格能否再创新高。
+  </blockquote>
+</section>
+
+<!-- ============ Ch.1 ============ -->
+<section id="ch1">
+  <h2><span class="num">1</span>🏰 行业地位与天花板</h2>
+
+  <h3>1.1 赛道基本面</h3>
+  <ul>
+    <li><b>细分赛道:</b>锂电池电解液(动力 + 储能 + 消费) + 上游六氟磷酸锂 / LiFSI / 添加剂</li>
+    <li><b>赛道规模:</b>2025 全年中国电解液出货 215 万吨,占全球 93.5%<sup class="ref">[28]</sup></li>
+    <li><b>行业 CAGR:</b><span class="unknown">未查到精确 CAGR,但天赐自身规划 2024→2025→2026E 销量 50→72→100 万吨,3 年翻 1 倍</span><sup class="ref">[5]</sup></li>
+    <li><b>赛道属性:</b>
+      <span class="tag tag-purple">🏷️ 周期性</span>
+      <span class="tag tag-blue">🏷️ 增量市场(储能+海外)</span>
+      <span class="tag tag-red">🏷️ 价格博弈(6F)</span>
+      <span class="tag tag-yellow">🏷️ 政策驱动(双碳)</span>
+    </li>
+  </ul>
+
+  <h3>1.2 市占率可视化</h3>
+  <p><b>全球电解液份额(2025):</b><br>
+    <span class="bar"><span class="filled">███████░░░░░░░░░░░░░</span> 38.2% (#1)<sup class="ref">[10]</sup></span>
+  </p>
+  <p><b>国内电解液份额(2024):</b><br>
+    <span class="bar"><span class="filled">███████░░░░░░░░░░░░░</span> 36.4% (#1)<sup class="ref">[9][11]</sup></span>
+  </p>
+  <p><b>国内 LiFSI 份额(2020):</b><br>
+    <span class="bar"><span class="filled">███████░░░░░░░░░░░░░</span> 36%(#1,CR3 73%)<sup class="ref">[12]</sup></span>
+  </p>
+  <p><b>国内 6F 产能份额(2024,11/37 万吨):</b><br>
+    <span class="bar"><span class="filled">██████░░░░░░░░░░░░░░</span> ~30%(#1)<sup class="ref">[13]</sup></span>
+  </p>
+  <ul>
+    <li><b>龙头等级:</b><span class="tag tag-green">🏷️ 绝对龙头</span> 三大细分(电解液 / 6F / LiFSI)同时 #1,且显著领先第二名</li>
+  </ul>
+
+  <h3>1.3 ⚔️ 核心对手横向对决</h3>
+  <table>
+    <tr><th>竞争对手</th><th>2025H1 营收</th><th>毛利率(趋势)</th><th>核心杀手锏</th><th>核心软肋</th></tr>
+    <tr><td><b>天赐材料(本标的)</b></td><td>👑 ¥70.29 亿<sup class="ref">[27]</sup></td><td>2026Q1 38.65%(↑)<sup class="ref">[8]</sup></td><td>6F 自供 98% + LiFSI 36% + 长协绑 CATL/LG</td><td>大客户集中度高、6F 自建产能反向放大周期</td></tr>
+    <tr><td><b>多氟多 002407</b></td><td>¥43.28 亿<sup class="ref">[27]</sup></td><td>—(↑)</td><td>6F 原创工艺优势,锂盐第一梯队</td><td>电解液业务弱,纯锂盐周期裸奔</td></tr>
+    <tr><td><b>新宙邦 300037</b></td><td>¥42.48 亿<sup class="ref">[27]</sup></td><td>~9%(→)<sup class="ref">[28]</sup></td><td>有机氟化学品 + 半导体材料对冲</td><td>电解液一体化深度弱于天赐</td></tr>
+    <tr><td><b>比亚迪(自供 + 外售)</b></td><td>👑 第一梯队<sup class="ref">[28]</sup></td><td>—</td><td>整车厂自配套,内部锁定需求</td><td>外售客户开发滞后,品牌差异化弱</td></tr>
+    <tr><td><b>江苏国泰 002091</b></td><td>—</td><td>—</td><td>国内 #3,10% 全球份额<sup class="ref">[11]</sup></td><td>多元化业务稀释专注度</td></tr>
+  </table>
+
+  <blockquote>
+    <strong>💡 行业格局判断:</strong>CR3(天赐 + 新宙邦 + 比亚迪)合计市占率 60%<sup class="ref">[28]</sup>,行业已是<b>"一超多强"格局</b>,天赐用一体化+海外建厂双重护城河巩固第一,但份额每 +1 个百分点需要打掉对手 2-3 个百分点的利润,继续提升边际成本上升。
+  </blockquote>
+</section>
+
+<!-- ============ Ch.2 ============ -->
+<section id="ch2">
+  <h2><span class="num">2</span>🧬 主业拆解</h2>
+
+  <h3>2.1 收入结构</h3>
+  <table>
+    <tr><th>业务线</th><th>营收占比</th><th>YoY 增速</th><th>毛利率</th><th>战略定位</th></tr>
+    <tr><td><b>锂离子电池材料(电解液 + 6F + LiFSI)</b></td><td>主力(&gt;80%,精确占比<span class="unknown">未查到</span>)</td><td>2025 销量 +44%<sup class="ref">[5]</sup></td><td>2026Q1 单吨净利 ¥1.2 万<sup class="ref">[7]</sup></td><td><span class="tag tag-green">🏷️ 现金牛 + 弹性主力</span></td></tr>
+    <tr><td><b>日化材料(卡波姆 / 甜菊糖 / 表活剂)</b></td><td>小(精确占比<span class="unknown">未查到</span>)</td><td>—</td><td>—</td><td><span class="tag tag-gray">🏷️ 维持 / 现金牛(稳定)</span></td></tr>
+    <tr><td><b>磷酸铁前驱体(磷酸铁锂)</b></td><td>较小</td><td>—</td><td>—</td><td><span class="tag tag-yellow">🏷️ 第二曲线(待验证)</span></td></tr>
+    <tr><td><b>有机硅 / 添加剂 / 其他</b></td><td>小</td><td>—</td><td>—</td><td><span class="tag tag-gray">🏷️ 配套</span></td></tr>
+  </table>
+
+  <h3>2.2 集中度风险扫描</h3>
+  <table>
+    <tr><th>风险维度</th><th>数值</th><th>警戒线</th><th>状态</th></tr>
+    <tr><td>第一大客户占比</td><td><span class="unknown">未查到(已知与 CATL / LG 签长协)</span></td><td>&gt;30% 危险</td><td><span class="lamp lamp-yellow">🟡 待查</span></td></tr>
+    <tr><td>前五大客户占比</td><td><span class="unknown">未查到</span></td><td>&gt;50% 注意</td><td><span class="lamp lamp-yellow">🟡 待查</span></td></tr>
+    <tr><td>第一大产品占比</td><td>电解液 + 锂盐 ≥80%</td><td>&gt;70% 单一</td><td><span class="lamp lamp-yellow">🟡 偏单一</span></td></tr>
+    <tr><td>第一大地区占比</td><td>国内为主<span class="unknown">(精确比例未查到,海外产能 2027 后释放)</span></td><td>&gt;60% 集中</td><td><span class="lamp lamp-yellow">🟡 集中</span></td></tr>
+    <tr><td>核心原料自给率</td><td>6F &gt;98% · 整体 &gt;97%<sup class="ref">[14][15]</sup></td><td>&lt;50% 注意</td><td><span class="lamp lamp-green">🟢 高度自给</span></td></tr>
+  </table>
+
+  <blockquote>
+    <strong>💡 集中度判断:</strong>本公司风险在客户端(CATL/LG 是不可替代的下游买方,议价权强);在原料端反而是<b>"自给率最高的电解液玩家"</b>,这是天赐相比新宙邦/比亚迪在 6F 涨价周期里多赚两倍利润的根因。
+  </blockquote>
+</section>
+
+<!-- ============ Ch.3 ============ -->
+<section id="ch3">
+  <h2><span class="num">3</span>💰 财务核心指标</h2>
+
+  <table>
+    <tr><th>指标</th><th>2026 Q1</th><th>2025</th><th>2024</th><th>2023</th><th>趋势</th><th>同行对比</th></tr>
+    <tr><td>营业收入(亿)</td><td>66.73<sup class="ref">[4]</sup></td><td>166.50<sup class="ref">[3]</sup></td><td>125.18<sup class="ref">[2]</sup></td><td>—</td><td>↑↑↑</td><td><span class="tag tag-green">行业 #1</span></td></tr>
+    <tr><td>营收 YoY</td><td>+91.29%</td><td>+33%</td><td>—</td><td>—</td><td>↑↑</td><td>—</td></tr>
+    <tr><td>归母净利(亿)</td><td>16.54<sup class="ref">[4]</sup></td><td>13.62<sup class="ref">[3]</sup></td><td>4.84<sup class="ref">[2]</sup></td><td>—</td><td>↑↑↑</td><td><span class="tag tag-green">绝对最强</span></td></tr>
+    <tr><td>净利 YoY</td><td>+1005.75%</td><td>+181.43%</td><td>—</td><td>—</td><td>↑↑↑</td><td>弹性最大</td></tr>
+    <tr><td>扣非净利 YoY</td><td>—</td><td>+256.32%<sup class="ref">[3]</sup></td><td>—</td><td>—</td><td>↑↑↑</td><td>—</td></tr>
+    <tr><td>⭐ 毛利率</td><td>38.65%<sup class="ref">[8]</sup></td><td>~22%<sup class="ref">[8]</sup></td><td>~17%(推算)</td><td>—</td><td>↑↑</td><td><span class="tag tag-green">显著领先</span></td></tr>
+    <tr><td>⭐ 净利率</td><td>24.68%<sup class="ref">[8]</sup></td><td>~8.2%</td><td>~3.9%</td><td>—</td><td>↑↑↑</td><td>行业最高</td></tr>
+    <tr><td>⭐ ROE</td><td><span class="unknown">未查到 TTM</span></td><td>—</td><td>—</td><td>—</td><td>↑</td><td>—</td></tr>
+    <tr><td>⭐ 经营现金流/净利润</td><td><span class="unknown">未查到</span></td><td><span class="unknown">未查到</span></td><td><span class="unknown">未查到</span></td><td>—</td><td>—</td><td>—</td></tr>
+    <tr><td>资产负债率</td><td><span class="unknown">未查到</span></td><td><span class="unknown">未查到</span></td><td><span class="unknown">未查到</span></td><td>—</td><td>—</td><td>—</td></tr>
+    <tr><td>电解液单吨净利(元/吨)</td><td>&gt;12000<sup class="ref">[7]</sup></td><td>Q4 ~4000<sup class="ref">[6]</sup></td><td>—</td><td>—</td><td>↑↑↑</td><td>显著高于同行</td></tr>
+    <tr><td>6F 单吨净利(元/吨)</td><td>—</td><td>Q4 &gt;30000<sup class="ref">[6]</sup></td><td>—</td><td>—</td><td>↑↑↑</td><td>—</td></tr>
+  </table>
+
+  <h3>3.1 利润增长归因(2026 Q1)</h3>
+  <table>
+    <tr><th>驱动来源</th><th>是否成立</th><th>证据</th></tr>
+    <tr><td>📈 量增</td><td>✅ 部分</td><td>Q1 电解液出货 &gt;20 万吨,同比 +50%<sup class="ref">[7]</sup></td></tr>
+    <tr><td>💵 价增</td><td>✅✅ 主驱</td><td>6F 长单均价从低点翻倍涨至 12 万/吨,电解液维持 3 万/吨以上<sup class="ref">[7]</sup></td></tr>
+    <tr><td>✂️ 降本</td><td>✅ 一体化加成</td><td>自供率 &gt;97% 使涨价 100% 留存,毛利率 22%→38.65%<sup class="ref">[8]</sup></td></tr>
+  </table>
+
+  <blockquote>
+    <strong>💡 财务质量判断:</strong>Q1 是"量价利"三杀的<b>教科书反转报表</b>,且不像章源那样靠预收款锁价(<span class="unknown">现金流细节未查到,需关注</span>);利润质量比 2021 年那轮高,因为这次一体化深度更深。
+  </blockquote>
+</section>
+
+<!-- ============ Ch.4 ============ -->
+<section id="ch4">
+  <h2><span class="num">4</span>🚀 增长阶段定位</h2>
+
+  <table>
+    <tr><th>阶段</th><th>营收特征</th><th>是否当前阶段</th></tr>
+    <tr><td><span class="tag tag-blue">🏷️ 高速成长期</span></td><td>YoY &gt; 30%</td><td>—</td></tr>
+    <tr><td><span class="tag tag-green">🏷️ 稳健增长期</span></td><td>YoY 10-30%</td><td>—</td></tr>
+    <tr><td><span class="tag tag-gray">🏷️ 成熟期</span></td><td>个位数</td><td>—</td></tr>
+    <tr><td><span class="tag tag-gray">🏷️ 衰退期</span></td><td>下滑</td><td>—</td></tr>
+    <tr><td><span class="tag tag-purple">🏷️ 周期反转 + 二次成长</span></td><td>底部反转 + 海外建厂打开第二曲线</td><td>✅ 当前</td></tr>
+  </table>
+
+  <table>
+    <tr><th>驱动维度</th><th>当前驱动力</th><th>可持续年限</th></tr>
+    <tr><td>量</td><td>储能爆发 + 海外建厂 + 国内份额 36%→40%</td><td>3-5 年</td></tr>
+    <tr><td>价</td><td>6F 价格反弹 + 行业产能出清</td><td>1-2 年</td></tr>
+    <tr><td>结构</td><td>LiFSI 渗透率提升 + 摩洛哥/德州海外产能(2027 投产)<sup class="ref">[17][18]</sup></td><td>3-5 年</td></tr>
+  </table>
+
+  <blockquote>
+    <strong>💡 增长可持续性判断:</strong>当前驱动 ≈ 60% 周期 + 30% 一体化结构 + 10% 海外,<b>第二曲线(LiFSI+海外)是真的在跑</b>,但贡献节点在 2027 之后,中间一年半是纯周期裸奔。
+  </blockquote>
+</section>
+
+<!-- ============ Ch.5 ============ -->
+<section id="ch5">
+  <h2><span class="num">5</span>🏭 商业模式透视</h2>
+
+  <h3>5.1 模式标签矩阵</h3>
+  <table>
+    <tr><th>维度</th><th>当前属性</th></tr>
+    <tr><td>资产属性</td><td><span class="tag tag-yellow">🏷️ 重资产</span> 6F+电解液产线;<span class="unknown">固定资产占比未查到精确值</span></td></tr>
+    <tr><td>收入类型</td><td><span class="tag tag-blue">🏷️ 一次性销售 + 长协</span> 与 CATL/LG/EVE 签长期供货协议</td></tr>
+    <tr><td>现金周期</td><td><span class="unknown">未查到 DSO,但化工大宗一般"先垫后收"</span></td></tr>
+    <tr><td>规模效应</td><td><span class="tag tag-green">🏷️ 强</span> 单线 ≥5 万吨 + 上游一体化</td></tr>
+    <tr><td>锁定效应</td><td><span class="tag tag-yellow">🏷️ 中</span> 电池厂认证 12-18 个月 + 配方/添加剂适配</td></tr>
+    <tr><td>网络效应</td><td><span class="tag tag-red">🏷️ 无</span></td></tr>
+  </table>
+
+  <h3>5.2 商业模式打分</h3>
+  <blockquote>
+    <strong>打分:</strong><span class="stars">⭐⭐⭐⭐☆</span> (4/5)<br>
+    <strong>💡 评分理由:</strong>4 星而非 5 星的扣分项是"本质大宗品 + 6F 价格周期不可控";加分项是一体化深度 + 长协绑定 + 海外提前布局,这三点合起来让天赐在周期下行时的护城河比同行更深。
+  </blockquote>
+</section>
+
+<!-- ============ Ch.6 SWOT ============ -->
+<section id="ch6">
+  <h2><span class="num">6</span>🛡️ 优势 vs 风险矩阵</h2>
+  <div class="swot">
+    <div class="swot-cell swot-moat">
+      <h4>🛡️ 核心护城河 (Moat)</h4>
+      <ul>
+        <li><b>一体化深度:</b>6F 自供 &gt;98%、整体原料 &gt;97%<sup class="ref">[14][15]</sup>,涨价 100% 留存</li>
+        <li><b>规模 #1:</b>2025 电解液产能 85 万吨,全球份额 ~38%,连续 9 年 #1<sup class="ref">[10]</sup></li>
+        <li><b>长协客户:</b>与 CATL / LG / EVE 签长期供货协议</li>
+        <li><b>LiFSI 先手:</b>2020 年市占 36%,CR3 73%,占据下一代锂盐主要位置<sup class="ref">[12]</sup></li>
+        <li><b>海外提前:</b>摩洛哥(15 万吨,2.8 亿美元)+ 美国德州(20 万吨,2 亿美元 + Honeywell 合作),2027-2028 投产<sup class="ref">[17][18]</sup></li>
+      </ul>
+    </div>
+    <div class="swot-cell swot-risk">
+      <h4>⚠️ 主要风险 (Risk)</h4>
+      <ul>
+        <li><b>6F 价格风险:</b>2021 年从 7 万→57 万→6 万的崩盘剧本可能重演</li>
+        <li><b>估值高位:</b>静态 PE 74.72,5Y 分位 ~80%<sup class="ref">[22]</sup>,周期股顶部往往 PE 反而最低</li>
+        <li><b>主力撤离:</b>2026-05-07 主力净流出 ¥15.77 亿、05-12 净流出 ¥9.91 亿<sup class="ref">[21]</sup></li>
+        <li><b>客户议价:</b>CATL/LG 议价权极强,长协价格调整可压缩单吨毛利</li>
+        <li><b>产能过剩:</b>自家 2026 扩产 200 万吨电解液目标,叠加同行扩产,2027-2028 供过于求风险</li>
+        <li><b>固态电池冲击:</b>固态电解质若量产将削弱液态电解液长期需求</li>
+        <li><b>地缘:</b>美国德州工厂受关税/制裁政策不确定性影响</li>
+      </ul>
+    </div>
+  </div>
+  <blockquote>
+    <strong>💡 护城河净评估:</strong>护城河是同行里最深的(一体化+海外+LiFSI 三道墙),但护城河里关着一只野兽叫"6F 价格",净安全边际取决于野兽什么时候睡着。
+  </blockquote>
+</section>
+
+<!-- ============ Ch.7 估值 ============ -->
+<section id="ch7">
+  <h2><span class="num">7</span>💹 估值</h2>
+
+  <h3>7.1 估值快照</h3>
+  <table>
+    <tr><th>指标</th><th>当前值</th><th>5Y 分位</th><th>行业中位</th><th>相对位置</th></tr>
+    <tr><td><b>PE (静态)</b></td><td>74.72<sup class="ref">[22]</sup></td><td><span class="bar"><span class="filled">████████░░</span> ~80%</span></td><td>—</td><td><span class="lamp lamp-red">显著溢价</span></td></tr>
+    <tr><td><b>PE (TTM,按 Q1 年化 + H1 预期推算)</b></td><td>~25-28×</td><td>—</td><td>—</td><td>合理偏高</td></tr>
+    <tr><td><b>PE (东吴 26E 70.3 亿,20×)</b></td><td>~18.6×<sup class="ref">[26]</sup></td><td>—</td><td>—</td><td>买方逻辑</td></tr>
+    <tr><td><b>PB</b></td><td>2.79<sup class="ref">[22]</sup></td><td><span class="unknown">未查到分位</span></td><td>—</td><td>—</td></tr>
+    <tr><td><b>PS / PEG</b></td><td><span class="unknown">未查到</span></td><td>—</td><td>—</td><td>—</td></tr>
+    <tr><td><b>股息率</b></td><td><span class="unknown">未查到</span></td><td>—</td><td>—</td><td>—</td></tr>
+    <tr><td>市值</td><td>¥1304.7 亿<sup class="ref">[19]</sup></td><td>—</td><td>—</td><td>—</td></tr>
+  </table>
+
+  <blockquote>
+    <strong>💡 估值判断:</strong>市场用 1304 亿市值定价 26 年净利 65-70 亿(对应 ~19× PE)+ LiFSI/海外 27 年贡献,这个预期需要 H1 单季净利持续 16-18 亿才能兑现,空间已经"赔率打平"。
+  </blockquote>
+</section>
+
+<!-- ============ Ch.8 ============ -->
+<section id="ch8">
+  <h2><span class="num">8</span>👀 外部视角(市场怎么看?)</h2>
+
+  <table>
+    <tr><th>视角</th><th>关键数据</th><th>倾向</th></tr>
+    <tr><td><b>券商覆盖</b></td><td>近 6 个月 11 家机构发布研报<sup class="ref">[24]</sup>:8 买入 / 1 强推 / 1 推荐 / 1 收集</td><td><span class="lamp lamp-green">🟢 一致看多</span></td></tr>
+    <tr><td><b>目标价区间</b></td><td>高 ¥69.20 / 低 ¥52.00 / 均 ¥59.13<sup class="ref">[24]</sup>;东吴最新上调至 ¥76(2026-04-28)<sup class="ref">[23]</sup></td><td>较 ¥64 中性偏多</td></tr>
+    <tr><td><b>盈利预测</b></td><td>东吴:26E ¥70.3 亿 / 27E ¥83.0 亿<sup class="ref">[26]</sup>;长江:26E ¥73.38 亿<sup class="ref">[25]</sup></td><td>—</td></tr>
+    <tr><td><b>机构持仓变化</b></td><td><span class="unknown">未查到精确季度变动</span></td><td>—</td></tr>
+    <tr><td><b>主力资金(5月)</b></td><td>05-06 -¥1.27 亿 / 05-07 -¥15.77 亿 / 05-12 -¥9.91 亿<sup class="ref">[21]</sup></td><td><span class="lamp lamp-red">🔴 大额撤离</span></td></tr>
+    <tr><td><b>多头核心论点</b></td><td>(1) Q1 利润超 2025 全年,Q2 继续放大;(2) LiFSI + 海外双轮;(3) 一体化护城河最深</td><td>—</td></tr>
+    <tr><td><b>空头核心论点</b></td><td>(1) 主力 5 月净流出 27 亿;(2) 6F 涨到 12 万后边际放缓;(3) 1300 亿市值已定价完美兑现</td><td>—</td></tr>
+  </table>
+
+  <blockquote class="info">
+    <strong>💡 共识 vs 我的判断:</strong>市场共识"龙头 + 一体化 + 海外 = 买入",我同意基本面方向,但在<b>"主力大额净流出 + 股价 1 年涨 270%"组合信号下,共识本身可能是空头的反向指标</b>,留半个仓位等回调或 H1 兑现。
+  </blockquote>
+</section>
+
+<!-- ============ Ch.9 ============ -->
+<section id="ch9">
+  <h2><span class="num">9</span>⏰ 催化剂 vs 风险事件</h2>
+  <table>
+    <tr><th>🟢 潜在上涨催化剂</th><th>时间窗口</th><th>🔴 潜在下跌风险事件</th><th>时间窗口</th></tr>
+    <tr><td>2026 H1 业绩兑现东吴预期(单季 16-18 亿)</td><td>2026-08 中报</td><td>6F 价格见顶(12 万/吨)回落</td><td>随时</td></tr>
+    <tr><td>摩洛哥项目里程碑节点更新</td><td>2026 H2-2027</td><td>电解液单吨净利从 1.2 万回到 4000 元</td><td>2026 H2</td></tr>
+    <tr><td>LiFSI 渗透率提升 / 大客户切换至 LiFSI 主导配方</td><td>持续</td><td>新一轮全行业扩产宣言</td><td>随时</td></tr>
+    <tr><td>美国德州 + Honeywell 合作进展</td><td>2026-2027</td><td>大股东 / 高管减持公告</td><td>—</td></tr>
+    <tr><td>固态电池电解质订单(天赐已布局)</td><td>2027+</td><td>固态电池量产挤压液态电解液长期需求</td><td>2028+</td></tr>
+  </table>
+  <h3>关键时间节点</h3>
+  <ul>
+    <li>📅 下一份财报:2026 年中报(预计 2026-08)</li>
+    <li>📅 股东大会:<span class="unknown">未查到 2026 年精确日期</span></li>
+    <li>📅 摩洛哥项目里程碑:2026-02 动工,2027-2028 投产<sup class="ref">[17]</sup></li>
+    <li>📅 美国德州工厂:2025-11 破土,2027-2028 投产<sup class="ref">[18]</sup></li>
+  </ul>
+</section>
+
+<!-- ============ Ch.10 ============ -->
+<section id="ch10">
+  <h2><span class="num">10</span>🎯 我的结论(决策卡)</h2>
+  <table>
+    <tr><th>项目</th><th>内容</th></tr>
+    <tr><td><b>态度</b></td><td><span class="lamp lamp-yellow">🟡 观望(偏多)</span></td></tr>
+    <tr><td><b>核心逻辑</b></td><td>天赐是这轮锂电反转里基本面最硬的标的;1300 亿市值已经把 26 年 70 亿净利打满,赔率不利,但下行受一体化保护,适合在回调时分批介入</td></tr>
+    <tr><td><b>建议仓位</b></td><td>总仓位 <b>2-5%</b>(分 3 批:¥55、¥48、¥42)</td></tr>
+    <tr><td><b>买入触发点</b></td><td>任一:(1) 股价回落至 ¥55 以下 + 6F 价格仍 &gt; 10 万;(2) 2026 中报单季净利 ≥ 16 亿且毛利率维持 35%+;(3) 摩洛哥项目里程碑公告</td></tr>
+    <tr><td><b>止损位</b></td><td>价格 &lt; 建仓价 -18% 或 6F 价格跌破 8 万/吨</td></tr>
+    <tr><td><b>止盈位 / 目标价</b></td><td>第一目标 ¥76(东吴上限),第二目标 ¥90(若 H2 单季净利 ≥ 20 亿)</td></tr>
+    <tr><td><b>预期持有时间</b></td><td>12-18 个月(覆盖海外产能投产节点)</td></tr>
+  </table>
+
+  <h3>⚠️ 证伪条件</h3>
+  <blockquote class="danger">
+    出现以下任一情况,必须重新审视、甚至清仓:
+    <ul>
+      <li>条件 1:6F 长单价跌破 8 万/吨且连续 2 个月不反弹</li>
+      <li>条件 2:2026 中报电解液单吨净利从 1.2 万滑落至 6000 元以下</li>
+      <li>条件 3:摩洛哥或德州海外项目宣布推迟 6 个月以上</li>
+      <li>条件 4:CATL 或 LG 公开调整供应商结构(新增二供并大幅切量)</li>
+      <li>条件 5:固态电池量产时间表从 2028 提前至 2026</li>
+    </ul>
+  </blockquote>
+</section>
+
+<!-- ============ ⏸ 待补充 ============ -->
+<section id="pending">
+  <h2><span class="num">⏸</span>待补充字段(下次增量续跑)</h2>
+  <ul>
+    <li>第一大客户 / 前五大客户精确占比(2025 年报附注)</li>
+    <li>分业务线营收占比 + 各业务毛利率(电解液 vs 锂盐 vs 日化)</li>
+    <li>2026-05 实时 PE-TTM / PB 精确值 + 5Y PE/PB 分位</li>
+    <li>资产负债率、ROE、经营现金流 / 净利润比(2025 年报)</li>
+    <li>应收账款周转天数 + DSO 趋势</li>
+    <li>海外营收占比(港股 / 出口数据)</li>
+    <li>实际控制人持股结构 + 近 1 年大股东动作</li>
+    <li>北向 / 公募近 1 季度持仓变化(wind 终端)</li>
+    <li>固态电池电解质订单进展 + 客户名单</li>
+    <li>2026 年股东大会日期</li>
+  </ul>
+</section>
+
+<!-- ============ 数据来源 ============ -->
+<section id="sources">
+  <h2><span class="num">📚</span>数据来源附录</h2>
+  <div class="sources">
+  <table>
+    <tr><th>角标</th><th>数据点</th><th>来源 URL</th><th>日期</th></tr>
+    <tr><td>[1]</td><td>公司全称 / 代码</td><td><a href="http://money.finance.sina.com.cn/corp/view/vCB_AllBulletinDetail.php?stockid=002709&id=10873316">天赐材料 2024 年年度报告(新浪)</a></td><td>2025</td></tr>
+    <tr><td>[2]</td><td>2024 营收 125.18 亿、归母净利 4.84 亿</td><td><a href="https://www.shidaotec.com/fina-analysis/2024-12-31/002709.html">天赐材料 2024 年年度财报深度分析</a></td><td>2025</td></tr>
+    <tr><td>[3]</td><td>2025 营收 166.50 亿 / 净利 13.62 亿(+181.43%) / 扣非 +256.32%</td><td><a href="https://finance.sina.com.cn/jjxw/2026-03-19/doc-inhrnqzu0951428.shtml">天赐材料的 2025 年:涨价引爆业绩(新浪财经)</a></td><td>2026-03-19</td></tr>
+    <tr><td>[4]</td><td>2026 Q1 营收 66.73 亿 / 净利 16.54 亿(+1005.75%)</td><td><a href="https://finance.sina.com.cn/roll/2026-04-27/doc-inhvxxxe7788742.shtml">天赐材料 Q1 净利同比+1006%(新浪)</a> / <a href="https://finance.sina.com.cn/jjxw/2026-04-28/doc-inhvzfsm1761522.shtml">Q1 净利润 16.54 亿元(新浪)</a></td><td>2026-04-27 / 28</td></tr>
+    <tr><td>[5]</td><td>电解液销量 2024 50 万吨 / 2025 72 万吨 / 2026E 100 万吨</td><td><a href="https://www.stcn.com/article/detail/1663761.html">天赐材料 2024 电解液销量超 50 万吨,一体化+全球化(证券时报)</a></td><td>—</td></tr>
+    <tr><td>[6]</td><td>2025 Q4 电解液出货 22 万吨,单吨净利 4000 元,6F &gt; 3 万</td><td>同 [3]</td><td>2026-03</td></tr>
+    <tr><td>[7]</td><td>2026 Q1 电解液出货 &gt; 20 万吨(+50%),6F 12 万/吨,单吨净利 1.2 万</td><td><a href="https://caifuhao.eastmoney.com/news/20260505195620864826530">天赐材料 Q1 业绩爆发式增长(东方财富)</a></td><td>2026-05</td></tr>
+    <tr><td>[8]</td><td>毛利率 22.2% → 38.65%,净利率 24.68%</td><td>同 [7]</td><td>2026-05</td></tr>
+    <tr><td>[9]</td><td>2024 国内份额 36.4% / 全球 35.75%</td><td><a href="https://www.vzkoo.com/read/20250217c616b1832af18da9a69794aa.html">2025 年天赐材料研究报告:一体化夯实核心竞争力(未来智库)</a></td><td>2025-02-17</td></tr>
+    <tr><td>[10]</td><td>2025 全球份额 38.2%,连续 9 年 #1</td><td>同 [7]</td><td>2026-05</td></tr>
+    <tr><td>[11]</td><td>CR3 60%:天赐 36% + 新宙邦 12% + 江苏国泰 10%</td><td><a href="https://tanhexincai.com/zhuanjiaziyuan/2672.html">全球最大电解液厂商:天赐材料市占率 40%(碳和新材)</a></td><td>—</td></tr>
+    <tr><td>[12]</td><td>2020 LiFSI 市占 36%,CR3 73%,毛利 &gt; 70%</td><td>同 [9]</td><td>—</td></tr>
+    <tr><td>[13]</td><td>国内 6F 产能 37 万吨,天赐 11 万吨</td><td><a href="https://finance.sina.com.cn/roll/2025-09-28/doc-infrzyri8819767.shtml">12 家电解液产业链上市企业 2025H1 业绩盘点(新浪)</a></td><td>2025-09-28</td></tr>
+    <tr><td>[14]</td><td>液体 6F 产能 33 万吨,自供率 &gt;98%</td><td>同 [9]</td><td>—</td></tr>
+    <tr><td>[15]</td><td>核心原料整体自供率 &gt;97%</td><td>同 [7]</td><td>2026-05</td></tr>
+    <tr><td>[16]</td><td>2025 电解液产能 85 万吨,全球 35.7%</td><td>同 [7]</td><td>2026-05</td></tr>
+    <tr><td>[17]</td><td>摩洛哥 2.8 亿美元 / 15 万吨电解液一体化,2026-02 动工,2027-2028 投产</td><td><a href="https://finance.sina.com.cn/roll/2026-02-14/doc-inhmuaqq5129155.shtml">总投资 2.8 亿美元!天赐材料又一电解液项目动工(新浪)</a></td><td>2026-02-14</td></tr>
+    <tr><td>[18]</td><td>美国德州贝敦 2 亿美元 / 20 万吨,2025-11 破土,与 Honeywell 合作</td><td><a href="https://www.stcn.com/article/detail/1484606.html">天赐材料拟与 Honeywell 组建合资公司加速北美生产(证券时报)</a></td><td>—</td></tr>
+    <tr><td>[19]</td><td>2026-05-06 股价 64.00 元 / 市值 1304.7 亿 / +5.77%</td><td><a href="https://caifuhao.eastmoney.com/news/20260507072927753068550">天赐材料:净利+1005%,股价 1 年涨 270%(东方财富)</a></td><td>2026-05-07</td></tr>
+    <tr><td>[20]</td><td>近 1 年涨幅 ~270%</td><td>同 [19]</td><td>2026-05</td></tr>
+    <tr><td>[21]</td><td>05-06 / 07 / 12 主力资金净流出 -1.27 / -15.77 / -9.91 亿</td><td><a href="https://stock.stockstar.com/RB2026050800008451.shtml">天赐材料 5月7日主力资金净卖出 15.77 亿(证券之星)</a> / <a href="https://stock.stockstar.com/RB2026051200037991.shtml">5月12日净卖出 9.91 亿(证券之星)</a></td><td>2026-05-08 / 12</td></tr>
+    <tr><td>[22]</td><td>静态 PE 74.72,PB 2.79(2026-04 口径)</td><td>东方财富/同花顺估值快照(汇总口径)</td><td>2026-04</td></tr>
+    <tr><td>[23]</td><td>东吴目标价上调至 76 元 / 买入</td><td><a href="https://stock.stockstar.com/RB2026042800067740.shtml">东吴证券:上调天赐材料目标价至 76.0 元(证券之星)</a></td><td>2026-04-28</td></tr>
+    <tr><td>[24]</td><td>11 家机构覆盖:高 69.2 / 低 52 / 均 59.13,8 买入</td><td>东方财富 F10 评级汇总</td><td>2026-04 / 05</td></tr>
+    <tr><td>[25]</td><td>长江证券预测 26E 净利 73.38 亿 / 买入</td><td><a href="https://stock.10jqka.com.cn/20260317/c675336325.shtml">长江证券给予天赐材料买入评级(同花顺)</a></td><td>2026-03-17</td></tr>
+    <tr><td>[26]</td><td>东吴预测 26E/27E 净利 70.3 / 83.0 亿,给 26 年 20× PE</td><td>同 [23]</td><td>2026-04-28</td></tr>
+    <tr><td>[27]</td><td>2025H1 营收对比:天赐 70.29 / 多氟多 43.28 / 新宙邦 42.48 亿</td><td>同 [13]</td><td>2025-09-28</td></tr>
+    <tr><td>[28]</td><td>2025 全年中国电解液出货 215 万吨 / Top3 出货排名</td><td><a href="https://finance.sina.com.cn/roll/2026-01-22/doc-inhiepsy1742904.shtml">2025 年中国电解液出货量 Top10:天赐/比亚迪/新宙邦(新浪)</a></td><td>2026-01-22</td></tr>
+  </table>
+  </div>
+</section>
+
+<div class="footer">
+  本报告基于公开信息整理,仅作个人研究用途,不构成投资建议。<br>
+  框架:CLAUDE.md v2.1(含执行协议 + Token 经济学) · 分析时点:2026-05-18 · 总搜索次数 7/8
+</div>
+
+</main>
+</body>
+</html>
