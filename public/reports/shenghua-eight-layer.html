@@ -1,0 +1,947 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>石大胜华 603026 八层穿透分析报告</title>
+<style>
+  * { box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+    margin: 0;
+    background: #fafaf8;
+    color: #222;
+    line-height: 1.7;
+  }
+  .layout { display: flex; }
+  .toc {
+    position: fixed;
+    left: 0; top: 0;
+    width: 260px;
+    height: 100vh;
+    background: #1f2937;
+    color: #e5e7eb;
+    padding: 24px 16px;
+    overflow-y: auto;
+    box-shadow: 2px 0 8px rgba(0,0,0,0.05);
+  }
+  .toc h2 {
+    font-size: 15px;
+    color: #9ca3af;
+    margin: 0 0 16px 0;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    border-bottom: 1px solid #374151;
+    padding-bottom: 10px;
+  }
+  .toc ol { list-style: none; padding: 0; margin: 0; }
+  .toc li { margin: 0; }
+  .toc a {
+    display: block;
+    padding: 10px 12px;
+    color: #d1d5db;
+    text-decoration: none;
+    border-radius: 6px;
+    font-size: 14px;
+    transition: all 0.15s;
+    border-left: 3px solid transparent;
+  }
+  .toc a:hover { background: #374151; color: #fff; border-left-color: #60a5fa; }
+  .toc .num {
+    display: inline-block;
+    width: 24px;
+    color: #60a5fa;
+    font-weight: 600;
+    font-family: ui-monospace, monospace;
+  }
+  .toc .meta {
+    font-size: 12px;
+    color: #6b7280;
+    padding: 12px;
+    margin-top: 16px;
+    border-top: 1px solid #374151;
+    line-height: 1.5;
+  }
+  .content {
+    margin-left: 260px;
+    padding: 40px 56px 80px 56px;
+    max-width: 1000px;
+  }
+  .header-card {
+    background: linear-gradient(135deg, #0c4a6e 0%, #1e40af 100%);
+    color: #fff;
+    padding: 32px;
+    border-radius: 12px;
+    margin-bottom: 32px;
+  }
+  .header-card h1 {
+    font-size: 28px;
+    margin: 0 0 6px 0;
+    font-weight: 700;
+  }
+  .header-card .subtitle { color: #bfdbfe; font-size: 14px; margin-bottom: 20px; }
+  .stat-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+    margin-top: 16px;
+  }
+  .stat {
+    background: rgba(255,255,255,0.08);
+    padding: 14px;
+    border-radius: 8px;
+    border: 1px solid rgba(255,255,255,0.12);
+  }
+  .stat .label { font-size: 11px; color: #bfdbfe; text-transform: uppercase; letter-spacing: 0.8px; }
+  .stat .value { font-size: 20px; font-weight: 700; color: #fff; margin-top: 4px; }
+  .stat .delta { font-size: 12px; color: #4ade80; margin-top: 2px; }
+  .stat .delta.red { color: #fca5a5; }
+
+  section {
+    background: #fff;
+    padding: 36px 40px;
+    border-radius: 12px;
+    margin-bottom: 28px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+    scroll-margin-top: 20px;
+  }
+  section h2 {
+    font-size: 22px;
+    margin: 0 0 24px 0;
+    padding-bottom: 12px;
+    border-bottom: 2px solid #f1f5f9;
+    color: #0f172a;
+  }
+  section h2 .num {
+    display: inline-block;
+    background: #1e40af;
+    color: #fff;
+    font-size: 14px;
+    padding: 3px 10px;
+    border-radius: 4px;
+    margin-right: 12px;
+    font-family: ui-monospace, monospace;
+    vertical-align: middle;
+  }
+  section h3 {
+    font-size: 16px;
+    color: #1e293b;
+    margin: 24px 0 12px 0;
+    padding-left: 10px;
+    border-left: 3px solid #60a5fa;
+  }
+  section h4 {
+    font-size: 14px;
+    color: #475569;
+    margin: 14px 0 6px 0;
+  }
+  .question-box {
+    background: #f0f9ff;
+    border-left: 4px solid #0ea5e9;
+    padding: 14px 18px;
+    margin-bottom: 24px;
+    border-radius: 0 6px 6px 0;
+    font-size: 15px;
+    color: #0c4a6e;
+  }
+  .question-box .q-label {
+    font-weight: 700;
+    color: #0369a1;
+    margin-right: 6px;
+  }
+  ul { padding-left: 24px; }
+  ul li { margin-bottom: 6px; }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 12px 0;
+    font-size: 14px;
+  }
+  th, td {
+    padding: 10px 12px;
+    text-align: left;
+    border-bottom: 1px solid #e5e7eb;
+    vertical-align: top;
+  }
+  th { background: #f8fafc; font-weight: 600; color: #334155; }
+  tr:hover { background: #fafbfc; }
+  .red-flag {
+    background: #fef2f2;
+    border-left: 4px solid #ef4444;
+    padding: 14px 18px;
+    margin: 18px 0;
+    border-radius: 0 6px 6px 0;
+    font-size: 14px;
+  }
+  .red-flag-label {
+    color: #b91c1c;
+    font-weight: 700;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 6px;
+    display: block;
+  }
+  .verdict {
+    background: #fefce8;
+    border-left: 4px solid #eab308;
+    padding: 14px 18px;
+    margin: 18px 0;
+    border-radius: 0 6px 6px 0;
+  }
+  .verdict-label {
+    color: #854d0e;
+    font-weight: 700;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 6px;
+    display: block;
+  }
+  .ok-box {
+    background: #f0fdf4;
+    border-left: 4px solid #22c55e;
+    padding: 14px 18px;
+    margin: 18px 0;
+    border-radius: 0 6px 6px 0;
+  }
+  .ok-label {
+    color: #15803d;
+    font-weight: 700;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 6px;
+    display: block;
+  }
+  .sources {
+    margin-top: 28px;
+    padding: 16px 20px;
+    background: #f8fafc;
+    border-radius: 8px;
+    font-size: 13px;
+  }
+  .sources-label {
+    color: #64748b;
+    font-weight: 700;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 8px;
+  }
+  .sources ul { margin: 0; padding-left: 18px; }
+  .sources li { color: #475569; margin-bottom: 4px; }
+  .sources a { color: #2563eb; text-decoration: none; word-break: break-all; }
+  .sources a:hover { text-decoration: underline; }
+  .unknown { color: #94a3b8; font-style: italic; }
+  .footer {
+    text-align: center;
+    color: #94a3b8;
+    font-size: 12px;
+    padding: 40px 0 20px 0;
+    border-top: 1px solid #e5e7eb;
+    margin-top: 40px;
+  }
+  .score-row {
+    display: flex;
+    gap: 8px;
+    margin: 16px 0;
+    flex-wrap: wrap;
+  }
+  .score-badge {
+    padding: 6px 12px;
+    border-radius: 16px;
+    font-size: 13px;
+    font-weight: 600;
+  }
+  .score-strong { background: #dcfce7; color: #166534; }
+  .score-mid { background: #fef9c3; color: #854d0e; }
+  .score-weak { background: #fee2e2; color: #991b1b; }
+  blockquote {
+    margin: 16px 0;
+    padding: 12px 20px;
+    border-left: 4px solid #cbd5e1;
+    background: #f8fafc;
+    color: #475569;
+    font-style: italic;
+    border-radius: 0 6px 6px 0;
+  }
+  @media (max-width: 900px) {
+    .toc { position: static; width: 100%; height: auto; }
+    .content { margin-left: 0; padding: 20px; }
+    .stat-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+</style>
+</head>
+<body>
+
+<aside class="toc">
+  <h2>八层导航</h2>
+  <ol>
+    <li><a href="#l1"><span class="num">L1</span>现象 Narrative</a></li>
+    <li><a href="#l2"><span class="num">L2</span>商业 Contract</a></li>
+    <li><a href="#l3"><span class="num">L3</span>战略 Counterparty</a></li>
+    <li><a href="#l4"><span class="num">L4</span>技术/物理 Time</a></li>
+    <li><a href="#l5"><span class="num">L5</span>生态 Sunk Cost</a></li>
+    <li><a href="#l6"><span class="num">L6</span>估值 Pricing</a></li>
+    <li><a href="#l7"><span class="num">L7</span>类比 Pattern</a></li>
+    <li><a href="#l8"><span class="num">L8</span>结构 Industry</a></li>
+    <li><a href="#synth"><span class="num">▣</span>八层联立</a></li>
+    <li><a href="#sources-all"><span class="num">📚</span>全部数据来源</a></li>
+  </ol>
+  <div class="meta">
+    标的：<b>603026 / 石大胜华</b><br>
+    胜华新材料集团股份有限公司<br>
+    分析时点：2026-05-18<br>
+    框架版本：八层穿透 v1
+  </div>
+</aside>
+
+<main class="content">
+
+<div class="header-card">
+  <h1>石大胜华 603026 · 八层穿透分析</h1>
+  <div class="subtitle">全球电解液溶剂第一龙头 · 锂电材料一体化新材料平台 · 拟 A+H 双平台</div>
+  <div class="stat-grid">
+    <div class="stat">
+      <div class="label">收盘价 (2026-05-13)</div>
+      <div class="value">¥102.14</div>
+      <div class="delta">总市值约 ¥280 亿(05-06)</div>
+    </div>
+    <div class="stat">
+      <div class="label">2025 营收</div>
+      <div class="value">¥68.08 亿</div>
+      <div class="delta">+22.75% YoY</div>
+    </div>
+    <div class="stat">
+      <div class="label">2025 归母净利</div>
+      <div class="value">¥1589.85 万</div>
+      <div class="delta red">-3.17% YoY · 连续三年降</div>
+    </div>
+    <div class="stat">
+      <div class="label">2026 Q1 归母净利</div>
+      <div class="value">¥2.82 亿</div>
+      <div class="delta">+1086.75% YoY · 扭亏</div>
+    </div>
+    <div class="stat">
+      <div class="label">全球电解液溶剂份额</div>
+      <div class="value">22.2%</div>
+      <div class="delta">六连冠 · 招股书口径</div>
+    </div>
+    <div class="stat">
+      <div class="label">DMC 出口份额</div>
+      <div class="value">~60%</div>
+      <div class="delta">公司自披露</div>
+    </div>
+    <div class="stat">
+      <div class="label">实际控制人</div>
+      <div class="value">青岛西海岸国资</div>
+      <div class="delta">石大控股一致行动 23.31%</div>
+    </div>
+    <div class="stat">
+      <div class="label">H 股递表</div>
+      <div class="value">2026-04-01</div>
+      <div class="delta">中金独家保荐</div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ L1 现象 ============ -->
+<section id="l1">
+  <h2><span class="num">L1</span>第一层 · 现象 (Narrative)</h2>
+  <div class="question-box"><span class="q-label">现象问题:</span>公司在讲什么故事?核心论点是什么?</div>
+
+  <h3>一句话总结</h3>
+  <p>"我们是<b>全球电解液溶剂第一龙头(连续六年)</b>，正在从单一溶剂供应商升级为<b>锂电材料一体化平台</b>(DMC/EMC/EC 溶剂 → 六氟磷酸锂(锂盐) → 硅基负极 → 固态电池配套材料)，2025 年是行业产能出清底部，2026 Q1 已经看到价格反转和利润弹性，正在借港股 IPO 锁定下一轮扩张窗口。"</p>
+
+  <h3>核心论点拆解</h3>
+  <table>
+    <tr><th>论点</th><th>角色</th><th>支撑数据 / 来源</th></tr>
+    <tr>
+      <td>全球电解液溶剂龙头，六连冠</td>
+      <td><b>基石</b></td>
+      <td>招股书披露 2025 年全球出货量份额 22.2%(自 2020 年起六连冠);DMC 出口占国内 60% 以上(公司披露)</td>
+    </tr>
+    <tr>
+      <td>2026 Q1 业绩反转,行业拐点确认</td>
+      <td><b>基石</b></td>
+      <td>一季度营收 22.30 亿 (+40.45%)、归母净利 2.82 亿 (+1086.75%);DMC 出厂均价 +17.62% YoY,EC 均价 +23.74% YoY (公司一季报)</td>
+    </tr>
+    <tr>
+      <td>从溶剂向锂盐、负极、固态电池横向扩张</td>
+      <td>装饰 → 待验证</td>
+      <td>东营六氟磷酸锂权益产能 1.68 万吨 → 3.3 万吨 (Q1 完成 49% 股权收购);眉山硅基负极规划 3 万吨,目前 SiOx 500 吨 + SiC 500 吨,B 样阶段送测卫蓝/清陶/赣锋/太蓝</td>
+    </tr>
+    <tr>
+      <td>宁德时代 10 万吨电解液战略合作</td>
+      <td>装饰</td>
+      <td>2025-03 与 CATL 签《战略合作框架协议》,2025 年底前预计供应 10 万吨电解液 (框架而非订单)</td>
+    </tr>
+    <tr>
+      <td>A+H 双融资平台</td>
+      <td>装饰</td>
+      <td>2026-04-01 递表港交所主板,中金独家保荐</td>
+    </tr>
+  </table>
+
+  <h3>故事的最大受益者</h3>
+  <ul>
+    <li><b>青岛西海岸国资</b>:实控人,通过石大控股一致行动 23.31% 表决权;H 股 IPO 有助于国资资产证券化与估值提升</li>
+    <li><b>管理层(郭天明董事长一致行动方)</b>:股价从 2025 年三季度低位反弹后 H 股发行可锁定估值</li>
+    <li><b>近期参与定增的机构</b>:2025-08 完成定增上市(公告口径)</li>
+  </ul>
+
+  <h3>评估:论点经不经得起反问</h3>
+  <table>
+    <tr><th>反问</th><th>站不站得住</th></tr>
+    <tr><td>"如果碳酸酯价格 H2 不能持续上涨,Q1 反转还成立吗?"</td><td><b>不站住</b>。2025 全年亏损,反转 100% 来自价格 + 销量两端;价格回落即利润回落</td></tr>
+    <tr><td>"如果海科新源 100 万吨产能完全释放,22.2% 的份额还能保持吗?"</td><td><b>存疑</b>。海科新源 2026 年规划 100 万吨,自称份额 40%;两家口径打架,需以全球第三方数据校准</td></tr>
+    <tr><td>"如果 CATL 与天赐、新宙邦的份额不变,10 万吨框架协议能落地多少?"</td><td><b>存疑</b>。框架协议无强制力,CATL 现有电解液一级供应商是天赐和新宙邦</td></tr>
+    <tr><td>"硅基负极/固态如果到 2027 不能贡献收入,平台故事还值吗?"</td><td><b>不站住</b>。当前硅基负极规划产能 3 万吨,实际只有千吨级,固态主流量产时间在 2027-2028</td></tr>
+  </table>
+
+  <div class="red-flag">
+    <span class="red-flag-label">🚩 红旗</span>
+    <ul>
+      <li>2025-05 出现"小作文"导致一度跌停,公司公告称"严重失实",反映市场对扩张故事的怀疑度</li>
+      <li>"全球第一"口径在公司自述中频繁出现,但同行海科新源也自称"40% 全球份额";口径差异说明第三方独立份额数据稀缺</li>
+      <li>"固态电池配套"是当前 A 股最热概念,管理层主动多次提及 → 典型的"借热点抬估值"信号,需打折</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ============ L2 商业 ============ -->
+<section id="l2">
+  <h2><span class="num">L2</span>第二层 · 商业 (Contract)</h2>
+  <div class="question-box"><span class="q-label">现象问题:</span>故事里提到的合作 / 独占 / 优势,有没有合同保障?</div>
+
+  <h3>关键合同清单</h3>
+  <table>
+    <tr><th>对手方</th><th>合同类型</th><th>强度</th><th>披露源</th></tr>
+    <tr>
+      <td>宁德时代 (CATL)</td>
+      <td>《战略合作框架协议》,2025 年底前预计采购 10 万吨电解液</td>
+      <td>⚠️ <b>框架协议</b>,无强制采购量、无 take-or-pay 条款,法律措辞为"预计"</td>
+      <td>2025-03-05 公告 / 证券时报</td>
+    </tr>
+    <tr>
+      <td>比亚迪</td>
+      <td>溶剂稳定供应,2024 年合作"稳固性增强"(年报口径,未披露具体合同)</td>
+      <td>⚠️ 市场默认采购,无公开长协披露</td>
+      <td>2024 年报 / 时代周报年报透视</td>
+    </tr>
+    <tr>
+      <td>LGES / 三星 SDI</td>
+      <td>溶剂出口客户</td>
+      <td>⚠️ 商业采购,无具体合同条款披露</td>
+      <td>多家行业报道</td>
+    </tr>
+    <tr>
+      <td>ENCHEM(韩国电解液厂)</td>
+      <td>溶剂稳定客户</td>
+      <td>⚠️ 同上</td>
+      <td>2024 年报 / 时代周报</td>
+    </tr>
+    <tr>
+      <td>太蓝 / 卫蓝 / 清陶 / 赣锋(固态电池)</td>
+      <td>硅基负极 B 样送测,潜在客户</td>
+      <td>❌ <b>仅意向 / 测试</b>,无量产订单</td>
+      <td>2025-09 东方财富 / SMM 行业图</td>
+    </tr>
+  </table>
+
+  <h3>强度分级总结</h3>
+  <div class="score-row">
+    <span class="score-badge score-weak">股权绑定 ❌ 无</span>
+    <span class="score-badge score-weak">长期排他合同 ❌ 无披露</span>
+    <span class="score-badge score-mid">优先供应 / 采购 ⚠ 框架级别</span>
+    <span class="score-badge score-strong">MOU / 战略合作 ✓ 多份</span>
+    <span class="score-badge score-strong">市场默认惯例 ✓ 多年合作</span>
+  </div>
+
+  <h3>评估</h3>
+  <div class="verdict">
+    <span class="verdict-label">判定</span>
+    <p>合同体系停留在"战略合作"层级,<b>没有任何排他、最惠国、违约赔偿等"反向锁定"条款</b>。10 万吨 CATL 框架协议是有里程碑信号意义的事件,但实际兑现率不可预测——CATL 现有电解液一级供应商是天赐和新宙邦,胜华更可能成为<b>份额二供 / 三供</b>而非主力。</p>
+  </div>
+
+  <div class="red-flag">
+    <span class="red-flag-label">🚩 红旗</span>
+    <ul>
+      <li>故事在讲"绑定 CATL", 合同写"预计采购"; 这是典型的<b>故事强度 &gt; 合同强度</b></li>
+      <li>关键客户合同披露程度低; 招股书后续可能补充更多细节,但已发布部分都是软合同</li>
+      <li>未查到任何"排他"或"独家供应"条款披露 → 业务本质是 commodity 供应关系</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ============ L3 战略 ============ -->
+<section id="l3">
+  <h2><span class="num">L3</span>第三层 · 战略 (Counterparty)</h2>
+  <div class="question-box"><span class="q-label">现象问题:</span>站在交易对手视角,他们的利益是什么?</div>
+
+  <h3>三类核心对手</h3>
+  <table>
+    <tr><th>类别</th><th>代表</th><th>对方为什么选我们</th><th>对方的备选 / 去依赖动机</th></tr>
+    <tr>
+      <td><b>下游电池厂</b></td>
+      <td>CATL、比亚迪、LGES、三星 SDI、ENCHEM</td>
+      <td>(1) 全球产能规模,可稳定供应 (2) 一体化(DMC→电解液→锂盐),议价稳 (3) 海外有出口 / 关税优势</td>
+      <td>电池厂天然推动<b>二供 / 三供战略</b>,绝不依赖单一供应商;天赐材料、新宙邦、海科新源都是替代</td>
+    </tr>
+    <tr>
+      <td><b>上游原料(甲醇/环氧丙烷/碳酸钙)</b></td>
+      <td>煤化工/石化巨头(华鲁恒升等)</td>
+      <td>胜华是大宗采购方,稳定大客户</td>
+      <td>华鲁恒升直接进入碳酸酯赛道,<b>从上游变成最大的竞争对手</b> → 这是最危险的"上游一体化"威胁</td>
+    </tr>
+    <tr>
+      <td><b>直接竞争对手</b></td>
+      <td>海科新源、华鲁恒升、奥克股份、华一股份</td>
+      <td>—</td>
+      <td>海科新源 2026 规划 100 万吨产能 + 自称份额 40%;华鲁恒升靠煤化工成本碾压</td>
+    </tr>
+  </table>
+
+  <h3>客户/供应商集中度</h3>
+  <ul>
+    <li>前五大客户 / 供应商占比:<span class="unknown">具体数字未查到(需翻 2025 年报 / 招股书披露)</span></li>
+    <li>已知集中风险:CATL 单一框架协议 10 万吨电解液,假设 2025 年公司电解液销量 ~12 万吨(2024 年 6 万吨,2025 年翻倍),则 CATL 占电解液业务 80%+ → <b>典型不对称依赖,我方弱势</b></li>
+    <li>海外 70% 利润来自欧美日韩(2024 年报口径),海外营收同比 -24.09%,毛利率 +3.57pct → 海外是<b>利润垫</b>,但收入端正在萎缩</li>
+  </ul>
+
+  <h3>评估:依赖是否对称</h3>
+  <div class="verdict">
+    <span class="verdict-label">判定</span>
+    <p><b>不对称依赖,我方弱势</b>。下游 CATL/LGES 是行业寡头,议价权极强;上游华鲁恒升正在向下一体化,胜华夹在中间。<b>真正稳的是海外业务</b>——欧美日韩电池厂对中国溶剂依赖更高,且物流/质检壁垒形成事实排他,这才是胜华真正"赚到钱"的板块。</p>
+  </div>
+
+  <div class="red-flag">
+    <span class="red-flag-label">🚩 红旗</span>
+    <ul>
+      <li>管理层路演重点讲 CATL 合作,不讲 CATL 的"多元化供应链"诉求</li>
+      <li>2024 年海外营收 -24.09%,但管理层和市场用"产品涨价 + 国内份额扩张"叙事盖过这个事实</li>
+      <li>华鲁恒升后来居上、海科新源狂飙扩产 → 行业格局远未稳态</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ============ L4 技术/物理 ============ -->
+<section id="l4">
+  <h2><span class="num">L4</span>第四层 · 技术/物理 (Time)</h2>
+  <div class="question-box"><span class="q-label">现象问题:</span>故事兑现需要多长物理时间?能不能被压缩?</div>
+
+  <h3>关键时间表</h3>
+  <table>
+    <tr><th>项目</th><th>物理时间约束</th><th>历史可压缩性</th></tr>
+    <tr>
+      <td>电池级 DMC 产能(纯度 99.99%+)</td>
+      <td>新厂建设 18-24 个月,电池厂认证 12-18 个月</td>
+      <td>有限。煤化工巨头(华鲁恒升)已经在 2-3 年内完成切入,说明<b>不是难以逾越的物理护城河</b></td>
+    </tr>
+    <tr>
+      <td>六氟磷酸锂(锂盐)</td>
+      <td>建设 18-30 个月,工艺 know-how 沉淀 3-5 年</td>
+      <td>2021-2022 年价格爆涨时,多氟多、天赐快速扩产;胜华此次收购东营 49% 股权将权益产能从 1.68 万吨提至 3.3 万吨</td>
+    </tr>
+    <tr>
+      <td>硅基负极(SiOx / SiC)</td>
+      <td>从 B 样到量产 24-36 个月;产线 12-18 个月</td>
+      <td>低。<span class="unknown">行业内 40+ 家在竞逐量产,胜华目前只是 B 样阶段,落后于贝特瑞、璞泰来</span></td>
+    </tr>
+    <tr>
+      <td>固态电池配套材料</td>
+      <td>主流量产 2027-2028,材料供应商认证 2-3 年</td>
+      <td>真正贡献利润在 3-5 年后</td>
+    </tr>
+    <tr>
+      <td>欧美/日韩客户认证</td>
+      <td>2-3 年,且因关税 / 政策有反向门槛</td>
+      <td>胜华已完成,这是<b>最硬的物理护城河</b></td>
+    </tr>
+  </table>
+
+  <h3>评估:护城河真实宽度</h3>
+  <div class="verdict">
+    <span class="verdict-label">判定</span>
+    <p><b>真正硬的护城河只有一条:海外客户认证 + 关税壁垒</b>。这是 2-3 年物理时间叠加监管成本构筑的,2024 年贡献 70% 利润的核心来源。</p>
+    <p>国内电解液溶剂(DMC/EMC/EC)技术 know-how 护城河<b>正在被快速侵蚀</b>:海科新源、华鲁恒升、奥克股份都已实现规模化生产。当煤化工巨头华鲁恒升用"煤 → 甲醇 → 碳酸酯"成本链碾压时,胜华的工艺优势不足以对冲成本劣势。</p>
+    <p>硅基负极、固态电池属于<b>正在跑的赛道</b>,胜华相对落后,无先发优势可言。</p>
+  </div>
+
+  <div class="ok-box">
+    <span class="ok-label">✓ 真护城河</span>
+    <ul>
+      <li>欧美/日韩客户长期认证(典型 2-3 年时间窗口)</li>
+      <li>美国 IRA / 欧洲 CBAM 等政策反向锁定中国头部出口商</li>
+      <li>DMC 出口占国内 60%+,这是规模 + 物流 + 客户关系的复合壁垒</li>
+    </ul>
+  </div>
+
+  <div class="red-flag">
+    <span class="red-flag-label">🚩 红旗</span>
+    <ul>
+      <li>"电解液溶剂技术领先 5 年"——但物理事实是 5 年内华鲁恒升从 0 做到行业 Top 3</li>
+      <li>"固态电池布局领先"——但公司硅基负极 B 样阶段,行业头部已 A 样 / 量产</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ============ L5 生态 ============ -->
+<section id="l5">
+  <h2><span class="num">L5</span>第五层 · 生态 (Sunk Cost)</h2>
+  <div class="question-box"><span class="q-label">现象问题:</span>利益相关方有多深的沉没成本?切换边际成本多少?</div>
+
+  <h3>切换成本拆解</h3>
+  <table>
+    <tr><th>客户类型</th><th>一次性切换成本</th><th>持续成本</th><th>心理成本</th></tr>
+    <tr>
+      <td>国内动力电池(CATL/比亚迪)</td>
+      <td>低-中(认证 6-12 个月)</td>
+      <td>无,切换后零持续成本</td>
+      <td>低-中,行业默认多供应商策略</td>
+    </tr>
+    <tr>
+      <td>国内储能 / 中小电池厂</td>
+      <td>低(认证 3-6 个月)</td>
+      <td>无</td>
+      <td>低</td>
+    </tr>
+    <tr>
+      <td>欧美/日韩电池厂</td>
+      <td>较高(认证 24+ 个月、本地化合规)</td>
+      <td>无</td>
+      <td>较高(供应链稳定性责任)</td>
+    </tr>
+  </table>
+
+  <h3>评估:三种锁定的区分</h3>
+  <div class="score-row">
+    <span class="score-badge score-weak">真锁定(底层基础设施)❌</span>
+    <span class="score-badge score-mid">半锁定(认证 + 时间)⚠ 海外客户</span>
+    <span class="score-badge score-mid">伪锁定(习惯 / 默认)⚠ 国内客户</span>
+  </div>
+
+  <div class="verdict">
+    <span class="verdict-label">判定</span>
+    <p>电解液溶剂本质是<b>化学品大宗商品</b>,纯度达标 + 价格有竞争力 = 可以换。<b>没有任何"切换需要重建底层基础设施"</b>的真锁定关系。</p>
+    <p>海外客户因认证周期长 + 合规成本 → 半锁定;国内客户基本是伪锁定,价格才是主导。这与电池正极材料(三元/磷酸铁锂)同行更弱 → 后者会随车型周期被锁定 5-7 年。</p>
+    <p>生态正反馈:更多客户 → 规模降本 → 出口扩张 → 海外份额 → 这个回路存在但很弱,因为成本端无法对抗煤化工玩家。</p>
+  </div>
+
+  <div class="red-flag">
+    <span class="red-flag-label">🚩 红旗</span>
+    <ul>
+      <li>2025 年公司经营性现金流连续三年负 → 说明<b>账面市占率不等于真现金流锁定</b></li>
+      <li>应收账款 2024 年翻倍 → "国内激进扩张"换来的销量是<b>赊销获得的</b>,实质就是<b>用资金换份额</b>,不是生态锁定</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ============ L6 估值 ============ -->
+<section id="l6">
+  <h2><span class="num">L6</span>第六层 · 估值 (Pricing)</h2>
+  <div class="question-box"><span class="q-label">现象问题:</span>当前价格定价了哪个阶段?后续里程碑是什么?</div>
+
+  <h3>当前市值与隐含预期</h3>
+  <table>
+    <tr><th>口径</th><th>数值</th><th>来源 / 时点</th></tr>
+    <tr><td>股价</td><td>¥102.14</td><td>2026-05-13 收盘 (证券之星)</td></tr>
+    <tr><td>总市值</td><td>~¥280 亿</td><td>2026-05-06 (证券之星行情口径)</td></tr>
+    <tr><td>2025 全年归母净利</td><td>¥1589.85 万</td><td>2025 年报 (证券之星 / 公告)</td></tr>
+    <tr><td>2026 Q1 归母净利</td><td>¥2.82 亿</td><td>2026 Q1 报 (证券之星)</td></tr>
+    <tr><td>2026 H1 业绩预告</td><td>¥2.6 亿 ~ ¥3.1 亿</td><td>新浪财经预告(2026)</td></tr>
+    <tr><td>2025 毛利率</td><td>7.1%</td><td>港股招股书</td></tr>
+    <tr><td>2026 Q1 毛利率</td><td>12.7%</td><td>一季报口径</td></tr>
+    <tr><td>PE-TTM</td><td><span class="unknown">未查到精确口径(2025 全年 PE 接近 1700×,无意义;按 H1 年化 PE ~45×;按 Q1 年化 PE ~25×)</span></td><td>—</td></tr>
+    <tr><td>PB</td><td><span class="unknown">未查到 2026-05 精确数值</span></td><td>—</td></tr>
+  </table>
+
+  <h3>反向 DCF / 隐含预期</h3>
+  <ul>
+    <li>市场用 280 亿市值给 <b>"2026 年化净利 10-12 亿"</b> 的预期(对应 PE 25-28×),意味着已经定价了<b>价格景气持续到 2026 全年 + 销量翻倍</b>这两件事</li>
+    <li>对比 2024 净利 1641.96 万、2025 净利 1589.85 万 → 市场基本忽略历史利润,完全押注景气反转</li>
+    <li>2024 年报口径"海外贡献 70% 利润",2025-2026 反弹主要来自国内涨价,如果海外 -24.09% 趋势延续,实际盈利质量会被压低</li>
+  </ul>
+
+  <h3>里程碑路径</h3>
+  <table>
+    <tr><th>里程碑</th><th>预期时点</th><th>是否已被定价</th></tr>
+    <tr><td>DMC / EC 价格继续上行 (Q2/Q3 涨价)</td><td>2026 H2</td><td>大部分已定价</td></tr>
+    <tr><td>2026 H1 预告兑现 (¥2.6-3.1 亿)</td><td>2026-08(中报)</td><td>已定价</td></tr>
+    <tr><td>H 股 IPO 通过证监会备案</td><td>2026-2027</td><td>部分定价(融资稀释 vs. 估值锚)</td></tr>
+    <tr><td>CATL 10 万吨框架协议实际兑现率披露</td><td>2027 年报</td><td>未定价</td></tr>
+    <tr><td>六氟磷酸锂涨价周期(权益 3.3 万吨)</td><td>2026 H2 - 2027</td><td>部分定价</td></tr>
+    <tr><td>硅基负极 / 固态电池 A 样验证 → 收入</td><td>2027-2028</td><td>未定价</td></tr>
+  </table>
+
+  <h3>评估:剩余空间与节奏</h3>
+  <div class="verdict">
+    <span class="verdict-label">判定</span>
+    <p><b>当前价格 ≈ 完美兑现 2026 全年景气 + 平台化故事开局</b>。上行空间需要看 H2 价格继续上行 + 港股 IPO 估值锚 + 锂盐弹性;下行风险来自 Q2/Q3 涨价不及预期,以及华鲁恒升/海科新源加速扩产打掉价格。</p>
+    <p><b>赔率粗算</b>:乐观情形(2026 净利 12 亿、估值 30×)= 市值 360 亿,上行 +29%;悲观情形(碳酸酯价格回落、2026 净利 5 亿、估值 20×)= 市值 100 亿,下行 -64%。<b>赔率约 0.45 : 1,远低于框架要求的 3 : 1。</b></p>
+  </div>
+
+  <div class="red-flag">
+    <span class="red-flag-label">🚩 红旗</span>
+    <ul>
+      <li>2025 年股价已从低位反弹一倍以上;2026 Q1 业绩反转后又上涨,<b>"反转"已经被市场充分识别</b></li>
+      <li>2025-05 出现小作文跌停,5-13 主力净卖出 1.09 亿 → 资金内部分歧大</li>
+      <li>"长期看好但短期催化剂主要靠涨价" → 这是典型周期股,周期股顶部往往是 PE 最低的时候,而胜华现在 PE 还很高</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ============ L7 类比 ============ -->
+<section id="l7">
+  <h2><span class="num">L7</span>第七层 · 类比 (Pattern)</h2>
+  <div class="question-box"><span class="q-label">现象问题:</span>历史上有没有类似剧本?那个剧本怎么演?</div>
+
+  <h3>三个最接近的历史类比</h3>
+  <table>
+    <tr><th>案例</th><th>剧本</th><th>结局</th><th>对胜华的启发</th></tr>
+    <tr>
+      <td><b>多氟多 002407 · 六氟磷酸锂周期 (2020-2023)</b></td>
+      <td>2020 年价格 7 万/吨 → 2022 Q1 涨到 57 万/吨 → 2023 年崩盘到 6 万/吨</td>
+      <td>股价 2020-09 ¥10 → 2021-09 ¥75 → 2024 跌回 ¥10</td>
+      <td>纯化学品价格周期极陡;<b>顶部出现在产能扩张高峰前,而不是利润高峰</b></td>
+    </tr>
+    <tr>
+      <td><b>天赐材料 002709 · 电解液周期 (2020-2023)</b></td>
+      <td>价格从 4 万 → 10 万 → 跌回 2 万;一体化整合(锂盐+电解液+磷酸铁)</td>
+      <td>股价 2020-04 ¥10 → 2021-12 ¥70 → 2024 ¥18</td>
+      <td>一体化平台<b>能延后周期顶,但延后不了周期</b>;PE 最低点反而是利润最高点</td>
+    </tr>
+    <tr>
+      <td><b>恩捷股份 002812 · 隔膜周期</b></td>
+      <td>湿法隔膜全球第一,绑定 CATL 长期供应,从龙头到价格战</td>
+      <td>2021 高点 ¥320 → 2024 ¥40</td>
+      <td><b>第一名也无法对抗产能过剩</b>;龙头估值溢价在产能出清完成前不可持续</td>
+    </tr>
+  </table>
+
+  <h3>当前胜华 vs. 历史类比的关键差异</h3>
+  <ul>
+    <li><b>差异 1(变好):</b>海外业务占比高(70% 利润),不像多氟多/天赐主要 to 国内</li>
+    <li><b>差异 2(变好):</b>实控人是国资,有港股 IPO 的资本运作空间,估值锚更稳</li>
+    <li><b>差异 3(变差):</b>胜华 PE 反弹起来时已经接近 30×,而上述案例顶部 PE 反而是 10-15×</li>
+    <li><b>差异 4(变差):</b>胜华平台化故事(硅基/固态)<b>没有先发优势</b>,而多氟多在六氟具有原创工艺优势</li>
+    <li><b>差异 5(中性):</b>本轮电解液周期是从底部反转,胜华位置是<b>反转第二季度</b>,对比天赐当年是反转第一个季度</li>
+  </ul>
+
+  <h3>评估:概率分布的先验</h3>
+  <div class="verdict">
+    <span class="verdict-label">判定</span>
+    <p>从历史类比看,锂电材料周期股的最佳买点是<b>"价格刚开始反弹 + PE 看起来不便宜"</b>那个阶段,最差买点是"价格已涨 1-2 个季度 + 股价已涨 50%+ + 市场开始喊'平台化'"那个阶段。<b>当前胜华更接近后者,而非前者</b>。</p>
+    <p>历史样本告诉我们:这类公司可以从底部反弹 2-3 倍,但反弹之后的回撤往往是 60-80%。<b>持仓久期决定一切</b>:能在 6-9 个月内出场的人是赚周期 Beta;想穿越周期持有 3 年的人,要么有真平台化(胜华存疑),要么会被回撤吞掉。</p>
+  </div>
+
+  <div class="red-flag">
+    <span class="red-flag-label">🚩 红旗</span>
+    <ul>
+      <li>"这次不一样,因为有 H 股 IPO" → 历史上没有任何中国锂电材料公司靠港股拿到比 A 股高的估值</li>
+      <li>"这次不一样,因为有固态电池催化" → 固态电池真量产至少要 2027,中间 1-2 年没有新催化的话,估值难以维持</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ============ L8 结构 ============ -->
+<section id="l8">
+  <h2><span class="num">L8</span>第八层 · 结构 (Industry Structure)</h2>
+  <div class="question-box"><span class="q-label">现象问题:</span>产业结构允许几个玩家?标的占哪个位置?</div>
+
+  <h3>电解液溶剂(碳酸酯)产业结构</h3>
+  <table>
+    <tr><th>结构维度</th><th>评估</th></tr>
+    <tr>
+      <td>终局玩家数</td>
+      <td>5-8 家寡头(全球范围);国内 33 家 DMC 厂正在出清,2025-2027 完成</td>
+    </tr>
+    <tr>
+      <td>结构驱动力</td>
+      <td>规模经济(单线 5 万吨起步) + 一体化(煤化工/石化原料) + 电池厂认证 + 出口资质</td>
+    </tr>
+    <tr>
+      <td>当前阶段</td>
+      <td><b>整合期末尾</b> → 准稳态;价格已底部反转;2026-2027 完成出清</td>
+    </tr>
+    <tr>
+      <td>胜华位置</td>
+      <td><b>全球 #1 出货量(自报 22.2%),但海科新源、华鲁恒升口径不一</b>;客观说处于 Top 3</td>
+    </tr>
+    <tr>
+      <td>结构稳定性</td>
+      <td><b>中等偏低</b>。煤化工巨头(华鲁恒升)向下一体化的威胁未消;每一次价格上行都吸引新产能</td>
+    </tr>
+  </table>
+
+  <h3>横向对比:三家自称龙头</h3>
+  <table>
+    <tr><th>公司</th><th>核心优势</th><th>主要风险</th></tr>
+    <tr>
+      <td><b>石大胜华 (603026)</b></td>
+      <td>历史最早布局,出口份额高,一体化向锂盐 + 负极延伸</td>
+      <td>无煤化工成本优势,平台化故事未验证</td>
+    </tr>
+    <tr>
+      <td><b>海科新源 (301292)</b></td>
+      <td>2026 规划 100 万吨,自称份额 40%,扩产最激进</td>
+      <td>产能落地节奏 + 价格弹性匹配能否同步</td>
+    </tr>
+    <tr>
+      <td><b>华鲁恒升 (600426)</b></td>
+      <td>煤化工巨头,成本最低,后来居上</td>
+      <td>是电解液行业的<b>价格屠夫</b>,既是对手也是行业利润的天花板</td>
+    </tr>
+  </table>
+
+  <h3>评估:底层确定性的来源</h3>
+  <div class="verdict">
+    <span class="verdict-label">判定</span>
+    <p>电解液溶剂行业的<b>结构问题在于"上游可下沉"</b>:华鲁恒升用煤化工成本链做碳酸酯,胜华无法在成本上对抗;如果想保利润只能靠"产品分级 + 海外份额 + 配方与服务"。这决定了胜华无法享受像"晶圆代工的台积电""数据库的 Oracle"那样的<b>结构性溢价</b>。</p>
+    <p>在准稳态格局下,Top 3 玩家估值差距应该在 1.5-2× 之内,而非 3-5×;胜华作为出货量 #1 但成本非 #1,合理估值溢价相对于行业平均应不超过 30-50%,而非数倍。</p>
+  </div>
+
+  <div class="red-flag">
+    <span class="red-flag-label">🚩 红旗</span>
+    <ul>
+      <li>"龙头"叙事 vs. 三家自称第一 → 集中度不够 → <b>市场尚未真正完成"龙头共识"</b></li>
+      <li>华鲁恒升的成本碾压威胁是<b>胜华无法解决的结构性矛盾</b></li>
+      <li>固态电池如果改变电解液体系,胜华的溶剂技术资产可能贬值(尽管胜华在试图向硅基负极、锂盐对冲)</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ============ 联立 ============ -->
+<section id="synth">
+  <h2><span class="num">▣</span>收尾 · 八层联立 (Synthesis)</h2>
+
+  <h3>一致性检查</h3>
+  <table>
+    <tr><th>检查项</th><th>结论</th></tr>
+    <tr>
+      <td>L1 故事(全球龙头) vs. L8 结构(三家自称第一,集中度不足)</td>
+      <td>⚠️ <b>不完全一致</b>。"龙头"是公司视角,行业视角尚未形成共识</td>
+    </tr>
+    <tr>
+      <td>L4 物理时间护城河(海外认证 2-3 年) vs. L3 海外营收 -24.09%</td>
+      <td>⚠️ <b>潜在矛盾</b>。护城河在,但护城河里的客户在转移采购</td>
+    </tr>
+    <tr>
+      <td>L6 估值(已定价 2026 全年景气) vs. L7 类比(周期股顶部 PE 反而最低)</td>
+      <td>⚠️ <b>明显矛盾</b>。市场用成长股 PE 给周期股定价</td>
+    </tr>
+    <tr>
+      <td>L2 合同(框架而非订单) vs. L1 故事(CATL 10 万吨)</td>
+      <td>⚠️ <b>故事 &gt; 合同</b>,典型软包装</td>
+    </tr>
+  </table>
+
+  <h3>最弱环</h3>
+  <div class="red-flag">
+    <span class="red-flag-label">⚠ 核心风险变量</span>
+    <p><b>最弱环 = L6 估值 + L8 结构</b>。市场给胜华定价用的是"成长龙头 + 平台化"叙事(估值溢价大),但行业结构还在整合期末尾,煤化工巨头威胁未消;一旦 2026 Q2/Q3 碳酸酯价格不能持续上行,或华鲁恒升宣布大幅扩产,叙事即破。</p>
+    <p>第二弱环 = L2 商业。CATL 10 万吨是框架协议,真正的兑现率和价格条款都是开放的,管理层若不能在 2026 中报披露具体进展,市场叙事将开始打折。</p>
+  </div>
+
+  <h3>八层评分总览</h3>
+  <table>
+    <tr><th>层级</th><th>结论</th><th>强度</th></tr>
+    <tr><td>L1 现象</td><td>故事完整,但基石论点(反转 + 平台化)需要持续验证</td><td><span class="score-badge score-mid">中</span></td></tr>
+    <tr><td>L2 商业</td><td>合同停留在战略合作 / 框架级别,法律强度弱</td><td><span class="score-badge score-weak">弱</span></td></tr>
+    <tr><td>L3 战略</td><td>下游议价权丧失,上游有一体化威胁</td><td><span class="score-badge score-weak">弱</span></td></tr>
+    <tr><td>L4 技术/物理</td><td>海外认证 + 关税是真护城河,技术 know-how 在被侵蚀</td><td><span class="score-badge score-mid">中</span></td></tr>
+    <tr><td>L5 生态</td><td>客户基本是半锁定 / 伪锁定,无真正粘性</td><td><span class="score-badge score-weak">弱</span></td></tr>
+    <tr><td>L6 估值</td><td>已定价 2026 完美兑现,赔率不利</td><td><span class="score-badge score-weak">弱</span></td></tr>
+    <tr><td>L7 类比</td><td>历史样本警告:这是周期反弹中段而非起点</td><td><span class="score-badge score-weak">弱</span></td></tr>
+    <tr><td>L8 结构</td><td>整合期末尾,但煤化工威胁导致结构性溢价有限</td><td><span class="score-badge score-mid">中</span></td></tr>
+  </table>
+
+  <h3>下一步:需要追踪 / 验证的具体问题</h3>
+  <ol>
+    <li><b>追踪 2026 H1 公告</b>:CATL 框架协议 10 万吨的实际兑现率,以及前五大客户名单与占比</li>
+    <li><b>追踪 DMC / EC 月度价格</b>(百川盈孚 / 卓创资讯):跌破 Q1 均价就是周期顶信号</li>
+    <li><b>追踪海科新源 100 万吨产能</b>投产节奏,以及华鲁恒升是否宣布碳酸酯扩产</li>
+    <li><b>追踪 H 股递表进展</b>:中证监备案 → 港交所聆讯 → 招股价区间,该区间是机构对长期价值的"硬定价"</li>
+    <li><b>追踪硅基负极 B 样进度</b>:是否进入 A 样;若 2026 年内无任何客户量产订单,平台化故事需折价</li>
+  </ol>
+
+  <h3>体系结论(不构成投资建议)</h3>
+  <div class="verdict">
+    <span class="verdict-label">体系结论</span>
+    <p><b>八层穿透后,胜华的状态是:行业地位真、合同强度弱、估值已定价完美兑现、赔率不利</b>。这是一只<b>典型的周期反弹中段 + 借平台化故事抬估值</b>的标的,不符合"3:1 赔率"和"安全边际"的核心原则。</p>
+    <p>若以八层框架的纪律严格执行,该标的<b>在 L6 估值与 L2 商业两层就应当停止深入</b>。要参与的最佳场景应当是:(a) 股价回撤至 70-80 元区间(对应 200 亿市值);(b) DMC 价格创新高且至少有两份具体采购合同(非框架)披露;(c) 海外营收同比转正。</p>
+    <p>当前价位的合理操作是<b>观察而非介入</b>。已持有者需要明确自己赚的是周期 Beta(短中期)还是平台 Alpha(2-3 年),两者要求的卖出纪律完全不同。</p>
+  </div>
+</section>
+
+<!-- ============ 数据来源 ============ -->
+<section id="sources-all">
+  <h2><span class="num">📚</span>全部数据来源</h2>
+  <div class="sources">
+    <div class="sources-label">公司公告 / 招股书</div>
+    <ul>
+      <li><a href="http://file.finance.sina.com.cn/211.154.219.97:9494/MRGG/CNSESH_STOCK/2025/2025-4/2025-04-11/10864334.PDF">石大胜华新材料集团股份有限公司 2024 年年度报告(新浪财经 PDF)</a></li>
+      <li><a href="http://file.finance.sina.com.cn/211.154.219.97:9494/MRGG/CNSESH_STOCK/2025/2025-8/2025-08-26/11355640.PDF">石大胜华 2025 年半年度报告(新浪财经 PDF)</a></li>
+      <li><a href="http://file.finance.sina.com.cn/211.154.219.97:9494/MRGG/CNSESH_STOCK/2026/2026-3/2026-03-31/12045604.PDF">石大胜华 2025 年年度报告(新浪财经 PDF)</a></li>
+      <li><a href="https://static.cninfo.com.cn/finalpage/2025-08-22/1224535076.PDF">石大胜华 2025-08-22 向特定对象发行 A 股股票上市公告书(巨潮 PDF)</a></li>
+      <li><a href="https://stock.stockstar.com/notice/SN2026042900026413.shtml">石大胜华 2026 年第一季度报告(证券之星)</a></li>
+      <li><a href="https://finance.sina.com.cn/roll/2026-04-02/doc-inhszpqt4762105.shtml">石大胜华关于向香港联交所递交 H 股发行上市的申请并刊发申请资料的公告(2026-04-02)</a></li>
+    </ul>
+
+    <div class="sources-label">业绩 / 行业报道</div>
+    <ul>
+      <li><a href="https://stock.stockstar.com/RB2025041200007490.shtml">石大胜华 2024 年年报简析(证券之星)</a></li>
+      <li><a href="https://stock.stockstar.com/KX2026033000033198.shtml">石大胜华 2025 年净利润 1589.85 万元,同比下降 3.17%(证券之星)</a></li>
+      <li><a href="https://stock.stockstar.com/RB2026050200000153.shtml">石大胜华 Q1 净利增 1086.75%(证券之星)</a></li>
+      <li><a href="https://caifuhao.eastmoney.com/news/20260429092039051516820">石大胜华一季度扣非归母净利润同比增盈 3.1 亿元(东方财富)</a></li>
+      <li><a href="https://www.sohu.com/a/1016499649_115377">石大胜华 2026 年一季报简析(搜狐)</a></li>
+      <li><a href="https://time-weekly.com/post/320502">电解液溶剂龙头石大胜华年报透视:海外市场贡献七成利润,国内激进扩张应收账款翻倍(时代周报)</a></li>
+      <li><a href="https://finance.sina.com.cn/jjxw/2026-04-25/doc-inhvskfh7402581.shtml">全球电解液溶剂出货六连冠,经营现金流三年入不敷出,拟构建 A+H 双融资平台(新浪财经)</a></li>
+      <li><a href="https://finance.sina.com.cn/roll/2025-03-05/doc-inenrcym1763463.shtml">石大胜华与宁德时代达成战略合作,2025 年底前预计供应电解液 10 万吨(新浪财经)</a></li>
+      <li><a href="https://www.stcn.com/article/detail/1564288.html">石大胜华与宁德时代达成战略合作(证券时报)</a></li>
+      <li><a href="https://stock.stockstar.com/RB2026051400008251.shtml">石大胜华 2026-05-13 主力资金净卖出 1.09 亿元(证券之星)</a></li>
+      <li><a href="https://caifuhao2.eastmoney.com/news/20260507193452510719630">小作文突袭,石大胜华一度跌停,公司称内容严重失实(东方财富)</a></li>
+    </ul>
+
+    <div class="sources-label">行业 / 竞争对手</div>
+    <ul>
+      <li><a href="https://libattery.ofweek.com/2025-05/ART-36002-8120-30663272.html">超 40% 全球份额!电解液溶剂龙头一体化布局为电池"造血"(OFweek 锂电)</a></li>
+      <li><a href="https://caifuhao.eastmoney.com/news/20251126162242147695800">电解液溶剂龙头!石大胜华、华一股份、海科新源,谁是隐形赢家?(东方财富)</a></li>
+      <li><a href="https://cj.sina.com.cn/articles/view/7857201851/1d45362bb0680195iw">电解液溶剂龙头海科新源股价创新高(新浪财经)</a></li>
+      <li><a href="https://www.time-weekly.com/post/290944">海科新源与对手皆自称"市占率第一",产销量却显著低于对手(时代周报)</a></li>
+      <li><a href="https://m.gelonghui.com/p/1043433">全球电池级碳酸二甲酯(DMC)市场深度剖析:产能销量销售收入及厂商占有率排名(格隆汇)</a></li>
+      <li><a href="https://tanhexincai.com/zhuanjiaziyuan/1203.html">碳酸二甲酯行业持续"内卷"(碳和新材)</a></li>
+      <li><a href="https://file.iyanbao.com/pdf/31294-e9efd5e1-9e21-4dea-84cf-105103a1d79b.pdf">华鲁恒升公司深度研究(研报 PDF)</a></li>
+      <li><a href="https://emcreative.eastmoney.com/app_fortune/article/index.html?artCode=20250908110648598412910&postId=1596416498">硅基负极突破性布局:产能与量产进度,胜华眉山基地(东方财富)</a></li>
+      <li><a href="https://news.smm.cn/news/103322783">胜华新材助力 SMM 制作《2025 年中国硅基负极材料产业分布图》(上海有色网)</a></li>
+    </ul>
+
+    <div class="sources-label">股权 / 资本运作</div>
+    <ul>
+      <li><a href="https://www.jiemian.com/article/8913739.html">实控权落定青岛国资,胜华新材 45 亿定增预案重启(界面新闻)</a></li>
+      <li><a href="http://www.21jingji.com/article/20230112/herald/d7364b05b60435647ca244f8614090e9.html">两家上市公司股权变更,青岛资本力量再度发力(21 经济网)</a></li>
+      <li><a href="https://caifuhao.eastmoney.com/news/20260402074313452630070">新股消息:石大胜华(603026.SH)递表港交所,全球电解液溶剂市场出货量连续六年排名第一(东方财富)</a></li>
+      <li><a href="https://m.rccaijing.com/news-7445306419706525311.html">200 亿市值石大胜华冲击港股 IPO:亏损收窄,实控人是西海岸国资局(瑞财经)</a></li>
+    </ul>
+
+    <div class="sources-label">未查到精确数据的字段</div>
+    <ul>
+      <li>2025 年报前五大客户名单 / 销售占比 → 需调阅完整年报附注或港股招股书</li>
+      <li>2026-05 实时 PE-TTM / PB 精确数值 → 建议从同花顺 / 东方财富 / 理杏仁查实时</li>
+      <li>2026 Q2 / Q3 DMC、EC、EMC 月度价格 → 需百川盈孚 / 卓创资讯付费数据</li>
+      <li>主要券商 2026 年最新评级与目标价(仅找到一份中泰证券苏晨的旧研报,价位 ¥39.4) → 需 wind / choice 终端查最新</li>
+      <li>硅基负极、LiFSI 产线具体投产时间表 → 需港股招股书披露后补</li>
+    </ul>
+  </div>
+</section>
+
+<div class="footer">
+  本报告基于公开信息整理,仅作个人研究与框架训练用途,不构成任何投资建议。<br>
+  框架来源:八层穿透分析框架(Eight-Layer Penetration Framework)v1 · 分析时点:2026-05-18
+</div>
+
+</main>
+
+</body>
+</html>
