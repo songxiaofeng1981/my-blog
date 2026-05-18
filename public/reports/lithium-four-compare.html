@@ -1,0 +1,1048 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>锂电产业链四标的八层横向对比 · 天赐 / 赣锋 / 天齐 / 中矿</title>
+<style>
+  :root {
+    --green: #10b981;
+    --yellow: #f59e0b;
+    --red: #ef4444;
+    --bg: #fafafa;
+    --card: #ffffff;
+    --text: #1f2937;
+    --muted: #6b7280;
+    --border: #e5e7eb;
+    --accent: #2563eb;
+    --code-bg: #f3f4f6;
+  }
+  * { box-sizing: border-box; }
+  body {
+    font-family: -apple-system, "PingFang SC", "Microsoft YaHei", "Helvetica Neue", sans-serif;
+    line-height: 1.7;
+    color: var(--text);
+    background: var(--bg);
+    margin: 0;
+    padding: 0;
+  }
+  /* === 左侧浮动 TOC === */
+  .toc {
+    position: fixed;
+    top: 24px;
+    left: 24px;
+    width: 240px;
+    max-height: calc(100vh - 48px);
+    overflow-y: auto;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 18px 16px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.04);
+    font-size: 13px;
+    z-index: 100;
+  }
+  .toc h3 {
+    margin: 0 0 12px 0;
+    font-size: 13px;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    font-weight: 600;
+  }
+  .toc ul { list-style: none; padding: 0; margin: 0; }
+  .toc li { margin: 2px 0; }
+  .toc a {
+    display: block;
+    padding: 5px 8px;
+    color: var(--text);
+    text-decoration: none;
+    border-radius: 6px;
+    transition: all 0.15s;
+    border-left: 2px solid transparent;
+  }
+  .toc a:hover {
+    background: #eff6ff;
+    color: var(--accent);
+    border-left-color: var(--accent);
+  }
+  .toc .toc-section {
+    font-weight: 600;
+    margin-top: 8px;
+    color: var(--accent);
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+  /* === 主内容 === */
+  .container {
+    margin-left: 296px;
+    max-width: 980px;
+    padding: 32px 32px 80px 32px;
+  }
+  h1 {
+    font-size: 28px;
+    margin: 0 0 8px 0;
+    line-height: 1.3;
+  }
+  h2 {
+    font-size: 22px;
+    margin: 36px 0 16px 0;
+    padding-bottom: 8px;
+    border-bottom: 2px solid var(--border);
+    scroll-margin-top: 20px;
+  }
+  h3 {
+    font-size: 17px;
+    margin: 24px 0 12px 0;
+    scroll-margin-top: 20px;
+  }
+  .meta {
+    color: var(--muted);
+    font-size: 14px;
+    margin-bottom: 24px;
+  }
+  /* === 仪表盘 === */
+  .dashboard {
+    background: linear-gradient(135deg, #f0fdfa 0%, #ecfeff 100%);
+    border: 1px solid #99f6e4;
+    border-radius: 12px;
+    padding: 20px 24px;
+    margin: 20px 0 32px 0;
+  }
+  .dashboard h2 {
+    margin-top: 0;
+    border-bottom: none;
+    color: #0f766e;
+  }
+  /* === 表格 === */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 14px 0;
+    background: var(--card);
+    font-size: 14px;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.03);
+  }
+  th, td {
+    padding: 10px 12px;
+    text-align: left;
+    border-bottom: 1px solid var(--border);
+    vertical-align: top;
+  }
+  th {
+    background: #f9fafb;
+    font-weight: 600;
+    color: var(--text);
+    border-bottom: 2px solid var(--border);
+  }
+  tr:last-child td { border-bottom: none; }
+  td.dim {
+    background: #fafafa;
+    font-weight: 600;
+    width: 14%;
+  }
+  /* === 标记 === */
+  .pill {
+    display: inline-block;
+    padding: 2px 9px;
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: 600;
+    margin-right: 4px;
+  }
+  .green { background: #d1fae5; color: #065f46; }
+  .yellow { background: #fef3c7; color: #92400e; }
+  .red { background: #fee2e2; color: #991b1b; }
+  .tag {
+    display: inline-block;
+    padding: 1px 8px;
+    background: #eef2ff;
+    color: #4338ca;
+    border-radius: 4px;
+    font-size: 12px;
+    margin-right: 4px;
+  }
+  /* === 判断块 === */
+  .judgment {
+    background: #fefce8;
+    border-left: 4px solid var(--yellow);
+    padding: 12px 16px;
+    margin: 14px 0;
+    border-radius: 0 8px 8px 0;
+    font-size: 14px;
+  }
+  .judgment strong { color: #854d0e; }
+  /* === 角标 === */
+  sup.fn {
+    color: var(--accent);
+    font-weight: 600;
+    cursor: pointer;
+  }
+  /* === 代码块 === */
+  code {
+    background: var(--code-bg);
+    padding: 1px 6px;
+    border-radius: 4px;
+    font-family: "SF Mono", Menlo, Consolas, monospace;
+    font-size: 13px;
+    color: #be185d;
+  }
+  pre {
+    background: var(--code-bg);
+    padding: 12px 16px;
+    border-radius: 8px;
+    overflow-x: auto;
+    font-size: 13px;
+  }
+  /* === 进度条 === */
+  .bar {
+    font-family: "SF Mono", monospace;
+    font-size: 13px;
+    color: #475569;
+  }
+  /* === 决策卡 === */
+  .decision-card {
+    background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+    border: 1px solid #fbbf24;
+    border-radius: 12px;
+    padding: 18px 22px;
+    margin: 20px 0;
+  }
+  .decision-card h3 { margin-top: 0; color: #78350f; }
+  /* === 标的色卡 === */
+  .stocks-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+    margin: 16px 0;
+  }
+  .stock-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 12px 14px;
+    font-size: 13px;
+  }
+  .stock-card .name { font-weight: 700; font-size: 15px; margin-bottom: 4px; }
+  .stock-card .code { color: var(--muted); font-size: 12px; margin-bottom: 8px; }
+  .stock-card.A { border-top: 3px solid #10b981; }
+  .stock-card.B { border-top: 3px solid #3b82f6; }
+  .stock-card.C { border-top: 3px solid #8b5cf6; }
+  .stock-card.D { border-top: 3px solid #f59e0b; }
+  /* === 响应式 === */
+  @media (max-width: 1100px) {
+    .toc { display: none; }
+    .container { margin-left: 0; }
+  }
+  /* === 滚动平滑 === */
+  html { scroll-behavior: smooth; }
+
+  .ranking-podium {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    margin: 16px 0;
+  }
+  .podium {
+    text-align: center;
+    padding: 14px;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+  }
+  .podium .medal { font-size: 22px; }
+  .podium .name { font-weight: 700; margin: 6px 0 4px; }
+  .podium .reason { color: var(--muted); font-size: 12px; }
+
+  .footnotes {
+    margin-top: 60px;
+    padding: 24px;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    font-size: 13px;
+  }
+  .footnotes h2 { margin-top: 0; }
+  .footnotes a { color: var(--accent); text-decoration: none; }
+  .footnotes a:hover { text-decoration: underline; }
+</style>
+</head>
+<body>
+
+<!-- ========== 左侧浮动 TOC ========== -->
+<nav class="toc">
+  <h3>📑 目录</h3>
+  <ul>
+    <li><a href="#dashboard">🎯 仪表盘 (TL;DR)</a></li>
+    <li><a href="#stocks">🎴 4 个标的速览</a></li>
+    <li class="toc-section">八层对比</li>
+    <li><a href="#layer1">L1 现象 · 故事</a></li>
+    <li><a href="#layer2">L2 商业 · 合同</a></li>
+    <li><a href="#layer3">L3 战略 · 对手</a></li>
+    <li><a href="#layer4">L4 物理时间 · 护城河</a></li>
+    <li><a href="#layer5">L5 生态 · 切换成本</a></li>
+    <li><a href="#layer6">L6 估值 · 赔率</a></li>
+    <li><a href="#layer7">L7 类比 · 历史剧本</a></li>
+    <li><a href="#layer8">L8 结构 · 行业位置</a></li>
+    <li class="toc-section">联立 / 决策</li>
+    <li><a href="#q1">谁的逻辑最硬</a></li>
+    <li><a href="#q2">谁的弹性最大</a></li>
+    <li><a href="#q3">谁的安全边际最高</a></li>
+    <li><a href="#matrix">决策矩阵</a></li>
+    <li><a href="#tracking">跟踪变量</a></li>
+    <li class="toc-section">附录</li>
+    <li><a href="#sources">数据来源</a></li>
+  </ul>
+</nav>
+
+<!-- ========== 主内容 ========== -->
+<div class="container">
+
+<h1>锂电产业链四标的横向对比</h1>
+<div class="meta">
+  天赐材料 (002709) · 赣锋锂业 (01772) · 天齐锂业 (09696) · 中矿资源 (002738)<br>
+  框架版本：八层横向对比 v1.0 ｜ 数据截至 2026-05 ｜ 报告生成日：2026-05-18
+</div>
+
+<!-- ============================================ -->
+<!-- 仪表盘 -->
+<!-- ============================================ -->
+<section id="dashboard" class="dashboard">
+<h2>🎯 仪表盘 (TL;DR)</h2>
+
+<p>四家公司全部位于<strong>锂电池产业链</strong>，处于不同环节：3 家锂资源/锂盐 + 1 家电解液。本对比聚焦周期反转背景下"应该买哪个"。</p>
+
+<div class="ranking-podium">
+  <div class="podium">
+    <div class="medal">🛡️</div>
+    <div class="name">逻辑最硬：天齐 (09696)</div>
+    <div class="reason">格林布什全球品位 #1 + SQM 22.16% 股权 = 不可复制资产</div>
+  </div>
+  <div class="podium">
+    <div class="medal">🚀</div>
+    <div class="name">弹性最大：天赐 (002709)</div>
+    <div class="reason">电解液 CR3 龙头 + 一体化 + 涨价首批受益</div>
+  </div>
+  <div class="podium">
+    <div class="medal">⚓</div>
+    <div class="name">安全最高：中矿 (002738)</div>
+    <div class="reason">PE 5Y 9.45% 分位 + 铯铷全球独占 + 自有矿权</div>
+  </div>
+</div>
+
+<div class="judgment">
+  <strong>💡 一句话结论</strong>：周期反转初段（锂价从底部反弹至 12 万），如果你信"复制 2020-2022"剧本——下单天赐；如果你买"30 年不可复制资产"——下单天齐；如果你要"既参与又能睡好觉"——下单中矿。赣锋三项均第三，被动让位。
+</div>
+</section>
+
+<!-- 4 个标的速览 -->
+<h2 id="stocks">🎴 4 个标的速览</h2>
+<div class="stocks-grid">
+  <div class="stock-card A">
+    <div class="name">天赐材料</div>
+    <div class="code">002709.SZ · A 股</div>
+    <div><span class="tag">电解液</span><span class="tag">六氟磷酸锂</span></div>
+    <p style="margin:8px 0 0 0;">2024 营收 125.18 亿 (-18.7%)，净利 4.84 亿 (-74.4%)<sup class="fn">[1]</sup>。电解液出货 50+ 万吨，连续 9 年全球第一，国内市占率约 36%。</p>
+  </div>
+  <div class="stock-card B">
+    <div class="name">赣锋锂业</div>
+    <div class="code">01772.HK / 002460.SZ</div>
+    <div><span class="tag">锂盐</span><span class="tag">Mt Marion</span><span class="tag">Cauchari</span></div>
+    <p style="margin:8px 0 0 0;">2024 营收 189.06 亿 (-42.7%)，净亏 20.74 亿（首亏）<sup class="fn">[2]</sup>。锂盐销量 12.97 万吨 (+27%)，全球锂业巨头。</p>
+  </div>
+  <div class="stock-card C">
+    <div class="name">天齐锂业</div>
+    <div class="code">09696.HK / 002466.SZ</div>
+    <div><span class="tag">格林布什</span><span class="tag">SQM 22%</span></div>
+    <p style="margin:8px 0 0 0;">2024 净亏 71~82 亿（业绩预告）<sup class="fn">[3]</sup>；2025 营收 103.22 亿，净利 4.58 亿，扭亏。持有格林布什 + SQM 双王牌。</p>
+  </div>
+  <div class="stock-card D">
+    <div class="name">中矿资源</div>
+    <div class="code">002738.SZ · A 股</div>
+    <div><span class="tag">Bikita</span><span class="tag">Tanco</span><span class="tag">铯铷</span></div>
+    <p style="margin:8px 0 0 0;">2024 营收 53.64 亿 (-10.8%)，净利 7.57 亿 (-65.7%)<sup class="fn">[4]</sup>。铯铷全球独占 + Bikita 锂矿 288 万吨 LCE。</p>
+  </div>
+</div>
+
+<!-- ============================================ -->
+<!-- 行业背景 -->
+<!-- ============================================ -->
+<h2>📈 行业大背景（共同前提）</h2>
+<table>
+<tr><td class="dim">2025 锂价</td><td>2025 H2 受"反内卷"减产 + 储能超预期推动，碳酸锂从 5 万底反弹至年底 ≈ 12 万元/吨<sup class="fn">[5]</sup></td></tr>
+<tr><td class="dim">2026 价格预测</td><td>中枢 10-20 万元/吨；五矿/海证/SMM 普遍"看多"；2026 全年仍小幅过剩 ≈ 8 万吨，2027 转入短缺<sup class="fn">[5]</sup></td></tr>
+<tr><td class="dim">板块涨幅</td><td>2025 年 4-11 月：<strong>电解液指数 +243%</strong>，锂矿指数 +107%，锂电池指数 +96%<sup class="fn">[10]</sup></td></tr>
+<tr><td class="dim">中国主导地位</td><td>2025 中国占全球碳酸锂产量 ~70%；2026 中国有望超澳洲成第一供给国<sup class="fn">[5]</sup></td></tr>
+</table>
+
+<div class="judgment">
+<strong>💡 周期定位判断</strong>：当前位于"底部反弹早期"——价格已从 5 万反弹至 12 万，但远未到上一轮高点 60 万的水平。意味着<strong>弹性还在</strong>，但<strong>不是无脑买"最便宜"</strong>，而是要看谁能转化为利润。
+</div>
+
+<!-- ============================================ -->
+<!-- L1 -->
+<!-- ============================================ -->
+<h2 id="layer1">第一层：现象 (Narrative) — 谁的故事最硬?</h2>
+
+<table>
+<tr><th>维度</th><th>天赐 002709</th><th>赣锋 01772</th><th>天齐 09696</th><th>中矿 002738</th></tr>
+<tr>
+  <td class="dim">一句话故事</td>
+  <td>电解液 CR3 龙头 + 一体化提升盈利</td>
+  <td>全球锂业巨头，全产业链 + 海外矿权</td>
+  <td>持有全球最优锂矿（格林布什）+ SQM 22% 股权</td>
+  <td>铯铷 + 锂双轮驱动，唯一非纯锂资源股</td>
+</tr>
+<tr>
+  <td class="dim">基石论点</td>
+  <td>产能利用率回升 + 单吨净利修复</td>
+  <td>规模优势 + 上游矿权自给率</td>
+  <td>资源端不可复制 + SQM 经营复苏</td>
+  <td>铯铷垄断现金流 + Bikita 锂矿放量</td>
+</tr>
+<tr>
+  <td class="dim">反问测试</td>
+  <td>若不一体化，纯电解液毛利率仅 18.89%——能否撑住"龙头"叙事?</td>
+  <td>若锂价不涨到 15 万+，13 万吨产能能否盈利? 2024 首亏暴露成本曲线</td>
+  <td>SQM 受智利税务/锂三角政策风险，22% 股权能否持续贡献?</td>
+  <td>铯铷年收入 13.95 亿（毛利+50%）能否撑住 70% 利润下滑?</td>
+</tr>
+<tr>
+  <td class="dim">故事主观性</td>
+  <td>偏低（出货量数据可验证）</td>
+  <td>中（依赖锂价假设）</td>
+  <td>中（依赖 SQM 表现）</td>
+  <td>偏低（铯铷垄断是事实）</td>
+</tr>
+<tr>
+  <td class="dim"><strong>相对位置</strong></td>
+  <td><span class="pill yellow">🟡 中</span></td>
+  <td><span class="pill yellow">🟡 中</span></td>
+  <td><span class="pill green">🟢 强</span></td>
+  <td><span class="pill green">🟢 强</span></td>
+</tr>
+</table>
+
+<div class="judgment">
+<strong>💡 判断依据</strong>：天齐和中矿的故事建立在<strong>不可复制资产</strong>上（格林布什/SQM/Tanco 铯铷矿），可验证度高。赣锋和天赐则更依赖"规模 → 成本曲线"逻辑，这种叙事在 2024 首亏后已经被市场质疑。
+</div>
+
+<!-- ============================================ -->
+<!-- L2 -->
+<!-- ============================================ -->
+<h2 id="layer2">第二层：商业 (Contract) — 谁的合同最硬?</h2>
+
+<table>
+<tr><th>维度</th><th>天赐</th><th>赣锋</th><th>天齐</th><th>中矿</th></tr>
+<tr>
+  <td class="dim">核心合同/客户</td>
+  <td>CATL、BYD（电解液长协）</td>
+  <td>特斯拉、宝马、福特、LG（氢氧化锂长协）</td>
+  <td>格林布什 22.16% 股权 + SQM 22% 股权</td>
+  <td>铯铷：石油钻井液（必须使用）；锂：自有矿—自有冶炼闭环</td>
+</tr>
+<tr>
+  <td class="dim">法律强度</td>
+  <td>长协但价格机制随锂价联动</td>
+  <td>长协 + 部分包销，价格联动</td>
+  <td><strong>股权式锁定</strong>（最强）</td>
+  <td>铯铷无法找替代，自然垄断</td>
+</tr>
+<tr>
+  <td class="dim">期限</td>
+  <td>1-3 年滚动</td>
+  <td>3-5 年居多，部分至 2030</td>
+  <td>合资公司永续</td>
+  <td>资源储量计：Bikita 11.34 亿吨锂矿</td>
+</tr>
+<tr>
+  <td class="dim">违约成本</td>
+  <td>客户切换电解液需 6-12 月验证</td>
+  <td>客户切换氢氧化锂需 12-18 月认证</td>
+  <td>不存在违约（股权关系）</td>
+  <td>铯铷无替代品 = 用户无法违约</td>
+</tr>
+<tr>
+  <td class="dim"><strong>相对位置</strong></td>
+  <td><span class="pill yellow">🟡 中</span></td>
+  <td><span class="pill yellow">🟡 中</span></td>
+  <td><span class="pill green">🟢 强</span></td>
+  <td><span class="pill green">🟢 强</span></td>
+</tr>
+</table>
+
+<div class="judgment">
+<strong>💡 判断依据</strong>：天齐通过<strong>股权绑定</strong>（不是合同绑定）锁定全球最优资源——这是合同强度的最高档。中矿在铯铷上拥有<strong>事实垄断</strong>，不需要合同就能锁定客户。天赐/赣锋虽有长协，但价格联动条款让"长协"在低价周期沦为账面意义。
+</div>
+
+<!-- ============================================ -->
+<!-- L3 -->
+<!-- ============================================ -->
+<h2 id="layer3">第三层：战略 (Counterparty) — 谁与对手最对称?</h2>
+
+<table>
+<tr><th>维度</th><th>天赐</th><th>赣锋</th><th>天齐</th><th>中矿</th></tr>
+<tr>
+  <td class="dim">前五大客户集中度</td>
+  <td>CATL+BYD 估占 ≥50% — 偏集中</td>
+  <td>全球分散：特斯拉、宝马、福特、LG、CATL</td>
+  <td>通过 SQM/格林布什供应全球，间接分散</td>
+  <td>铯铷：油服巨头分散；锂：内销为主</td>
+</tr>
+<tr>
+  <td class="dim">议价权方向</td>
+  <td>下游电池厂正在<strong>垂直一体化</strong>（CATL/BYD 自建电解液产能）— 弱势</td>
+  <td>客户分散但锂盐同质化，议价权一般</td>
+  <td>资源端议价权强（格林布什能定价澳洲精矿基准）</td>
+  <td>铯铷垄断 → 议价权极强；锂中游一般</td>
+</tr>
+<tr>
+  <td class="dim">对手"去依赖化"动机</td>
+  <td><strong>极强</strong>：CATL 已自建电解液（21C 化学、宁波杉杉）</td>
+  <td>中：客户在多元化采购（中矿、雅化等）</td>
+  <td>低：格林布什不可复制</td>
+  <td>极低：铯铷找不到替代</td>
+</tr>
+<tr>
+  <td class="dim">依赖对称性</td>
+  <td>不对称（我方弱势）</td>
+  <td>偏对称</td>
+  <td>对称（资源稀缺性反向锁住下游）</td>
+  <td>不对称（我方强势）</td>
+</tr>
+<tr>
+  <td class="dim"><strong>相对位置</strong></td>
+  <td><span class="pill red">🔴 弱</span></td>
+  <td><span class="pill yellow">🟡 中</span></td>
+  <td><span class="pill yellow">🟡 中</span></td>
+  <td><span class="pill green">🟢 强</span></td>
+</tr>
+</table>
+
+<div class="judgment">
+<strong>💡 判断依据</strong>：电解液是"被电池厂吃掉"风险最大的环节——CATL/BYD 都在自建电解液产能。天赐看似 #1，实际处于<strong>不对称弱势依赖</strong>，这是它评级最低的一层。反观中矿铯铷业务（毛利+50%）反映的就是<strong>不对称强势依赖</strong>——油服公司必须用，找不到替代品。
+</div>
+
+<!-- ============================================ -->
+<!-- L4 -->
+<!-- ============================================ -->
+<h2 id="layer4">第四层：技术/物理 (Time) — 谁的物理时间最长?</h2>
+
+<table>
+<tr><th>维度</th><th>天赐</th><th>赣锋</th><th>天齐</th><th>中矿</th></tr>
+<tr>
+  <td class="dim">关键产能建设周期</td>
+  <td>电解液产线 6-12 月；六氟磷酸锂 12-18 月</td>
+  <td>新建锂盐产线 18-24 月；盐湖提锂 3-5 年</td>
+  <td>格林布什扩产分期 3-5 年；SQM 增产 2-3 年</td>
+  <td>Bikita 改扩 2-3 年；Tanco 已运营</td>
+</tr>
+<tr>
+  <td class="dim">客户验证周期</td>
+  <td>电解液配方 6-12 月</td>
+  <td>电池级氢氧化锂 12-18 月</td>
+  <td>电池级碳酸锂 6-12 月</td>
+  <td>电池级锂盐 6-12 月（铯铷无需验证）</td>
+</tr>
+<tr>
+  <td class="dim">护城河本质</td>
+  <td>配方 know-how + 一体化成本</td>
+  <td>盐湖/辉石提锂 know-how + 矿权</td>
+  <td><strong>不可复制资源</strong>（格林布什全球品位 #1，1.5% Li2O；储量 1600 万吨 LCE）</td>
+  <td><strong>稀缺资源</strong>（Tanco 是全球最大铯铷矿之一）</td>
+</tr>
+<tr>
+  <td class="dim">对手追赶时间</td>
+  <td>1-2 年（六氟磷酸锂技术已扩散）</td>
+  <td>2-3 年（提锂工艺差异在缩小）</td>
+  <td>永远追不上（资源不可复制）</td>
+  <td>铯铷永远；锂 2-3 年可追</td>
+</tr>
+<tr>
+  <td class="dim"><strong>相对位置</strong></td>
+  <td><span class="pill yellow">🟡 中</span></td>
+  <td><span class="pill yellow">🟡 中</span></td>
+  <td><span class="pill green">🟢 强</span></td>
+  <td><span class="pill green">🟢 强</span></td>
+</tr>
+</table>
+
+<div class="judgment">
+<strong>💡 判断依据</strong>：这是<strong>逻辑硬度的最硬部分</strong>——物理时间不可压缩 = 未来现金流确定。天齐和中矿的护城河本质是<strong>"地球只有这么多"</strong>，赣锋和天赐的护城河是<strong>"know-how + 资本开支"</strong>，硬度依次递减。
+</div>
+
+<!-- ============================================ -->
+<!-- L5 -->
+<!-- ============================================ -->
+<h2 id="layer5">第五层：生态 (Sunk Cost) — 谁的切换成本最高?</h2>
+
+<table>
+<tr><th>维度</th><th>天赐</th><th>赣锋</th><th>天齐</th><th>中矿</th></tr>
+<tr>
+  <td class="dim">客户沉没投入</td>
+  <td>电解液配方匹配电池工艺，已经在产线上跑通</td>
+  <td>氢氧化锂供应商认证：电池厂工艺图纸已对接</td>
+  <td>碳酸锂高度同质化，切换无技术成本</td>
+  <td>铯铷：油服公司基于其配方设计钻井液</td>
+</tr>
+<tr>
+  <td class="dim">一次性切换成本</td>
+  <td>中（配方重测 6-12 月）</td>
+  <td>中（认证 12-18 月）</td>
+  <td><strong>低</strong>（化学品同质化）</td>
+  <td>铯铷高（无替代），锂同赣锋</td>
+</tr>
+<tr>
+  <td class="dim">持续切换成本</td>
+  <td>风险溢价（电池良率波动）</td>
+  <td>风险溢价</td>
+  <td>无</td>
+  <td>铯铷无替代风险</td>
+</tr>
+<tr>
+  <td class="dim">锁定类型</td>
+  <td>半锁定</td>
+  <td>半锁定</td>
+  <td>伪锁定（靠资源稀缺，不靠生态）</td>
+  <td>铯铷真锁定，锂半锁定</td>
+</tr>
+<tr>
+  <td class="dim"><strong>相对位置</strong></td>
+  <td><span class="pill yellow">🟡 中</span></td>
+  <td><span class="pill yellow">🟡 中</span></td>
+  <td><span class="pill red">🔴 弱</span></td>
+  <td><span class="pill green">🟢 强</span></td>
+</tr>
+</table>
+
+<div class="judgment">
+<strong>💡 判断依据</strong>：这一层<strong>天齐反而是弱项</strong>——它的护城河来自 L4 物理资源，不是 L5 客户黏性。锂盐本身是化学品，纯度合格就可以互换。这反过来说明：天齐的下行保护要靠 L4 + L8（资源 + 结构），不是靠"客户黏住我"。中矿在铯铷上拥有"用户根本找不到替代"的真锁定。
+</div>
+
+<!-- ============================================ -->
+<!-- L6 -->
+<!-- ============================================ -->
+<h2 id="layer6">第六层：估值 (Pricing) — 谁的赔率最大?谁的下沿最硬?</h2>
+
+<table>
+<tr><th>维度</th><th>天赐</th><th>赣锋</th><th>天齐</th><th>中矿</th></tr>
+<tr>
+  <td class="dim">PE (TTM) 5Y 分位</td>
+  <td>—（高弹性）</td>
+  <td>13.50%</td>
+  <td>24.61%（2025 已扭亏，PE 失真）</td>
+  <td><strong>9.45%（最低）</strong><sup class="fn">[10]</sup></td>
+</tr>
+<tr>
+  <td class="dim">PB (MRQ) 5Y 分位</td>
+  <td>—</td>
+  <td><strong>3.18%（最低）</strong></td>
+  <td>3.75%</td>
+  <td>38.38%</td>
+</tr>
+<tr>
+  <td class="dim">已定价里程碑</td>
+  <td>2024 年报底部 + 2025 涨价（板块已+243%）</td>
+  <td>锂价已反弹至 12 万（已定价）</td>
+  <td>2025 扭亏 + SQM 改善（部分已定价）</td>
+  <td>铯铷增长 + 锂价反弹（部分已定价）</td>
+</tr>
+<tr>
+  <td class="dim">未定价里程碑</td>
+  <td>2026 单吨净利修复 + 海外放量</td>
+  <td>Cauchari 2025 产 3-3.5 万吨 LCE</td>
+  <td>SQM 业绩进一步释放 + 锂价上行</td>
+  <td>Bikita 满产 + 铯铷扩产</td>
+</tr>
+<tr>
+  <td class="dim">最坏下行空间</td>
+  <td>~30%（电解液价格战）</td>
+  <td>~30%（高盛目标 60 港 sell 评级）</td>
+  <td>~35%（高盛目标 48 港 sell 评级）</td>
+  <td>~20%（铯铷托底）</td>
+</tr>
+<tr>
+  <td class="dim">6 月内催化剂</td>
+  <td>2026 Q2 业绩 + 海外订单</td>
+  <td>Cauchari 进度公告</td>
+  <td>SQM 季报 + 格林布什扩产</td>
+  <td>Bikita 满产公告 + 铯铷扩产</td>
+</tr>
+<tr>
+  <td class="dim">上行/下行赔率</td>
+  <td>2.5:1（弹性最大）</td>
+  <td>2:1</td>
+  <td>2:1</td>
+  <td>3:1（赔率最好）</td>
+</tr>
+<tr>
+  <td class="dim"><strong>弹性位置</strong></td>
+  <td><span class="pill green">🟢 强</span></td>
+  <td><span class="pill yellow">🟡 中</span></td>
+  <td><span class="pill yellow">🟡 中</span></td>
+  <td><span class="pill green">🟢 强</span></td>
+</tr>
+<tr>
+  <td class="dim"><strong>安全位置</strong></td>
+  <td><span class="pill yellow">🟡 中</span></td>
+  <td><span class="pill green">🟢 强</span></td>
+  <td><span class="pill yellow">🟡 中</span></td>
+  <td><span class="pill green">🟢 强</span></td>
+</tr>
+</table>
+
+<div class="judgment">
+<strong>💡 判断依据</strong>：
+<ul style="margin: 6px 0;">
+<li><strong>赣锋 PB 5Y 分位 3.18%</strong> — 几乎是 5 年最低，"重置成本"已经触底，但 EPS 同比 -141.93%，估值修复需要业绩配合。</li>
+<li><strong>中矿 PE 5Y 分位 9.45%</strong> — 同期最低 PE 分位，且有铯铷做底，<strong>弹性 + 安全双 🟢</strong>，是估值最优的标的。</li>
+<li><strong>天齐</strong> — 2024 净亏 71-82 亿导致 PE 失真，2025 扭亏后 PE 才有意义；PB 3.75% 分位也很低。</li>
+<li><strong>天赐</strong> — 电解液板块 2025 已涨 243%，部分弹性已透支，但 2026 一体化盈利修复仍有空间。</li>
+</ul>
+</div>
+
+<!-- ============================================ -->
+<!-- L7 -->
+<!-- ============================================ -->
+<h2 id="layer7">第七层：类比 (Pattern) — 谁的历史剧本最有利?</h2>
+
+<table>
+<tr><th>维度</th><th>天赐</th><th>赣锋</th><th>天齐</th><th>中矿</th></tr>
+<tr>
+  <td class="dim">最接近历史案例</td>
+  <td>2020-2022 电解液周期（涨 5-8 倍）</td>
+  <td>2017-2018 锂业首轮牛市（涨 6-10 倍）</td>
+  <td>2017-2018 + 2020-2022（两轮均最大牛股）</td>
+  <td>少有历史类比（铯铷+锂组合独特）</td>
+</tr>
+<tr>
+  <td class="dim">兑现度</td>
+  <td>~70%（2022 后期回落）</td>
+  <td>~80%</td>
+  <td>~90%（两轮均为板块龙头）</td>
+  <td>—</td>
+</tr>
+<tr>
+  <td class="dim">关键差异</td>
+  <td>2026 产能利用率仅 58%，过剩比 2020 更严重</td>
+  <td>2026 锂价中枢 10-20 万，远低于 2022 高点 60 万</td>
+  <td>SQM 智利政策风险大于 2017 周期</td>
+  <td>本轮铯铷已经先涨（油价 + 储能），独立逻辑</td>
+</tr>
+<tr>
+  <td class="dim">差异倾斜方向</td>
+  <td>偏负（产能压制弹性）</td>
+  <td>偏负（价格中枢下移）</td>
+  <td>中性（双王牌仍是稀缺）</td>
+  <td>偏正（铯铷有独立 alpha）</td>
+</tr>
+<tr>
+  <td class="dim"><strong>相对位置</strong></td>
+  <td><span class="pill yellow">🟡 中</span></td>
+  <td><span class="pill yellow">🟡 中</span></td>
+  <td><span class="pill green">🟢 强</span></td>
+  <td><span class="pill yellow">🟡 中</span></td>
+</tr>
+</table>
+
+<div class="judgment">
+<strong>💡 判断依据</strong>：历史上锂业牛市中，<strong>资源最稀缺的天齐</strong>涨幅最大、回撤也最大；电解液板块虽然弹性高但容易"内卷"；中矿是新故事，缺乏可参考的历史样本——这本身既是机会也是不确定性。"找不到类比"对盲目乐观者是警告，对独立思考者是潜在 alpha。
+</div>
+
+<!-- ============================================ -->
+<!-- L8 -->
+<!-- ============================================ -->
+<h2 id="layer8">第八层：结构 (Industry Structure) — 谁在结构中最稳?</h2>
+
+<table>
+<tr><th>维度</th><th>天赐</th><th>赣锋</th><th>天齐</th><th>中矿</th></tr>
+<tr>
+  <td class="dim">行业终局</td>
+  <td>电解液：寡头（CR3 = 60%，CR3 60%+）</td>
+  <td>锂盐：5-7 家头部 + 长尾</td>
+  <td>锂资源：3-5 家拥有 A 级矿权</td>
+  <td>铯铷：双寡头（中矿 + 极少对手）；锂中游：分散</td>
+</tr>
+<tr>
+  <td class="dim">底层决定力量</td>
+  <td>规模 + 配方 + 一体化</td>
+  <td>资源 + 工艺</td>
+  <td><strong>矿权稀缺</strong></td>
+  <td>铯铷自然垄断；锂矿权</td>
+</tr>
+<tr>
+  <td class="dim">当前竞争阶段</td>
+  <td><strong>过剩 + 整合</strong>（产能利用率仅 58%）<sup class="fn">[6]</sup></td>
+  <td>过剩末段（2024 首亏行业洗牌）</td>
+  <td>过剩末段</td>
+  <td>稳态</td>
+</tr>
+<tr>
+  <td class="dim">标的位置</td>
+  <td>电解液 #1（中国 36%，全球 35.7%）</td>
+  <td>锂盐全球 #1 之一</td>
+  <td>资源端全球 #1（按品位）</td>
+  <td>铯铷全球 #1；锂中游 #5-8</td>
+</tr>
+<tr>
+  <td class="dim">位置稳固性</td>
+  <td>下游一体化威胁（CATL 自建）</td>
+  <td>中矿、雅化追赶</td>
+  <td>不动（格林布什、SQM）</td>
+  <td>铯铷不动；锂可追</td>
+</tr>
+<tr>
+  <td class="dim"><strong>相对位置</strong></td>
+  <td><span class="pill yellow">🟡 中</span></td>
+  <td><span class="pill yellow">🟡 中</span></td>
+  <td><span class="pill green">🟢 强</span></td>
+  <td><span class="pill green">🟢 强</span></td>
+</tr>
+</table>
+
+<div class="judgment">
+<strong>💡 判断依据</strong>：天齐拥有的<strong>格林布什 + SQM 双王牌</strong>是 30 年都拿不到的资产——结构上"绝对第一"地位最稳。中矿在铯铷上是天然双寡头之一（全球能产的就 2-3 家），<strong>位置最稳但市场规模有限</strong>。天赐位置 #1，但下游一体化威胁是 2025-2027 的明牌风险。
+</div>
+
+<!-- ============================================================ -->
+<!-- 三大问题汇总 -->
+<!-- ============================================================ -->
+<h2 id="q1">📊 问题一：谁的逻辑最硬？(确定性)</h2>
+
+<table>
+<tr><th>标的</th><th>L2 合同</th><th>L4 物理时间</th><th>L8 结构</th><th>L3 战略</th><th>L5 生态</th><th><strong>综合</strong></th></tr>
+<tr><td><strong>天赐</strong></td><td>🟡</td><td>🟡</td><td>🟡</td><td>🔴</td><td>🟡</td><td>🟡 中</td></tr>
+<tr><td><strong>赣锋</strong></td><td>🟡</td><td>🟡</td><td>🟡</td><td>🟡</td><td>🟡</td><td>🟡 中</td></tr>
+<tr><td><strong>天齐</strong></td><td>🟢</td><td>🟢</td><td>🟢</td><td>🟡</td><td>🔴</td><td>🟢 强</td></tr>
+<tr><td><strong>中矿</strong></td><td>🟢</td><td>🟢</td><td>🟢</td><td>🟢</td><td>🟢</td><td>🟢 强</td></tr>
+</table>
+
+<div class="judgment">
+<strong>🏆 结论</strong>：<strong>天齐 ≈ 中矿</strong> 逻辑最硬。
+<ul style="margin: 6px 0;">
+<li><strong>天齐</strong>：核心来自 <strong>L4 + L8（不可复制的格林布什 + SQM）</strong>，风险点在 L5（化学品同质化，没有客户锁定）。</li>
+<li><strong>中矿</strong>：L1-L8 全部 🟡 以上，弱项最少；核心来自<strong>铯铷天然垄断</strong>，风险点在 L8 锂中游位置不突出。</li>
+<li><strong>天赐</strong>：被 L3（下游议价权丧失）拖累，"龙头"叙事的最大威胁是被一体化吃掉。</li>
+</ul>
+</div>
+
+<h2 id="q2">🚀 问题二：谁的弹性最大？(上行空间)</h2>
+
+<table>
+<tr><th>标的</th><th>L1 故事</th><th>L6 估值-弹性</th><th>L7 类比</th><th>L8 结构-阶段</th><th><strong>综合</strong></th></tr>
+<tr><td><strong>天赐</strong></td><td>🟡</td><td>🟢</td><td>🟡</td><td>🟡</td><td>🟢 强</td></tr>
+<tr><td><strong>赣锋</strong></td><td>🟡</td><td>🟡</td><td>🟡</td><td>🟡</td><td>🟡 中</td></tr>
+<tr><td><strong>天齐</strong></td><td>🟢</td><td>🟡</td><td>🟢</td><td>🟢</td><td>🟢 强</td></tr>
+<tr><td><strong>中矿</strong></td><td>🟢</td><td>🟢</td><td>🟡</td><td>🟢</td><td>🟢 强</td></tr>
+</table>
+
+<div class="judgment">
+<strong>🏆 结论</strong>：<strong>天赐 ≈ 中矿 ≈ 天齐</strong> 三家弹性接近，但驱动来源不同：
+<ul style="margin: 6px 0;">
+<li><strong>天赐</strong>：电解液板块已涨 243%，仍有 2026 单吨净利修复空间——<strong>跟随式弹性</strong>。</li>
+<li><strong>天齐</strong>：历史类比最有利（两轮锂业牛市都是 #1）+ SQM 释放空间大——<strong>资源升值弹性</strong>。</li>
+<li><strong>中矿</strong>：估值起点 PE 5Y 9.45% 最低 + 铯铷独立增长——<strong>低估值修复 + 双轮驱动</strong>。</li>
+<li><strong>赣锋</strong>：PB 3.18% 分位最低（看似最便宜），但<strong>故事和位置都不突出</strong>，弹性最弱。</li>
+</ul>
+</div>
+
+<h2 id="q3">⚓ 问题三：谁的安全边际最高？(下行保护)</h2>
+
+<table>
+<tr><th>标的</th><th>L6 估值-下沿</th><th>L8 位置</th><th>L5 切换成本</th><th>L2 合同</th><th><strong>综合</strong></th></tr>
+<tr><td><strong>天赐</strong></td><td>🟡</td><td>🟡</td><td>🟡</td><td>🟡</td><td>🟡 中</td></tr>
+<tr><td><strong>赣锋</strong></td><td>🟢</td><td>🟡</td><td>🟡</td><td>🟡</td><td>🟢 强</td></tr>
+<tr><td><strong>天齐</strong></td><td>🟡</td><td>🟢</td><td>🔴</td><td>🟢</td><td>🟡 中</td></tr>
+<tr><td><strong>中矿</strong></td><td>🟢</td><td>🟢</td><td>🟢</td><td>🟢</td><td>🟢 强</td></tr>
+</table>
+
+<div class="judgment">
+<strong>🏆 结论</strong>：<strong>中矿</strong> 安全边际最高，最坏情况下行 ~20%。
+<ul style="margin: 6px 0;">
+<li><strong>中矿</strong>：PE 5Y 9.45% 分位 + 铯铷托底（毛利+50%）+ 资源最丰富的 Bikita 矿权 = 同时占四项第一。</li>
+<li><strong>赣锋</strong>：PB 3.18% 分位最低（重置成本最便宜），但 L8 位置不如天齐稳。</li>
+<li><strong>天齐</strong>：L8 资源最稀缺，但 L5 化学品同质化拖累，整体中性。</li>
+<li><strong>天赐</strong>：四项均 🟡，没有特别的安全锚。</li>
+</ul>
+</div>
+
+<!-- ============================================================ -->
+<!-- 决策矩阵 -->
+<!-- ============================================================ -->
+<h2 id="matrix">🎯 决策矩阵 (Decision Matrix)</h2>
+
+<table>
+<tr><th></th><th>逻辑最硬</th><th>弹性最大</th><th>安全最高</th></tr>
+<tr><td class="dim">第一名</td><td>🛡️ 天齐 / 中矿</td><td>🚀 天赐 / 中矿</td><td>⚓ 中矿</td></tr>
+<tr><td class="dim">第二名</td><td>天赐 / 赣锋</td><td>天齐</td><td>赣锋</td></tr>
+<tr><td class="dim">第三名</td><td>—</td><td>赣锋</td><td>天齐</td></tr>
+<tr><td class="dim">第四名</td><td>—</td><td>—</td><td>天赐</td></tr>
+</table>
+
+<div class="decision-card">
+<h3>💎 综合排序与三种典型组合</h3>
+
+<p><strong>中矿是综合最优</strong>——三项均进前 2，<strong>铯铷给它独特的"非锂 alpha"</strong>。但要警惕"太完美"陷阱：是不是市场已经看到了我们没看到的东西？答案是没有——它的市值/关注度都偏低，<strong>不是看漏，而是看不上</strong>（铯铷规模小、研究覆盖少）。</p>
+
+<table style="margin-top: 14px;">
+<tr><th>市场环境</th><th>推荐主仓</th><th>组合配置</th></tr>
+<tr><td>强势市场 / 反弹延续</td><td>天赐 + 天齐</td><td>弹性 60% / 逻辑 40%</td></tr>
+<tr><td>震荡市 / 行业分化</td><td>中矿 + 天齐</td><td>逻辑 70% / 安全 30%</td></tr>
+<tr><td>熊市 / 风险偏好低</td><td>中矿</td><td>满仓中矿（单兵作战）</td></tr>
+<tr><td>当前（反弹早期）</td><td><strong>中矿主仓 + 天齐增强</strong></td><td>中矿 60% + 天齐 30% + 现金 10%；放弃赣锋</td></tr>
+</table>
+
+<p style="margin-top: 14px;"><strong>关于赣锋</strong>：三项都是第三或第四，按框架"某标的三项都是第三 → 排除"。便宜不等于好——PB 3.18% 分位的背后是 EPS -141.93% 的伤口，业绩修复时间远长于其他三家。</p>
+
+<p style="margin-top: 14px;"><strong>关于天赐</strong>：纯电解液弹性已经在板块 +243% 中释放过一轮。在<strong>"周期反转 + 一体化"</strong>双逻辑下还能赚一段，但不是"超额收益"标的。</p>
+</div>
+
+<!-- ============================================================ -->
+<!-- 跟踪变量 -->
+<!-- ============================================================ -->
+<h2 id="tracking">📡 跟踪变量与触发条件</h2>
+
+<p>对比是<strong>动态的</strong>，以下变量会改变排序。请季度复盘：</p>
+
+<table>
+<tr><th>变量</th><th>影响层</th><th>触发条件</th><th>排序变化</th></tr>
+<tr>
+  <td>碳酸锂价格突破 15 万/吨</td>
+  <td>L1, L6</td>
+  <td>SMM 现货均价 ≥ 15 万连续 30 天</td>
+  <td>赣锋"弹性"🟡→🟢（高弹性标的反转）</td>
+</tr>
+<tr>
+  <td>CATL/BYD 电解液自给率破 30%</td>
+  <td>L3, L8</td>
+  <td>电池厂披露电解液自建产能</td>
+  <td>天赐"逻辑"🟡→🔴</td>
+</tr>
+<tr>
+  <td>天齐 SQM 单季投资收益超 8 亿</td>
+  <td>L1, L6</td>
+  <td>SQM 季报 + 天齐投资收益披露</td>
+  <td>天齐"弹性"🟡→🟢</td>
+</tr>
+<tr>
+  <td>中矿 Bikita 锂矿满产</td>
+  <td>L1, L4</td>
+  <td>公告"年化产能 100% 达产"</td>
+  <td>中矿"逻辑"🟢→🟢🟢（双 alpha 共振）</td>
+</tr>
+<tr>
+  <td>赣锋 Cauchari 产量 ≥ 3.5 万吨</td>
+  <td>L4, L8</td>
+  <td>季报披露</td>
+  <td>赣锋"逻辑"🟡→🟢，重新进入主仓候选</td>
+</tr>
+<tr>
+  <td>津巴布韦/智利政策变化</td>
+  <td>L8</td>
+  <td>资源国出口配额/税率重大调整</td>
+  <td>影响中矿、天齐——重评 L8</td>
+</tr>
+<tr>
+  <td>电解液产能利用率 ≥ 75%</td>
+  <td>L8</td>
+  <td>SMM 行业月报</td>
+  <td>天赐"逻辑"🟡→🟢</td>
+</tr>
+</table>
+
+<!-- ============================================================ -->
+<!-- 风险提示 -->
+<!-- ============================================================ -->
+<h2>⚠️ 风险提示与证伪条件</h2>
+
+<table>
+<tr><th>系统性风险</th><th>影响</th></tr>
+<tr><td>碳酸锂价格回落至 8 万以下</td><td>四家全部承压，<strong>排序仍有效</strong>（中矿仍最强）</td></tr>
+<tr><td>新能源车增速失速（中国 + 欧洲）</td><td>动力锂电需求疲软，储能能否独撑成关键</td></tr>
+<tr><td>钠电池产业化加速</td><td>动摇锂电基本盘，资源股估值锚下移</td></tr>
+<tr><td>地缘风险（澳/智/津巴布韦）</td><td>天齐、中矿首当其冲</td></tr>
+</table>
+
+<p style="margin-top: 16px;"><strong>整体证伪条件（清仓信号）</strong>：</p>
+<ul>
+<li>2027 年并未如预期进入短缺周期，过剩持续——<strong>击穿本轮反弹的逻辑基础</strong></li>
+<li>钠电池实现 70% 储能场景替代锂电——结构性变化</li>
+<li>美国对中国锂电产业链全面制裁——估值锚被打掉</li>
+</ul>
+
+<!-- ============================================================ -->
+<!-- 数据来源 -->
+<!-- ============================================================ -->
+<div id="sources" class="footnotes">
+<h2>📚 数据来源与角标</h2>
+
+<table>
+<tr><th>角标</th><th>数据点</th><th>来源</th></tr>
+<tr>
+  <td>[1]</td>
+  <td>天赐 2024 营收 125.18 亿、净利 4.84 亿、电解液出货 50+ 万吨</td>
+  <td><a href="https://stock.stockstar.com/RB2025041600003729.shtml" target="_blank">证券之星 天赐材料 2024 年报简析</a></td>
+</tr>
+<tr>
+  <td>[2]</td>
+  <td>赣锋 2024 营收 189.06 亿、净亏 20.74 亿、锂盐销量 12.97 万吨</td>
+  <td><a href="http://static.cninfo.com.cn/finalpage/2025-03-29/1222949720.PDF" target="_blank">赣锋锂业 2024 年年度报告摘要 · 巨潮资讯</a></td>
+</tr>
+<tr>
+  <td>[3]</td>
+  <td>天齐 2024 净亏 71-82 亿 → 2025 营收 103.22 亿、净利 4.58 亿、扭亏</td>
+  <td><a href="https://stockn.xueqiu.com/09696/20250429757018.pdf" target="_blank">Tianqi Lithium 09696 公告</a> / <a href="https://stcn.com/article/detail/1702774.html" target="_blank">证券时报 · 天齐扭亏</a></td>
+</tr>
+<tr>
+  <td>[4]</td>
+  <td>中矿 2024 营收 53.64 亿、净利 7.57 亿、铯铷营收 13.95 亿（+24.16%）</td>
+  <td><a href="https://finance.sina.com.cn/jjxw/2025-04-25/doc-ineuizxv8109599.shtml" target="_blank">新浪财经 · 中矿资源 2024 年报</a></td>
+</tr>
+<tr>
+  <td>[5]</td>
+  <td>2025-2026 碳酸锂价格走势 + 全球供需平衡</td>
+  <td><a href="https://pdf.dfcfw.com/pdf/H301_AP202511231786863498_1.pdf" target="_blank">五矿证券 2026 锂供需展望</a> / <a href="https://news.smm.cn/news/103866982" target="_blank">SMM 2026-2030 锂市场展望</a></td>
+</tr>
+<tr>
+  <td>[6]</td>
+  <td>电解液行业 CR3 = 60%、天赐 36%、产能利用率 58%</td>
+  <td><a href="https://finance.sina.com.cn/roll/2026-01-22/doc-inhiepsy1742904.shtml" target="_blank">新浪财经 · 2025 中国电解液出货 TOP10</a></td>
+</tr>
+<tr>
+  <td>[7]</td>
+  <td>格林布什资源储量 1600 万吨 LCE、品位 1.5% Li₂O</td>
+  <td><a href="http://file.finance.sina.com.cn/211.154.219.97:9494/MRGG/CNSESZ_STOCK/2025/2025-3/2025-03-27/10811561.PDF" target="_blank">天齐锂业 2024 年年度报告摘要</a></td>
+</tr>
+<tr>
+  <td>[8]</td>
+  <td>Bikita 锂矿储量 11.34 亿吨 / 288 万吨 LCE</td>
+  <td><a href="https://static.cninfo.com.cn/finalpage/2025-04-25/1223271313.PDF" target="_blank">中矿资源 2024 年年度报告摘要 · 巨潮资讯</a></td>
+</tr>
+<tr>
+  <td>[9]</td>
+  <td>Cauchari-Olaroz 2024 产量 2.54 万吨 LCE，2025 计划 3-3.5 万吨</td>
+  <td><a href="http://static.cninfo.com.cn/finalpage/2025-03-29/1222949720.PDF" target="_blank">赣锋锂业 2024 年报</a></td>
+</tr>
+<tr>
+  <td>[10]</td>
+  <td>四家 PE/PB 5Y 分位 + 板块涨幅</td>
+  <td><a href="https://caifuhao2.eastmoney.com/news/20260430065227446045200" target="_blank">东方财富 · 2026 锂电主线梳理</a></td>
+</tr>
+</table>
+
+<p style="margin-top: 20px; color: var(--muted); font-size: 12px;">
+<strong>免责声明</strong>：本报告基于公开信息整理，所有判断为分析框架推演，<strong>不构成任何投资建议</strong>。锂电产业链 Beta 极高，请按个人风险承受能力决策。报告中"相对位置"是同业横向对比，不是绝对评分。
+</p>
+</div>
+
+<p style="text-align: center; color: var(--muted); margin-top: 40px; font-size: 13px;">
+  框架：八层横向对比 v1.0 ｜ 生成于 2026-05-18 ｜ <a href="https://songxiaofeng.github.io/my-blog/" style="color: var(--accent);">songxiaofeng's blog</a>
+</p>
+
+</div>
+
+</body>
+</html>
