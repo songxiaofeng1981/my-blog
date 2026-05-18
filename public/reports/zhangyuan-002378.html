@@ -1,0 +1,1000 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>章源钨业 002378 股票研究报告 v2.0</title>
+<style>
+  * { box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+    margin: 0;
+    background: #fafaf8;
+    color: #222;
+    line-height: 1.7;
+  }
+  .toc {
+    position: fixed;
+    left: 0; top: 0;
+    width: 260px;
+    height: 100vh;
+    background: #1f2937;
+    color: #e5e7eb;
+    padding: 24px 16px;
+    overflow-y: auto;
+    box-shadow: 2px 0 8px rgba(0,0,0,0.05);
+  }
+  .toc h2 {
+    font-size: 15px;
+    color: #9ca3af;
+    margin: 0 0 16px 0;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    border-bottom: 1px solid #374151;
+    padding-bottom: 10px;
+  }
+  .toc ol { list-style: none; padding: 0; margin: 0; }
+  .toc li { margin: 0; }
+  .toc a {
+    display: block;
+    padding: 9px 12px;
+    color: #d1d5db;
+    text-decoration: none;
+    border-radius: 6px;
+    font-size: 14px;
+    transition: all 0.15s;
+    border-left: 3px solid transparent;
+  }
+  .toc a:hover { background: #374151; color: #fff; border-left-color: #60a5fa; }
+  .toc .num {
+    display: inline-block;
+    width: 28px;
+    color: #60a5fa;
+    font-weight: 600;
+    font-family: ui-monospace, monospace;
+  }
+  .toc .meta {
+    font-size: 12px;
+    color: #6b7280;
+    padding: 12px;
+    margin-top: 16px;
+    border-top: 1px solid #374151;
+    line-height: 1.5;
+  }
+  .content {
+    margin-left: 260px;
+    padding: 40px 56px 80px 56px;
+    max-width: 1080px;
+  }
+
+  /* 顶部仪表盘卡片 */
+  .header-card {
+    background: linear-gradient(135deg, #1e3a8a 0%, #6d28d9 100%);
+    color: #fff;
+    padding: 32px;
+    border-radius: 12px;
+    margin-bottom: 32px;
+  }
+  .header-card h1 { font-size: 28px; margin: 0 0 6px 0; font-weight: 700; }
+  .header-card .subtitle { color: #c4b5fd; font-size: 14px; margin-bottom: 20px; }
+  .stat-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+    margin-top: 16px;
+  }
+  .stat {
+    background: rgba(255,255,255,0.08);
+    padding: 14px;
+    border-radius: 8px;
+    border: 1px solid rgba(255,255,255,0.12);
+  }
+  .stat .label { font-size: 11px; color: #c4b5fd; text-transform: uppercase; letter-spacing: 0.8px; }
+  .stat .value { font-size: 20px; font-weight: 700; color: #fff; margin-top: 4px; }
+  .stat .delta { font-size: 12px; color: #4ade80; margin-top: 2px; }
+  .stat .delta.red { color: #fca5a5; }
+  .stat .delta.yellow { color: #fde68a; }
+
+  section {
+    background: #fff;
+    padding: 32px 36px;
+    border-radius: 12px;
+    margin-bottom: 24px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+    scroll-margin-top: 20px;
+  }
+  section h2 {
+    font-size: 22px;
+    margin: 0 0 22px 0;
+    padding-bottom: 12px;
+    border-bottom: 2px solid #f1f5f9;
+    color: #0f172a;
+  }
+  section h2 .num {
+    display: inline-block;
+    background: #6d28d9;
+    color: #fff;
+    font-size: 14px;
+    padding: 3px 10px;
+    border-radius: 4px;
+    margin-right: 12px;
+    font-family: ui-monospace, monospace;
+    vertical-align: middle;
+  }
+  section h3 {
+    font-size: 16px;
+    color: #1e293b;
+    margin: 22px 0 12px 0;
+    padding-left: 10px;
+    border-left: 3px solid #a78bfa;
+  }
+
+  ul { padding-left: 24px; }
+  ul li { margin-bottom: 6px; }
+
+  /* 表格 */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 12px 0;
+    font-size: 14px;
+  }
+  th, td {
+    padding: 10px 12px;
+    text-align: left;
+    border-bottom: 1px solid #e5e7eb;
+    vertical-align: top;
+  }
+  th { background: #f5f3ff; font-weight: 600; color: #4c1d95; }
+  tr:hover { background: #fafbfc; }
+
+  /* 标签 pill */
+  .tag {
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 12px;
+    font-size: 12px;
+    font-weight: 600;
+    margin: 1px 3px 1px 0;
+    border: 1px solid transparent;
+  }
+  .tag-blue   { background: #dbeafe; color: #1e40af; }
+  .tag-green  { background: #dcfce7; color: #166534; }
+  .tag-yellow { background: #fef9c3; color: #854d0e; }
+  .tag-red    { background: #fee2e2; color: #991b1b; }
+  .tag-purple { background: #ede9fe; color: #5b21b6; }
+  .tag-gray   { background: #f1f5f9; color: #475569; }
+
+  /* 判断引用块 */
+  blockquote {
+    margin: 16px 0;
+    padding: 14px 20px;
+    border-left: 4px solid #f59e0b;
+    background: #fffbeb;
+    color: #78350f;
+    border-radius: 0 6px 6px 0;
+  }
+  blockquote.judge {
+    border-left-color: #f59e0b;
+    background: #fffbeb;
+    color: #78350f;
+  }
+  blockquote.danger {
+    border-left-color: #ef4444;
+    background: #fef2f2;
+    color: #7f1d1d;
+  }
+  blockquote.ok {
+    border-left-color: #22c55e;
+    background: #f0fdf4;
+    color: #14532d;
+  }
+  blockquote.info {
+    border-left-color: #3b82f6;
+    background: #eff6ff;
+    color: #1e3a8a;
+  }
+  blockquote strong { color: inherit; }
+
+  /* 进度条 */
+  .bar {
+    font-family: ui-monospace, monospace;
+    font-size: 14px;
+    color: #475569;
+    background: #f8fafc;
+    padding: 6px 10px;
+    border-radius: 4px;
+    border: 1px solid #e2e8f0;
+    display: inline-block;
+    margin: 4px 0;
+  }
+  .bar .filled { color: #6d28d9; font-weight: 700; }
+
+  /* 星级 */
+  .stars { color: #f59e0b; letter-spacing: 1px; font-size: 16px; }
+
+  /* 状态灯 */
+  .lamp {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 10px;
+    font-size: 12px;
+    font-weight: 600;
+  }
+  .lamp-green  { background: #dcfce7; color: #166534; }
+  .lamp-yellow { background: #fef9c3; color: #854d0e; }
+  .lamp-red    { background: #fee2e2; color: #991b1b; }
+
+  /* 角标 */
+  sup.ref {
+    color: #6d28d9;
+    font-weight: 700;
+    font-size: 11px;
+    cursor: help;
+    padding: 0 2px;
+  }
+
+  /* 来源列表 */
+  .sources {
+    margin-top: 20px;
+    padding: 16px 20px;
+    background: #f8fafc;
+    border-radius: 8px;
+    font-size: 13px;
+  }
+  .sources-label {
+    color: #64748b;
+    font-weight: 700;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 8px;
+  }
+  .sources ul { margin: 0; padding-left: 18px; }
+  .sources li { color: #475569; margin-bottom: 4px; }
+  .sources a { color: #2563eb; text-decoration: none; word-break: break-all; }
+  .sources a:hover { text-decoration: underline; }
+  .unknown { color: #94a3b8; font-style: italic; }
+
+  /* TL;DR 仪表盘 */
+  .dashboard-table th { width: 30%; }
+  .dashboard-table td { font-size: 14px; }
+
+  /* SWOT 矩阵 */
+  .swot {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+    margin: 16px 0;
+  }
+  .swot-cell {
+    padding: 14px 18px;
+    border-radius: 8px;
+    border: 1px solid #e5e7eb;
+  }
+  .swot-moat { background: #f0fdf4; border-color: #bbf7d0; }
+  .swot-risk { background: #fef2f2; border-color: #fecaca; }
+  .swot h4 {
+    margin: 0 0 8px 0;
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+  .swot-moat h4 { color: #166534; }
+  .swot-risk h4 { color: #991b1b; }
+  .swot ul { margin: 0; padding-left: 18px; font-size: 13px; }
+  .swot li { margin-bottom: 8px; }
+
+  .footer {
+    text-align: center;
+    color: #94a3b8;
+    font-size: 12px;
+    padding: 40px 0 20px 0;
+    border-top: 1px solid #e5e7eb;
+    margin-top: 40px;
+  }
+
+  @media (max-width: 900px) {
+    .toc { position: static; width: 100%; height: auto; }
+    .content { margin-left: 0; padding: 20px; }
+    .stat-grid { grid-template-columns: repeat(2, 1fr); }
+    .swot { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<aside class="toc">
+  <h2>章节导航</h2>
+  <ol>
+    <li><a href="#ch0"><span class="num">0</span>核心仪表盘</a></li>
+    <li><a href="#ch1"><span class="num">1</span>行业地位 / 天花板</a></li>
+    <li><a href="#ch2"><span class="num">2</span>主业拆解</a></li>
+    <li><a href="#ch3"><span class="num">3</span>财务核心指标</a></li>
+    <li><a href="#ch4"><span class="num">4</span>增长阶段定位</a></li>
+    <li><a href="#ch5"><span class="num">5</span>商业模式透视</a></li>
+    <li><a href="#ch6"><span class="num">6</span>优势 vs 风险</a></li>
+    <li><a href="#ch7"><span class="num">7</span>估值</a></li>
+    <li><a href="#ch8"><span class="num">8</span>外部视角</a></li>
+    <li><a href="#ch9"><span class="num">9</span>催化剂 vs 风险</a></li>
+    <li><a href="#ch10"><span class="num">10</span>结论决策卡</a></li>
+    <li><a href="#meta"><span class="num">▣</span>框架进化协议</a></li>
+    <li><a href="#sources"><span class="num">📚</span>数据来源附录</a></li>
+  </ol>
+  <div class="meta">
+    标的：<b>002378 / 章源钨业</b><br>
+    崇义章源钨业股份有限公司<br>
+    分析时点：2026-05-18<br>
+    框架版本：v2.0 视觉重构版
+  </div>
+</aside>
+
+<main class="content">
+
+<!-- ============ 顶部仪表盘 ============ -->
+<div class="header-card">
+  <h1>章源钨业 002378 · 股票研究报告</h1>
+  <div class="subtitle">钨全产业链民营厂商 · 2025-2026 钨价高位狂飙 · Q1 净利单季超 2025 全年</div>
+  <div class="stat-grid">
+    <div class="stat">
+      <div class="label">收盘价 (2026-05-12)</div>
+      <div class="value">¥32.11</div>
+      <div class="delta red">-3.54% · 5月主力净流出</div>
+    </div>
+    <div class="stat">
+      <div class="label">2026 年初至今涨幅</div>
+      <div class="value">+186%</div>
+      <div class="delta yellow">短期回调风险</div>
+    </div>
+    <div class="stat">
+      <div class="label">2025 营收</div>
+      <div class="value">¥52.02 亿</div>
+      <div class="delta">+41.61% YoY</div>
+    </div>
+    <div class="stat">
+      <div class="label">2025 归母净利</div>
+      <div class="value">¥2.9 亿</div>
+      <div class="delta">+68.73% YoY</div>
+    </div>
+    <div class="stat">
+      <div class="label">2026 Q1 营收</div>
+      <div class="value">¥26.31 亿</div>
+      <div class="delta">+121.76% YoY</div>
+    </div>
+    <div class="stat">
+      <div class="label">2026 Q1 归母净利</div>
+      <div class="value">¥3.81 亿</div>
+      <div class="delta">+795.78% · 单季 &gt; 全年</div>
+    </div>
+    <div class="stat">
+      <div class="label">钨精矿自给率</div>
+      <div class="value">~20%</div>
+      <div class="delta red">原料外购 ~80%</div>
+    </div>
+    <div class="stat">
+      <div class="label">钨资源储量</div>
+      <div class="value">9.46 万吨</div>
+      <div class="delta">6 采矿权 + 10 探矿权</div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ Ch.0 核心仪表盘 ============ -->
+<section id="ch0">
+  <h2><span class="num">0</span>🎯 核心仪表盘 (TL;DR)</h2>
+
+  <table class="dashboard-table">
+    <tr><th>公司名称 / 代码</th><td>崇义章源钨业股份有限公司 / <b>002378.SZ</b><sup class="ref">[1]</sup></td></tr>
+    <tr><th>所属市场</th><td><span class="tag tag-blue">🏷️ A股</span> 深圳中小板</td></tr>
+    <tr><th>细分赛道</th><td>钨业全产业链：钨精矿 → APT → 钨粉 / 碳化钨粉 → 硬质合金 → 切削刀具</td></tr>
+    <tr><th>一句话定位</th><td>江西崇义的民营钨业一体化厂商,靠"自有矿山 + 钨粉/碳化钨 + 硬质合金刀具"赚<b>钨产业链各环节的加价</b>,核心利润弹性来自钨价上行</td></tr>
+    <tr><th>行业地位</th><td><span class="tag tag-yellow">🏷️ 头部之一</span> 钨粉/碳化钨粉国内 #2(2021),硬质合金国内 #5;<b>非"绝对龙头"</b>,绝对龙头是厦门钨业 + 中钨高新<sup class="ref">[2]</sup></td></tr>
+    <tr><th>增长阶段</th><td><span class="tag tag-red">🏷️ 周期反转 + 价格驱动</span> 2024 平稳 → 2025 价格起涨 → 2026 Q1 利润爆发</td></tr>
+    <tr><th>商业模式打分</th><td><span class="stars">⭐⭐⭐☆☆</span> (3/5) —— 一体化覆盖全产业链是加分项,但<b>钨精矿自给率仅 ~20%</b>、深加工占比不足 30%、原料外购 80% 是核心瓶颈</td></tr>
+    <tr><th>估值分位(5Y)</th><td><span class="bar"><span class="filled">█████████░</span> ~90%</span> <span class="lamp lamp-red">⚠️ 历史高位</span><br>52 周区间 ¥6.21–¥48.42,当前 ¥32.11 接近顶部 2/3 分位<sup class="ref">[3]</sup></td></tr>
+    <tr><th>投资态度</th><td><span class="lamp lamp-yellow">🟡 观望</span> 仓位建议 <b>0-3%</b>(已涨 186% 后追入风险高于赔率)</td></tr>
+    <tr><th>最关键的一个风险</th><td><b>钨价见顶 + 库存高位甩货</b>。公司本质是钨价 Beta + 加价 Alpha,钨价从 90 万/标吨回到 50 万,利润弹性反向放大</td></tr>
+    <tr><th>最关键的一个催化剂</th><td><b>出口管制升级 + 矿山扩界注入</b>。淘锡坑(扩界)开发利用方案已报送自然资源部评审<sup class="ref">[4]</sup>,如批复将提升自给率</td></tr>
+  </table>
+
+  <blockquote class="judge">
+    <strong>💡 一句话看懂：</strong>章源是一家钨产业链民营老兵,在 2025-2026 战略金属狂热中被市场重新发现;<b>本质是高弹性的钨价 Beta + 中等强度一体化 Alpha</b>。短期最大问题不是公司不好,而是 <b>价 + 估值已经把好故事讲完了,主力 5 月连续大额净卖出 7 亿+</b>;参与窗口需要等待价格回调或矿山注入实质性兑现。
+  </blockquote>
+</section>
+
+<!-- ============ Ch.1 行业地位与天花板 ============ -->
+<section id="ch1">
+  <h2><span class="num">1</span>🏰 行业地位与天花板</h2>
+
+  <h3>1.1 赛道基本面</h3>
+  <ul>
+    <li><b>细分赛道：</b>钨产业链(钨精矿/APT/钨粉/碳化钨/硬质合金/切削刀具),钨是国家战略性金属,航天/原子能/军工/制造业不可替代<sup class="ref">[5]</sup></li>
+    <li><b>赛道规模：</b>2025 年中国 65% 黑钨精矿均价 21.79 万元/标吨(全年 +59.09%),最高 12 月 46.2 万元;2026 年 3 月报价 83-90 万元/标吨,较 2025 年初涨幅 &gt;400%<sup class="ref">[5]</sup></li>
+    <li><b>行业 CAGR：</b><span class="unknown">未查到精确 3-5 年增速预测(产量增长温和,但价格 CAGR 2024-2026 年化 100%+)</span></li>
+    <li><b>赛道属性：</b>
+      <span class="tag tag-purple">🏷️ 周期性</span>
+      <span class="tag tag-purple">🏷️ 战略资源</span>
+      <span class="tag tag-purple">🏷️ 政策驱动(出口管制)</span>
+      <span class="tag tag-blue">🏷️ 供给硬约束</span>
+    </li>
+  </ul>
+
+  <h3>1.2 市占率可视化</h3>
+  <p><b>钨粉国内份额(2021):</b><br>
+    <span class="bar"><span class="filled">████░░░░░░░░░░░░░░░░</span> 行业 #2(具体百分比未披露)<sup class="ref">[6]</sup></span>
+  </p>
+  <p><b>碳化钨产能(2022-07):</b><br>
+    <span class="bar"><span class="filled">██░░░░░░░░░░░░░░░░░░</span> 6.95% (国内行业 #1 并列株硬)<sup class="ref">[6]</sup></span>
+  </p>
+  <p><b>硬质合金产品总产量(2021):</b><br>
+    <span class="bar"><span class="filled">██░░░░░░░░░░░░░░░░░░</span> 行业 #5(具体百分比未披露)<sup class="ref">[6]</sup></span>
+  </p>
+  <ul>
+    <li><b>龙头等级：</b><span class="tag tag-yellow">🏷️ 头部之一</span> —— 单产能维度可并列国内第一,但综合营收/品种/深加工远低于厦钨 + 中钨高新</li>
+  </ul>
+
+  <h3>1.3 ⚔️ 核心对手横向对决</h3>
+  <table>
+    <tr><th>竞争对手</th><th>2025 前三季营收 (YoY)</th><th>毛利率(趋势)</th><th>核心杀手锏</th><th>核心软肋</th></tr>
+    <tr>
+      <td><b>厦门钨业 600549</b></td>
+      <td>👑 ¥320.01 亿(+较快)<sup class="ref">[7]</sup></td>
+      <td>~32.1% (↑)<sup class="ref">[7]</sup></td>
+      <td>全产业链 + 光伏钨丝<b>全球 80% 市占率</b> + 稀土 + 锂电三大业务</td>
+      <td>钨矿自给率仅 20-30%,业务多元化稀释钨价弹性</td>
+    </tr>
+    <tr>
+      <td><b>中钨高新 000657</b></td>
+      <td>👑 ¥127.55 亿<sup class="ref">[7]</sup></td>
+      <td>~28.7% (↑)<sup class="ref">[7]</sup></td>
+      <td>硬质合金<b>全球 30% 市占率</b>,切削刀具/IT 工具/球齿等中国 #1;资源自给率 70%(最高)</td>
+      <td>国企体制,反应速度慢于民营对手</td>
+    </tr>
+    <tr>
+      <td><b>章源钨业(本标的)</b></td>
+      <td>¥38.78 亿(+37.38%)<sup class="ref">[7]</sup></td>
+      <td>2024 ↑6.93pct,2026Q1 大幅扩张</td>
+      <td>民营机制 + 全产业链 + 钨精矿自给 ~20%(口径有争议,另一口径 60%)</td>
+      <td><b>深加工占比 &lt; 30%</b>、原料外购 80%;规模显著小于两巨头</td>
+    </tr>
+    <tr>
+      <td><b>翔鹭钨业 002842</b></td>
+      <td><span class="unknown">未查到 2025 三季度精确数据</span></td>
+      <td><span class="unknown">未查到</span></td>
+      <td>钨深加工方向,粉末产品</td>
+      <td>规模小,资源端薄弱</td>
+    </tr>
+  </table>
+
+  <blockquote class="judge">
+    <strong>💡 行业格局判断：</strong>钨业上游是 <b>"双寡头(厦钨 + 中钨高新) + 一众跟随者"</b> 结构。章源在<b>资源端是中等玩家,在深加工端是跟随者</b>,真正的差异化是民营机制 + 江西矿山布局;但难以撼动两巨头的结构性地位。2025-2026 的钨价大周期把所有钨业股都抬起来了,章源股价涨幅最大(186%)恰恰是因为它<b>体量小 + 弹性大 + 此前估值低</b>,而不是因为护城河变深。
+  </blockquote>
+</section>
+
+<!-- ============ Ch.2 主业拆解 ============ -->
+<section id="ch2">
+  <h2><span class="num">2</span>🧬 主业拆解</h2>
+
+  <h3>2.1 收入结构</h3>
+  <table>
+    <tr><th>业务线</th><th>营收占比</th><th>YoY 增速</th><th>毛利率</th><th>战略定位</th></tr>
+    <tr>
+      <td><b>钨初级品(APT / 钨粉 / 碳化钨)</b></td>
+      <td>~70% (深加工不足 30% 反推)<sup class="ref">[7]</sup></td>
+      <td><span class="unknown">未查到分业务 YoY</span></td>
+      <td><span class="unknown">未查到分业务毛利</span></td>
+      <td><span class="tag tag-green">🏷️ 现金牛 + 价格弹性</span></td>
+    </tr>
+    <tr>
+      <td><b>硬质合金(刀具 / 棒材)</b></td>
+      <td>&lt; 30%</td>
+      <td><span class="unknown">未查到</span></td>
+      <td><span class="unknown">未查到(行业一般 25-35%)</span></td>
+      <td><span class="tag tag-blue">🏷️ 第二曲线</span></td>
+    </tr>
+    <tr>
+      <td><b>钨矿采选</b></td>
+      <td><span class="unknown">未查到具体占比</span></td>
+      <td><span class="unknown">未查到</span></td>
+      <td>高(自产矿成本远低于市场)</td>
+      <td><span class="tag tag-purple">🏷️ 战略资源 + 价格弹性放大器</span></td>
+    </tr>
+    <tr>
+      <td><b>锡、铜(副产)</b></td>
+      <td>小</td>
+      <td><span class="unknown">未查到</span></td>
+      <td><span class="unknown">未查到</span></td>
+      <td><span class="tag tag-gray">🏷️ 维持</span></td>
+    </tr>
+  </table>
+
+  <blockquote class="info">
+    <strong>💡 业务结构观察：</strong>公司业务严重偏向<b>初级品和中间品</b>,深加工占比不足 30%,且原料外购 80%。这意味着<b>钨价上涨时,加价空间被外购成本吞掉一部分;钨价下跌时,自有矿山只能贡献 20% 的"安全垫"</b>。章源利润弹性其实来源于:(a) 自产 20% 钨精矿的成本-价格剪刀差;(b) 全产业链加工的多环节加价。两者都跟钨价高度相关。
+  </blockquote>
+
+  <h3>2.2 集中度风险扫描</h3>
+  <table>
+    <tr><th>风险维度</th><th>数值</th><th>警戒线</th><th>状态</th></tr>
+    <tr>
+      <td>第一大客户占比</td>
+      <td><span class="unknown">未查到(需翻 2024 年报附注)</span></td>
+      <td>&gt; 30% 危险</td>
+      <td><span class="lamp lamp-yellow">🟡 待查</span></td>
+    </tr>
+    <tr>
+      <td>前五大客户占比</td>
+      <td><span class="unknown">未查到</span></td>
+      <td>&gt; 50% 注意</td>
+      <td><span class="lamp lamp-yellow">🟡 待查</span></td>
+    </tr>
+    <tr>
+      <td>第一大产品占比</td>
+      <td>钨初级品 ~70%</td>
+      <td>&gt; 70% 单一</td>
+      <td><span class="lamp lamp-yellow">🟡 偏单一</span></td>
+    </tr>
+    <tr>
+      <td>第一大地区占比</td>
+      <td><span class="unknown">未查到(已知有出口资质,15 家之一)</span></td>
+      <td>&gt; 60% 集中</td>
+      <td><span class="lamp lamp-yellow">🟡 待查</span></td>
+    </tr>
+    <tr>
+      <td><b>原料供应端集中度</b></td>
+      <td>外购 ~80%</td>
+      <td>原料外购 &gt; 50% 注意</td>
+      <td><span class="lamp lamp-red">🔴 高度依赖外采</span></td>
+    </tr>
+    <tr>
+      <td>应收账款 / 利润</td>
+      <td>219.89%<sup class="ref">[8]</sup></td>
+      <td>&gt; 100% 警示</td>
+      <td><span class="lamp lamp-red">🔴 显著超标</span></td>
+    </tr>
+  </table>
+
+  <blockquote class="danger">
+    <strong>💡 集中度判断：</strong>真正的集中度风险<b>不在客户端,而在原料端</b>。外购钨精矿 80% 意味着公司是<b>"夹在钨价上涨周期里的加工商 + 半个矿主"</b>,议价能力在两端都偏弱:上游是矿山,下游是大型刀具厂/电子厂。当行业整体涨价时,公司可以转嫁成本(2026 Q1 验证);但<b>当钨价反转下跌时,会出现"高价库存 + 售价下行"双杀</b>。这是章源的结构性脆弱点。
+  </blockquote>
+</section>
+
+<!-- ============ Ch.3 财务核心指标 ============ -->
+<section id="ch3">
+  <h2><span class="num">3</span>💰 财务核心指标</h2>
+
+  <table>
+    <tr><th>指标</th><th>2026 Q1</th><th>2025</th><th>2024</th><th>2023</th><th>趋势</th><th>同行对比</th></tr>
+    <tr><td>营业收入(亿元)</td><td>26.31<sup class="ref">[9]</sup></td><td>52.02<sup class="ref">[3]</sup></td><td>36.73<sup class="ref">[8]</sup></td><td>~34<sup class="ref">[8]</sup></td><td>↑↑↑ 加速</td><td><span class="tag tag-red">低</span> 厦钨 320 亿、中钨 127 亿</td></tr>
+    <tr><td>营收 YoY</td><td>+121.76%</td><td>+41.61%</td><td>+8.02%</td><td>—</td><td>↑↑</td><td><span class="tag tag-green">高</span> 行业最快</td></tr>
+    <tr><td>归母净利润(亿元)</td><td>3.81<sup class="ref">[9]</sup></td><td>2.9<sup class="ref">[3]</sup></td><td>1.72<sup class="ref">[8]</sup></td><td>~1.44</td><td>↑↑↑ 爆发</td><td>规模小但弹性最大</td></tr>
+    <tr><td>净利润 YoY</td><td>+795.78%</td><td>+68.73%</td><td>+19.50%</td><td>—</td><td>↑↑↑</td><td>行业最高弹性</td></tr>
+    <tr><td>⭐ 毛利率</td><td>显著扩张</td><td>~12%(推算)</td><td>~10%(推算,+6.93%)<sup class="ref">[8]</sup></td><td><span class="unknown">未查到</span></td><td>↑</td><td><span class="tag tag-red">低</span> 厦钨 32%、中钨 29%</td></tr>
+    <tr><td>⭐ 净利率</td><td>~14.5%</td><td>~5.6%</td><td>4.66%<sup class="ref">[8]</sup></td><td>~4.0%</td><td>↑↑↑</td><td><span class="tag tag-yellow">中</span> 已大幅追上</td></tr>
+    <tr><td>⭐ ROE</td><td><span class="unknown">未查到 TTM 精确值(Q1 单季已显著提升)</span></td><td><span class="unknown">未查到</span></td><td><span class="unknown">未查到</span></td><td>—</td><td>↑</td><td>—</td></tr>
+    <tr><td>⭐ 经营现金流 / 净利润</td><td>Q1 应收翻倍,经营现金流弱<sup class="ref">[9]</sup></td><td><span class="unknown">未查到精确比值</span></td><td>三年均值 / 流动负债 17.91%<sup class="ref">[8]</sup></td><td>—</td><td>→</td><td><span class="tag tag-red">弱</span> &lt; 1 不健康</td></tr>
+    <tr><td>资产负债率</td><td><span class="unknown">未查到 Q1 最新</span></td><td><span class="unknown">未查到</span></td><td>有息资产负债率 36.74%<sup class="ref">[8]</sup></td><td>—</td><td>→</td><td>中</td></tr>
+    <tr><td>应收账款 / 利润</td><td>Q1 应收翻倍增长</td><td><span class="unknown">未查到</span></td><td>219.89%<sup class="ref">[8]</sup></td><td>—</td><td>↑(警示)</td><td><span class="tag tag-red">显著超标</span></td></tr>
+    <tr><td>合同负债 vs 期初</td><td>+11.21 亿 (+496.61%)<sup class="ref">[9]</sup></td><td>—</td><td>—</td><td>—</td><td>↑↑↑</td><td>预收款激增 = 锁价订单</td></tr>
+  </table>
+
+  <h3>3.1 利润增长归因(2026 Q1 维度)</h3>
+  <table>
+    <tr><th>驱动来源</th><th>是否成立</th><th>证据</th></tr>
+    <tr>
+      <td>📈 量增(卖得多)</td>
+      <td>✅ 部分成立</td>
+      <td>营收 +121.76% &gt; 价格 +约 100%,说明销量也有显著提升;<span class="unknown">具体出货量未单独披露</span></td>
+    </tr>
+    <tr>
+      <td>💵 价增(卖得贵)</td>
+      <td>✅✅ 主要驱动</td>
+      <td>"钨原料价格大幅上涨,传导致产品销售价格上涨"(公司一季报原文)<sup class="ref">[9]</sup>;2026 年初至 3 月钨精矿涨 100%+</td>
+    </tr>
+    <tr>
+      <td>✂️ 降本(省得多)</td>
+      <td>⚠️ 反向</td>
+      <td>原料外购 80%,涨价直接抬升成本,但<b>毛利率反而上升</b> → 说明终端售价涨幅 &gt; 原料涨幅,定价能力短期凸显</td>
+    </tr>
+  </table>
+
+  <blockquote class="judge">
+    <strong>💡 财务质量判断：</strong>2026 Q1 是一份<b>"教科书级周期股拐点报表"</b>:营收和利润弹性极大,但 (a) 经营性现金流没跟上,Q1 应收账款翻倍增长;(b) 合同负债 +496.61% 说明公司用<b>预收款 + 锁价</b>策略对冲价格回落风险,这反过来说明公司自己对钨价能否持续上涨也<b>没有十足把握</b>;(c) 历史财务质量(应收/利润 220%、现金流/流动负债 17.91%)显示公司经营性现金流长期偏弱。<b>这份利润漂亮,但质量不够厚</b>。
+  </blockquote>
+</section>
+
+<!-- ============ Ch.4 增长阶段定位 ============ -->
+<section id="ch4">
+  <h2><span class="num">4</span>🚀 增长阶段定位</h2>
+
+  <table>
+    <tr><th>阶段</th><th>营收特征</th><th>是否本公司当前阶段</th></tr>
+    <tr><td><span class="tag tag-blue">🏷️ 高速成长期</span></td><td>YoY &gt; 30%,赛道渗透率低</td><td>☐ 不符(行业不是新渗透,是涨价)</td></tr>
+    <tr><td><span class="tag tag-green">🏷️ 稳健增长期</span></td><td>YoY 10-30%,份额提升</td><td>☐ 不符(增速过 100%)</td></tr>
+    <tr><td><span class="tag tag-gray">🏷️ 成熟期</span></td><td>YoY 个位数,靠分红/回购</td><td>☐ 不符</td></tr>
+    <tr><td><span class="tag tag-gray">🏷️ 衰退期</span></td><td>YoY 下滑,业务转型</td><td>☐ 不符</td></tr>
+    <tr><td><span class="tag tag-purple">🏷️ 周期反转 / 价格驱动</span></td><td>过去下行,近期重启增长 / 价格大涨</td><td>✅ <b>符合</b> —— 2024 平稳、2025 反转、2026 Q1 爆发</td></tr>
+  </table>
+
+  <table>
+    <tr><th>驱动维度</th><th>当前驱动力</th><th>可持续年限(估)</th></tr>
+    <tr><td>量</td><td>下游硬质合金刀具国产替代 + 出口订单 + 矿山扩界增量</td><td>3-5 年(结构红利)</td></tr>
+    <tr><td>价</td><td>钨精矿供需紧平衡 + 出口管制 + 战略金属再定价</td><td><b>1-2 年</b>(周期红利,顶部不可预测)</td></tr>
+    <tr><td>结构</td><td>深加工占比提升(目前 &lt; 30% → 目标更高);超细碳化钨 / 高端刀具方向</td><td>3-5 年(需持续观察)</td></tr>
+  </table>
+
+  <blockquote class="info">
+    <strong>💡 增长可持续性判断：</strong>当前增长 ≈ <b>70% 周期红利(钨价) + 20% 结构红利(深加工/矿山扩界) + 10% 政策红利(出口管制)</b>。结构红利是真的,但兑现节奏慢(2-3 年);周期红利已经在 2026 Q1 充分释放,继续兑现需要钨价继续创新高。<b>下一个 S 曲线在"超细碳化钨 + 高端硬质合金刀具"</b>,但这条曲线上厦钨/中钨高新比章源更有优势。
+  </blockquote>
+</section>
+
+<!-- ============ Ch.5 商业模式透视 ============ -->
+<section id="ch5">
+  <h2><span class="num">5</span>🏭 商业模式透视</h2>
+
+  <h3>5.1 模式标签矩阵</h3>
+  <table>
+    <tr><th>维度</th><th>当前属性</th></tr>
+    <tr><td>资产属性</td><td><span class="tag tag-yellow">🏷️ 重资产</span> 矿山 + 冶炼 + 加工产线;<span class="unknown">具体固定资产占比未查精确</span></td></tr>
+    <tr><td>收入类型</td><td><span class="tag tag-blue">🏷️ 一次性销售(大宗商品)</span> + 长单(2026 Q1 预收款激增表明已转向锁价合同)</td></tr>
+    <tr><td>现金周期</td><td>历史:<span class="tag tag-red">🏷️ 先垫后收</span>(应收/利润 220%);2026 Q1 起:<span class="tag tag-green">🏷️ 部分先收后付</span>(合同负债 +496%)</td></tr>
+    <tr><td>规模效应</td><td><span class="tag tag-yellow">🏷️ 中</span> 冶炼 / 加工有规模效应,但矿山规模有限,无法通过规模摊薄外购成本</td></tr>
+    <tr><td>锁定效应</td><td><span class="tag tag-red">🏷️ 弱</span> 钨初级品高度同质化,客户切换成本低</td></tr>
+    <tr><td>网络效应</td><td><span class="tag tag-red">🏷️ 无</span></td></tr>
+  </table>
+
+  <h3>5.2 商业模式打分</h3>
+  <blockquote class="judge">
+    <strong>打分：</strong><span class="stars">⭐⭐⭐☆☆</span> (3/5)<br><br>
+    <strong>💡 评分理由：</strong>给 3 星不给 4 星的关键扣分是 (a) <b>原料自给率仅 ~20%</b>(中钨高新 70%、厦钨 20-30% 但有其他高毛利业务对冲);(b) <b>深加工占比 &lt; 30%</b>,产业链向高端延伸的速度慢于对手;(c) 商业模式高度依赖大宗品价格周期。给到 3 星的核心理由是:全产业链覆盖完整、有自有矿山(虽然小)、民营机制反应快、Q1 已经证明在价格上行周期具备强弹性。
+  </blockquote>
+</section>
+
+<!-- ============ Ch.6 SWOT ============ -->
+<section id="ch6">
+  <h2><span class="num">6</span>🛡️ 优势 vs 风险矩阵</h2>
+
+  <div class="swot">
+    <div class="swot-cell swot-moat">
+      <h4>🛡️ 核心护城河 (Moat)</h4>
+      <ul>
+        <li><b>资源端：</b>钨资源储量 9.46 万吨,6 采矿权 + 10 探矿权,核心矿区位于江西崇义/大余<sup class="ref">[4]</sup></li>
+        <li><b>产业链一体化：</b>从钨精矿到硬质合金刀具的全链条覆盖(国内民企里少见)</li>
+        <li><b>出口资质：</b>2026 年钨"一单一证"管制下全国仅 15 家具备出口资质,公司是其中之一<sup class="ref">[5]</sup></li>
+        <li><b>民营机制：</b>对比国企对手(中钨高新)反应更快、扩产决策更灵活</li>
+        <li><b>战略金属属性：</b>钨是国防/军工/航天不可替代材料,长期需求有政策托底</li>
+      </ul>
+    </div>
+    <div class="swot-cell swot-risk">
+      <h4>⚠️ 主要风险 (Risk)</h4>
+      <ul>
+        <li><b>价格风险:</b>2026 年初涨幅 186%,钨价 50% 回撤将导致利润大幅缩水(高弹性双向作用)</li>
+        <li><b>原料风险:</b>外购钨精矿 80%,价格上涨期可转嫁,下跌期面临高价库存减值</li>
+        <li><b>财务质量:</b>应收账款 / 利润 219.89%、经营现金流 / 流动负债 17.91%(2024 年报口径)<sup class="ref">[8]</sup></li>
+        <li><b>估值风险:</b>动态市盈率显著高于行业平均(2026-02-26 媒体口径)<sup class="ref">[10]</sup></li>
+        <li><b>对手挤压:</b>厦钨/中钨高新规模 5-10 倍于章源,深加工和品类竞争中绝对劣势</li>
+        <li><b>政策风险:</b>出口管制本身是双刃剑——若大幅收紧出口,海外营收受冲击;若放松,国内"稀缺溢价"消失</li>
+        <li><b>主力资金:</b>2026-05-08 主力净流出 4.01 亿、05-12 净流出 3.32 亿,机构态度趋谨慎<sup class="ref">[11]</sup></li>
+      </ul>
+    </div>
+  </div>
+
+  <blockquote class="judge">
+    <strong>💡 护城河净评估：</strong>章源的护城河本质是<b>"资源 + 全链条 + 资质"三件套</b>,但<b>每一件都不深</b>。资源量在江西钨矿系内算可观但相对全国不算前列;全链条覆盖但深加工弱;出口资质是政策门槛但 15 家共享。把优势减去风险,<b>安全边际很薄,公司的命运 90% 系于钨价</b>。
+  </blockquote>
+</section>
+
+<!-- ============ Ch.7 估值 ============ -->
+<section id="ch7">
+  <h2><span class="num">7</span>💹 估值</h2>
+
+  <h3>7.1 估值快照</h3>
+  <table>
+    <tr><th>指标</th><th>当前值</th><th>历史 5Y 分位</th><th>行业中位</th><th>相对位置</th></tr>
+    <tr>
+      <td><b>PE (TTM)</b></td>
+      <td><span class="unknown">未查到精确 TTM(总市值约 380-400 亿/TTM 净利估 8-10 亿 = ~40-50×)</span></td>
+      <td><span class="bar"><span class="filled">█████████░</span> ~90%(估)</span></td>
+      <td>厦钨 ~25×、中钨 ~22×(估)</td>
+      <td><span class="lamp lamp-red">显著溢价</span></td>
+    </tr>
+    <tr>
+      <td><b>PB</b></td>
+      <td><span class="unknown">未查到精确值</span></td>
+      <td><span class="bar"><span class="filled">████████░░</span> 80%(估)</span></td>
+      <td><span class="unknown">未查到</span></td>
+      <td><span class="lamp lamp-red">高位</span></td>
+    </tr>
+    <tr>
+      <td><b>PS</b></td>
+      <td><span class="unknown">未查到</span></td>
+      <td><span class="unknown">未查到</span></td>
+      <td><span class="unknown">未查到</span></td>
+      <td>—</td>
+    </tr>
+    <tr>
+      <td><b>PEG</b></td>
+      <td><span class="unknown">无意义(单季增速 796%,无法标准化)</span></td>
+      <td>—</td>
+      <td>—</td>
+      <td>—</td>
+    </tr>
+    <tr>
+      <td><b>股息率</b></td>
+      <td><span class="unknown">未查到精确值(2024 净利仅 1.72 亿,分红率有限)</span></td>
+      <td>低</td>
+      <td>低</td>
+      <td>非分红型</td>
+    </tr>
+    <tr>
+      <td>股价区间(52w)</td>
+      <td>¥6.21 - ¥48.42<sup class="ref">[10]</sup></td>
+      <td>—</td>
+      <td>—</td>
+      <td>当前 ¥32.11 处于区间 66%</td>
+    </tr>
+  </table>
+
+  <blockquote class="judge">
+    <strong>💡 估值判断：</strong>市场对章源的定价隐含了 <b>"钨价 90+ 万元/标吨维持 + 2026 全年净利 15-20 亿 + 25-30× PE"</b> 的预期(对应市值 400-500 亿)。这个预期的<b>每一项都过于乐观</b>:(a) 钨价 90 万是阶段高位,2026-05 公司已经下调长单采购报价,价格<b>已在见顶信号区</b>;(b) Q1 净利 3.81 亿不能简单 ×4 =&gt; 15 亿,因为合同负债+496% 等于一部分 H1 收入提前确认;(c) 周期股 PE 不应该给到 25-30×。
+  </blockquote>
+</section>
+
+<!-- ============ Ch.8 外部视角 ============ -->
+<section id="ch8">
+  <h2><span class="num">8</span>👀 外部视角(市场怎么看?)</h2>
+
+  <table>
+    <tr><th>视角</th><th>关键数据</th><th>倾向</th></tr>
+    <tr>
+      <td><b>券商覆盖</b></td>
+      <td>已检索到:东方财富 2024-04 东吴/华西"买入(维持)"研报<sup class="ref">[12]</sup>;申银万国等 9 家机构 2026-04-30 调研<sup class="ref">[13]</sup>;多家机构口径"增持",目标价 40-45 元区间<sup class="ref">[14]</sup></td>
+      <td><span class="lamp lamp-green">🟢 偏多</span></td>
+    </tr>
+    <tr>
+      <td><b>目标价中位数</b></td>
+      <td>¥40-45 区间(媒体汇总口径),较当前 ¥32.11 隐含 +25-40%<sup class="ref">[14]</sup></td>
+      <td>看多</td>
+    </tr>
+    <tr>
+      <td><b>机构持仓变化</b></td>
+      <td><span class="unknown">未查到具体公募/北向季度变动数据</span></td>
+      <td>—</td>
+    </tr>
+    <tr>
+      <td><b>主力资金(近期)</b></td>
+      <td>2026-05-08 净流出 ¥4.01 亿(占成交额 15.79%)、05-12 净流出 ¥3.32 亿(16.89%)<sup class="ref">[11]</sup></td>
+      <td><span class="lamp lamp-red">🔴 主力撤离</span></td>
+    </tr>
+    <tr>
+      <td><b>雪球热度</b></td>
+      <td><span class="unknown">未查到精确关注人数</span>;但作为 2026 年初涨幅 186% 的热门题材股,讨论热度极高</td>
+      <td>高</td>
+    </tr>
+    <tr>
+      <td><b>多头核心论点</b></td>
+      <td>(1)钨价持续上行,Q2 业绩进一步爆发;(2)出口管制持续收紧,公司是 15 家有出口资质之一;(3)矿山扩界批复将提升自给率</td>
+      <td>—</td>
+    </tr>
+    <tr>
+      <td><b>空头核心论点</b></td>
+      <td>(1)2026 年初涨 186% 已透支预期;(2)钨价见顶信号(公司下调 5 月长单采购报价)<sup class="ref">[15]</sup>;(3)主力大额净流出说明短期顶部已现;(4)深加工弱、自给率低,无法享受龙头溢价</td>
+      <td>—</td>
+    </tr>
+  </table>
+
+  <blockquote class="info">
+    <strong>💡 共识 vs 我的判断：</strong>
+    <ul>
+      <li><b>市场的共识是:</b>钨价大周期才刚开始,章源是高弹性民营标的,目标价 40-45 元有空间</li>
+      <li><b>我同意的部分:</b>钨的战略金属再定价是真实趋势,2-3 年维度向好;矿山扩界批复确实是潜在催化剂</li>
+      <li><b>我不同意的部分:</b>把"高弹性"作为买入理由忽略了它的对称性——同样的弹性会在钨价回调时放大利润下跌。<b>2026 Q1 利润超过 2025 全年</b>这件事本身就是周期顶部的典型信号;公司主动下调 5 月长单采购报价 + 主力 5 月连续大额净流出,这两条比券商目标价更值得相信</li>
+      <li><b>是否在跟风:</b>买入需要回答"我看到了什么市场没看到的?"。当前阶段我没有看到独家信息,反而是利好都已被定价;<b>不跟风的做法是观望</b></li>
+    </ul>
+  </blockquote>
+</section>
+
+<!-- ============ Ch.9 催化剂 vs 风险事件 ============ -->
+<section id="ch9">
+  <h2><span class="num">9</span>⏰ 催化剂 vs 风险事件</h2>
+
+  <table>
+    <tr><th>🟢 潜在上涨催化剂</th><th>时间窗口</th><th>🔴 潜在下跌风险事件</th><th>时间窗口</th></tr>
+    <tr>
+      <td>钨价创新高(突破 100 万/标吨)</td>
+      <td>2026 H1-H2</td>
+      <td>钨价见顶回落(已有迹象:公司下调 5 月长单采购报价<sup class="ref">[15]</sup>)</td>
+      <td>2026 H2 随时</td>
+    </tr>
+    <tr>
+      <td>淘锡坑扩界 / 新安子 / 龙潭面探矿权批复(提升自给率)<sup class="ref">[4]</sup></td>
+      <td>2026 H1-2027</td>
+      <td>2026 年中报业绩不及券商高预期</td>
+      <td>2026-08(中报)</td>
+    </tr>
+    <tr>
+      <td>美国 / 欧洲对中国钨制品的进一步采购需求</td>
+      <td>持续</td>
+      <td>大股东 / 高管减持公告</td>
+      <td>未定(需关注)</td>
+    </tr>
+    <tr>
+      <td>出口管制升级 → 海外稀缺溢价提升</td>
+      <td>未定</td>
+      <td>应收账款持续翻倍 → 减值风险</td>
+      <td>2026 中报 / 年报</td>
+    </tr>
+    <tr>
+      <td>下游硬质合金 / 切削刀具国产替代提速</td>
+      <td>2026-2027</td>
+      <td>厦钨 / 中钨高新启动反向价格战</td>
+      <td>钨价回落时</td>
+    </tr>
+  </table>
+
+  <h3>关键时间节点</h3>
+  <ul>
+    <li>📅 <b>下一份财报:</b>2026 年中报(预计 2026-08)</li>
+    <li>📅 <b>股东大会:</b><span class="unknown">未查到 2026 年度股东大会精确日期</span></li>
+    <li>📅 <b>矿山扩界批复:</b>需关注自然资源部公示节奏</li>
+    <li>📅 <b>下次产品涨价 / 调价通知:</b>每月 1 日 / 16 日左右(行业惯例)</li>
+  </ul>
+</section>
+
+<!-- ============ Ch.10 决策卡 ============ -->
+<section id="ch10">
+  <h2><span class="num">10</span>🎯 我的结论(决策卡)</h2>
+
+  <table>
+    <tr><th>项目</th><th>内容</th></tr>
+    <tr><td><b>态度</b></td><td><span class="lamp lamp-yellow">🟡 观望</span></td></tr>
+    <tr>
+      <td><b>核心逻辑(一句话)</b></td>
+      <td>章源是钨价的高弹性放大器,2026 Q1 已经把上涨叙事兑现到极致;<b>追入是赔率不利,观望等回调和矿山扩界落地</b>更合理</td>
+    </tr>
+    <tr><td><b>建议仓位</b></td><td>总仓位 <b>0-3%</b>(若钨价回落至 60-70 万/标吨且公司股价回落至 ¥20-22,可考虑分 2-3 批小仓位试探)</td></tr>
+    <tr>
+      <td><b>买入触发点</b></td>
+      <td>满足 <b>任意两条</b>:<br>(1)股价回落至 ¥22 以下(对应市值 270-280 亿,合理 PE 区间);<br>(2)淘锡坑扩界开发利用方案获自然资源部批复;<br>(3)钨精矿现货价格在 60-70 万元/标吨区间企稳超过 1 个月</td>
+    </tr>
+    <tr>
+      <td><b>止损位</b></td>
+      <td>建仓后:<b>价格 &lt; 建仓价 -15%</b> 或 <b>钨价跌破 50 万元/标吨</b>;基本面信号:Q2 净利环比 -40% 以上</td>
+    </tr>
+    <tr>
+      <td><b>止盈位 / 目标价</b></td>
+      <td>分两段:(a) 第一目标 ¥38-42(对应 460-510 亿市值,可减仓 1/2);(b) 极致目标 ¥48-52(需要钨价继续创新高叠加矿山批复)</td>
+    </tr>
+    <tr>
+      <td><b>预期持有时间</b></td>
+      <td>6-12 个月(周期股不宜长持);若矿山扩界落地后基本面改善,可延长至 18-24 个月</td>
+    </tr>
+  </table>
+
+  <h3>⚠️ 证伪条件(强迫自己诚实)</h3>
+  <blockquote class="danger">
+    <strong>出现以下任一情况,我必须重新审视、甚至清仓:</strong>
+    <ul>
+      <li>条件 1：钨精矿现货价格连续 2 个月下行,且跌破 50 万元/标吨</li>
+      <li>条件 2：2026 中报披露经营性现金流仍为负,或应收账款 / 营收比率继续上升</li>
+      <li>条件 3：厦钨 + 中钨高新启动深加工价格战,导致章源毛利率单季回落 &gt; 5pct</li>
+      <li>条件 4：大股东 / 实控人减持公告(套现性质,非员工持股)</li>
+      <li>条件 5：淘锡坑扩界开发利用方案被驳回或长期搁置</li>
+    </ul>
+  </blockquote>
+
+  <blockquote class="judge">
+    <strong>💡 最终一句话：</strong>这是一只<b>"好行业 + 中等公司 + 已经讲完的好故事"</b>的标的。行业(钨)是真的好,公司(章源)是中等偏上,但故事(Q1 +796%)已经被市场充分定价。 <b>买入这一刻不会让人富裕,但等待和纪律可能会。</b>
+  </blockquote>
+</section>
+
+<!-- ============ 框架进化协议 ============ -->
+<section id="meta">
+  <h2><span class="num">▣</span>框架进化协议(反思与建议)</h2>
+
+  <table>
+    <tr><th>反思维度</th><th>回答要点</th></tr>
+    <tr>
+      <td><b>冗余字段</b></td>
+      <td>分析章源时较少用到的字段:(a) <b>客户切换成本</b>(钨初级品同质化,该维度无意义);(b) <b>网络效应</b>(大宗品天然无网络效应);(c) <b>PEG</b>(单季 +796% 增速无法标准化,该字段对周期股反转期失效);(d) <b>NRR / 续费</b>类指标(非订阅模式)</td>
+    </tr>
+    <tr>
+      <td><b>盲区字段</b></td>
+      <td>钨业 / 大宗有色板块缺失的维度:<br>1. <b>单吨毛利 / 单吨净利</b>(大宗品最关键指标,价格 vs 成本剪刀差量化);<br>2. <b>原料自给率</b>(已加,但应该提到 Ch.0 仪表盘的核心位置);<br>3. <b>库存价值变动 / 价格敏感性测算</b>(钨价 ±20% 对净利的弹性);<br>4. <b>战略储备 / 国家收储</b>(战略金属独有变量);<br>5. <b>出口资质 / 配额</b>(政策准入门槛);<br>6. <b>下游应用结构</b>(硬质合金 vs 钨丝 vs 钨钢,不同应用周期不同)</td>
+    </tr>
+    <tr>
+      <td><b>模糊字段</b></td>
+      <td>(a) "<b>商业模式打分</b>"5 星制对周期股容易给中位数,建议增加"周期股 / 成长股 / 价值股"前置分类,不同分类用不同打分维度;(b) "<b>护城河净评估</b>" 太定性,建议加入"3 年内护城河是否被侵蚀?如果是,被谁、被什么、被多深"三连问</td>
+    </tr>
+    <tr>
+      <td><b>行业补丁建议</b></td>
+      <td>建议新建 <code>lessons/sector-specific/non-ferrous-metals.md</code>,内容包括:<br>(1) 大宗有色专属指标:单吨成本结构、原料自给率、库存价格弹性、价格周期定位;<br>(2) 关键价格信号:LME / 上海有色 / 各类指数;<br>(3) 政策维度:战略收储、出口管制、环保限产;<br>(4) 周期股估值方法:周期顶 PE 低 / 周期底 PE 高的反向思维,以及替代的 EV/吨产能、EV/资源储量法</td>
+    </tr>
+    <tr>
+      <td><b>框架修改建议(diff 格式)</b></td>
+      <td>
+<pre style="background:#f1f5f9;padding:10px;border-radius:6px;font-size:12px;overflow-x:auto;">
+@@ Ch.0 核心仪表盘 @@
++ | **资源自给率 / 原料自给率** | _例:钨精矿自给 20%_ |  <-- 大宗有色必填
++ | **价格敏感性** | _例:钨价 ±20% 对净利影响 ±X%_ |  <-- 周期股必填
+
+@@ Ch.3 财务核心指标 @@
++ | 单吨毛利(元/吨) | | | | | |  <-- 大宗品必填
++ | 库存周转天数 vs 价格周期 | | | | | |  <-- 周期股必填
+
+@@ Ch.7 估值 @@
++ ### 7.2 周期股替代估值法(适用于大宗 / 化工 / 有色)
++ | 方法 | 计算 | 当前值 | 历史区间 |
++ | EV / 资源储量(元/吨) | | | |
++ | EV / 单吨年产能(元/吨) | | | |
++ | PB-Band(因周期股 PE 失真) | | | |</pre>
+      </td>
+    </tr>
+  </table>
+
+  <blockquote class="info">
+    <strong>等用户确认后是否合入主框架。</strong>本次反思的最大启发:v2.0 框架对"成长股 / 平台股"很友好,但<b>对"周期股 / 大宗品"需要专用补丁</b>,否则部分核心字段会变成"未查到 / 不适用"的空白。
+  </blockquote>
+</section>
+
+<!-- ============ 数据来源 ============ -->
+<section id="sources">
+  <h2><span class="num">📚</span>数据来源附录</h2>
+
+  <h3>信息来源清单</h3>
+  <table>
+    <tr><th>来源类型</th><th>已查阅</th><th>备注</th></tr>
+    <tr><td>最新年报 / 季报</td><td>✅</td><td>2024 年报 / 2025 年报 / 2026 Q1 报</td></tr>
+    <tr><td>招股说明书(新股)</td><td>N/A</td><td>2010-02 上市,非新股</td></tr>
+    <tr><td>券商深度研报 ≥2 份</td><td>⚠ 部分</td><td>查到 1 份东吴 2024-04 PDF,1 份"优质矿山待注入"PDF;<span class="unknown">2026 年最新中信/国君研报未在公开 web 获取</span></td></tr>
+    <tr><td>行业报告(头豹 / 中钨在线 / 五矿)</td><td>✅</td><td>头豹 2024 中国钨金属行业概览;五矿 2025 钨价综述</td></tr>
+    <tr><td>雪球长文 / 公司公告</td><td>✅</td><td>投资者关系活动记录、SMM 资讯、财联社、时代周报</td></tr>
+    <tr><td>同业可比公司财报</td><td>✅</td><td>厦门钨业、中钨高新 2025 三季报对比</td></tr>
+  </table>
+
+  <h3>数据角标登记</h3>
+  <div class="sources">
+  <table>
+    <tr><th>角标</th><th>数据点</th><th>来源(标题 + URL)</th><th>日期</th></tr>
+    <tr><td>[1]</td><td>公司全称、代码</td><td><a href="https://www.cfi.net.cn/p20250421006008.html">章源钨业 2024 年年度报告(中财网)</a></td><td>2025-04-21</td></tr>
+    <tr><td>[2]</td><td>行业地位"中钨高新 PK 厦门钨业"</td><td><a href="https://www.qianzhan.com/analyst/detail/220/220817-3ae5bd40.html">前瞻 2022 中国硬质合金行业龙头企业对比</a></td><td>2022-08-17</td></tr>
+    <tr><td>[3]</td><td>2025 全年营收 / 净利、股价 32.39 / 区间 6.21-48.42</td><td><a href="https://eniu.com/gu/sz002378">章源钨业历史 PE | 亿牛网</a> / 多家媒体汇总</td><td>2026-04-16 / 2026-04 业绩快报</td></tr>
+    <tr><td>[4]</td><td>钨储量 9.46 万吨、6 采矿权 + 10 探矿权、淘锡坑扩界送审</td><td><a href="https://finance.sina.com.cn/stock/relnews/cn/2025-06-13/doc-inezxpfe5912204.shtml">章源钨业:公司拥有 6 座采矿权矿山和 10 个探矿权矿区(新浪)</a> / <a href="https://news.smm.cn/news/102532113">章源钨业:钨资源储量 9.46 万吨(SMM)</a></td><td>2025-06-13 / 2025-09</td></tr>
+    <tr><td>[5]</td><td>2025 钨价 +59%、2026 报价 83-90 万、出口管制"一单一证"</td><td><a href="https://mr.minmetals.com.cn/spqh/jbmyj/202512/P020251231488636488387.pdf">五矿 2025 年钨价高位狂飙,2026 年需求仍显刚性 PDF</a> / <a href="http://news.chinatungsten.com/pdf/overview-of-china-tungsten-price-in-2025-and-forecast-for-2026.pdf">中钨在线 2025 年中国钨制品价格总览与 2026 预测 PDF</a></td><td>2025-12 / 2026-01</td></tr>
+    <tr><td>[6]</td><td>钨粉国内 #2、碳化钨 6.95% 国内 #1、硬质合金 #5、自给率 ~60%</td><td><a href="https://www.appletree.fund/002378-sz/">章源钨业机构调研汇总 | 好研报</a> / <a href="https://zhuanlan.zhihu.com/p/562383599">钨产业链完整厂商:章源钨业(知乎)</a></td><td>—</td></tr>
+    <tr><td>[7]</td><td>厦钨 320 亿 / 中钨 127 亿 / 章源 38.78 亿、毛利率对比、深加工 &lt; 30%</td><td><a href="https://caifuhao.eastmoney.com/news/20260301110647010793380">厦门钨业(600549)战略资源重估下的全产业链龙头投资价值分析(东方财富)</a></td><td>2026-03-01</td></tr>
+    <tr><td>[8]</td><td>2024 营收 36.73 亿、净利 1.72 亿、毛利 +6.93%、应收/利润 219.89%、现金流/流动负债 17.91%、有息资负率 36.74%</td><td><a href="https://news.qq.com/rain/a/20250423A017RU00">章源钨业 2024 年年报简析(腾讯新闻)</a> / <a href="https://m.jiemian.com/article/12648574.html">章源钨业 2024 年报净利润为 1.72 亿元(界面新闻)</a> / <a href="https://news.qq.com/rain/a/20250421A073N700">章源钨业:2024 年净利润 1.72 亿元,同比增长 19.50%(腾讯新闻)</a></td><td>2025-04-21 ~ 23</td></tr>
+    <tr><td>[9]</td><td>2026 Q1 营收 26.31 亿、净利 3.81 亿、扣非 +824.73%、合同负债 +496.61%</td><td><a href="https://finance.sina.com.cn/stock/bxjj/2026-04-27/doc-inhvxtrc2304846.shtml">章源钨业 2026 一季度净利润 3.81 亿元,同比增长 795.78%(新浪)</a> / <a href="https://finance.sina.com.cn/stock/aigc/stockfs/2026-04-27/doc-inhvxtqy9101009.shtml">章源钨业 2026 年一季报解读:归母净利润增 795.78% 应收账款翻倍增长(新浪)</a> / <a href="https://cj.sina.com.cn/articles/view/2868676035/aafc85c302001qdc6">章源钨业:第一季度净利润同比增长 796%,主要系钨原料价格大幅上涨(新浪财经)</a></td><td>2026-04-27</td></tr>
+    <tr><td>[10]</td><td>2026 年初涨幅 186.32%、PE 显著高于行业平均</td><td>多家媒体汇总(2026-02-26 雪球 / 投资网)</td><td>2026-02-26</td></tr>
+    <tr><td>[11]</td><td>2026-05-08 主力净流出 4.01 亿、05-12 净流出 3.32 亿</td><td><a href="https://stock.stockstar.com/RB2026051100003138.shtml">章源钨业 5月8日主力资金净卖出 4.01 亿元(证券之星)</a> / <a href="https://stock.stockstar.com/RB2026051200036418.shtml">5月12日净卖出 3.32 亿元(证券之星)</a></td><td>2026-05-11 / 05-12</td></tr>
+    <tr><td>[12]</td><td>2024-04 东吴"买入(维持)"研报</td><td><a href="https://pdf.dfcfw.com/pdf/H3_AP202404231631053781_1.pdf?1713893809000.pdf=">东吴证券 章源钨业(002378.SZ) 公司点评 2024-04-23 PDF</a></td><td>2024-04-23</td></tr>
+    <tr><td>[13]</td><td>2026-04-30 申银万国等 9 家机构调研</td><td><a href="https://finance.sina.com.cn/stock/aigc/jgdy/2026-04-30/doc-inhwhrai4150850.shtml">调研速递:章源钨业接待申银万国等 9 家机构(新浪)</a></td><td>2026-04-30</td></tr>
+    <tr><td>[14]</td><td>多机构"增持"目标价 40-45 元</td><td>多家媒体汇总口径,<span class="unknown">具体研报未在 web 公开获取</span></td><td>2026-04 ~ 05</td></tr>
+    <tr><td>[15]</td><td>2026-05 章源下调长单采购报价</td><td><a href="http://finance.sina.com.cn/jjxw/2026-05-07/doc-inhxanxc2746374.shtml">章源钨业下调 2026 年 5 月上半月长单采购报价(新浪财经)</a></td><td>2026-05-07</td></tr>
+  </table>
+  </div>
+
+  <h3>"未查到 / 待补"字段清单</h3>
+  <div class="sources">
+    <ul>
+      <li>2024 年报前五大客户 / 供应商 名单与占比 → 需调阅 2024 年报附注</li>
+      <li>分业务线营收占比与毛利率 → 同上</li>
+      <li>2026-05 实时 PE-TTM / PB / 总市值精确数值 → 同花顺 / 东方财富终端</li>
+      <li>2026 年最新中信 / 国君 / 民生研报全文与目标价 → 需 wind / choice</li>
+      <li>实际控制人最新持股结构 → 2024 年报 / 公告</li>
+      <li>固定资产 / 总资产占比(资产属性的精确量化) → 2024 年报资产负债表</li>
+      <li>北向 / 公募近 1 季度持仓变化 → wind 终端</li>
+      <li>2026 年度股东大会精确日期</li>
+      <li>钨价 ±20% 对净利的精确敏感性测算 → 自建模型</li>
+    </ul>
+  </div>
+</section>
+
+<div class="footer">
+  本报告基于公开信息整理,仅作个人研究与框架训练用途,不构成任何投资建议。<br>
+  框架来源:股票研究框架 CLAUDE.md v2.0(视觉重构版) · 分析时点:2026-05-18
+</div>
+
+</main>
+
+</body>
+</html>
