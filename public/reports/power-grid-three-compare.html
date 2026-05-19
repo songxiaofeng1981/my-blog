@@ -1,0 +1,1089 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>电力设备三标的八层横向对比 · 金盘科技 / 华明装备 / 思源电气</title>
+<style>
+  :root {
+    --green: #10b981;
+    --yellow: #f59e0b;
+    --red: #ef4444;
+    --bg: #fafafa;
+    --card: #ffffff;
+    --text: #1f2937;
+    --muted: #6b7280;
+    --border: #e5e7eb;
+    --accent: #2563eb;
+    --code-bg: #f3f4f6;
+  }
+  * { box-sizing: border-box; }
+  body {
+    font-family: -apple-system, "PingFang SC", "Microsoft YaHei", "Helvetica Neue", sans-serif;
+    line-height: 1.7;
+    color: var(--text);
+    background: var(--bg);
+    margin: 0;
+    padding: 0;
+  }
+  /* === 左侧浮动 TOC === */
+  .toc {
+    position: fixed;
+    top: 24px;
+    left: 24px;
+    width: 240px;
+    max-height: calc(100vh - 48px);
+    overflow-y: auto;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 18px 16px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.04);
+    font-size: 13px;
+    z-index: 100;
+  }
+  .toc h3 {
+    margin: 0 0 12px 0;
+    font-size: 13px;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    font-weight: 600;
+  }
+  .toc ul { list-style: none; padding: 0; margin: 0; }
+  .toc li { margin: 2px 0; }
+  .toc a {
+    display: block;
+    padding: 5px 8px;
+    color: var(--text);
+    text-decoration: none;
+    border-radius: 6px;
+    transition: all 0.15s;
+    border-left: 2px solid transparent;
+  }
+  .toc a:hover {
+    background: #eff6ff;
+    color: var(--accent);
+    border-left-color: var(--accent);
+  }
+  .toc .toc-section {
+    font-weight: 600;
+    margin-top: 8px;
+    color: var(--accent);
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+  /* === 主内容 === */
+  .container {
+    margin-left: 296px;
+    max-width: 980px;
+    padding: 32px 32px 80px 32px;
+  }
+  h1 {
+    font-size: 28px;
+    margin: 0 0 8px 0;
+    line-height: 1.3;
+  }
+  h2 {
+    font-size: 22px;
+    margin: 36px 0 16px 0;
+    padding-bottom: 8px;
+    border-bottom: 2px solid var(--border);
+    scroll-margin-top: 20px;
+  }
+  h3 {
+    font-size: 17px;
+    margin: 24px 0 12px 0;
+    scroll-margin-top: 20px;
+  }
+  .meta {
+    color: var(--muted);
+    font-size: 14px;
+    margin-bottom: 24px;
+  }
+  /* === 仪表盘 === */
+  .dashboard {
+    background: linear-gradient(135deg, #f0fdfa 0%, #ecfeff 100%);
+    border: 1px solid #99f6e4;
+    border-radius: 12px;
+    padding: 20px 24px;
+    margin: 20px 0 32px 0;
+  }
+  .dashboard h2 {
+    margin-top: 0;
+    border-bottom: none;
+    color: #0f766e;
+  }
+  /* === 表格 === */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 14px 0;
+    background: var(--card);
+    font-size: 14px;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.03);
+  }
+  th, td {
+    padding: 10px 12px;
+    text-align: left;
+    border-bottom: 1px solid var(--border);
+    vertical-align: top;
+  }
+  th {
+    background: #f9fafb;
+    font-weight: 600;
+    color: var(--text);
+    border-bottom: 2px solid var(--border);
+  }
+  tr:last-child td { border-bottom: none; }
+  td.dim {
+    background: #fafafa;
+    font-weight: 600;
+    width: 18%;
+  }
+  /* === 标记 === */
+  .pill {
+    display: inline-block;
+    padding: 2px 9px;
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: 600;
+    margin-right: 4px;
+  }
+  .green { background: #d1fae5; color: #065f46; }
+  .yellow { background: #fef3c7; color: #92400e; }
+  .red { background: #fee2e2; color: #991b1b; }
+  .tag {
+    display: inline-block;
+    padding: 1px 8px;
+    background: #eef2ff;
+    color: #4338ca;
+    border-radius: 4px;
+    font-size: 12px;
+    margin-right: 4px;
+  }
+  /* === 判断块 === */
+  .judgment {
+    background: #fefce8;
+    border-left: 4px solid var(--yellow);
+    padding: 12px 16px;
+    margin: 14px 0;
+    border-radius: 0 8px 8px 0;
+    font-size: 14px;
+  }
+  .judgment strong { color: #854d0e; }
+  .uncertainty {
+    background: #fef2f2;
+    border-left: 4px solid var(--red);
+    padding: 10px 14px;
+    margin: 10px 0;
+    border-radius: 0 8px 8px 0;
+    font-size: 13px;
+    color: #7f1d1d;
+  }
+  /* === 角标 === */
+  sup.fn {
+    color: var(--accent);
+    font-weight: 600;
+    cursor: pointer;
+  }
+  /* === 代码块 === */
+  code {
+    background: var(--code-bg);
+    padding: 1px 6px;
+    border-radius: 4px;
+    font-family: "SF Mono", Menlo, Consolas, monospace;
+    font-size: 13px;
+    color: #be185d;
+  }
+  /* === 决策卡 === */
+  .decision-card {
+    background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+    border: 1px solid #fbbf24;
+    border-radius: 12px;
+    padding: 18px 22px;
+    margin: 20px 0;
+  }
+  .decision-card h3 { margin-top: 0; color: #78350f; }
+  /* === 标的色卡 === */
+  .stocks-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    margin: 16px 0;
+  }
+  .stock-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 12px 14px;
+    font-size: 13px;
+  }
+  .stock-card .name { font-weight: 700; font-size: 15px; margin-bottom: 4px; }
+  .stock-card .code { color: var(--muted); font-size: 12px; margin-bottom: 8px; }
+  .stock-card.A { border-top: 3px solid #10b981; }
+  .stock-card.B { border-top: 3px solid #3b82f6; }
+  .stock-card.C { border-top: 3px solid #8b5cf6; }
+  /* === 响应式 === */
+  @media (max-width: 1100px) {
+    .toc { display: none; }
+    .container { margin-left: 0; }
+  }
+  html { scroll-behavior: smooth; }
+
+  .ranking-podium {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    margin: 16px 0;
+  }
+  .podium {
+    text-align: center;
+    padding: 14px;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+  }
+  .podium .medal { font-size: 22px; }
+  .podium .name { font-weight: 700; margin: 6px 0 4px; }
+  .podium .reason { color: var(--muted); font-size: 12px; }
+
+  .footnotes {
+    margin-top: 60px;
+    padding: 24px;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    font-size: 13px;
+  }
+  .footnotes h2 { margin-top: 0; }
+  .footnotes a { color: var(--accent); text-decoration: none; word-break: break-all; }
+  .footnotes a:hover { text-decoration: underline; }
+</style>
+</head>
+<body>
+
+<!-- ========== 左侧浮动 TOC ========== -->
+<nav class="toc">
+  <h3>📑 目录</h3>
+  <ul>
+    <li><a href="#dashboard">🎯 仪表盘 (TL;DR)</a></li>
+    <li><a href="#stocks">🎴 3 个标的速览</a></li>
+    <li><a href="#backdrop">🌐 行业大背景</a></li>
+    <li class="toc-section">八层对比</li>
+    <li><a href="#layer1">L1 现象 · 故事</a></li>
+    <li><a href="#layer2">L2 商业 · 合同</a></li>
+    <li><a href="#layer3">L3 战略 · 对手</a></li>
+    <li><a href="#layer4">L4 物理时间 · 护城河</a></li>
+    <li><a href="#layer5">L5 生态 · 切换成本</a></li>
+    <li><a href="#layer6">L6 估值 · 赔率</a></li>
+    <li><a href="#layer7">L7 类比 · 历史剧本</a></li>
+    <li><a href="#layer8">L8 结构 · 行业位置</a></li>
+    <li class="toc-section">联立 / 决策</li>
+    <li><a href="#q1">谁的逻辑最硬</a></li>
+    <li><a href="#q2">谁的弹性最大</a></li>
+    <li><a href="#q3">谁的安全边际最高</a></li>
+    <li><a href="#matrix">决策矩阵</a></li>
+    <li><a href="#tracking">跟踪变量</a></li>
+    <li class="toc-section">附录</li>
+    <li><a href="#sources">数据来源</a></li>
+  </ul>
+</nav>
+
+<!-- ========== 主内容 ========== -->
+<div class="container">
+
+<h1>电力设备三标的横向对比</h1>
+<div class="meta">
+  金盘科技 (688676.SH) · 华明装备 (002270.SZ) · 思源电气 (002028.SZ)<br>
+  框架版本：八层横向对比 v1.0 ｜ 数据截至 2026-05 ｜ 报告生成日：2026-05-19
+</div>
+
+<!-- ============================================ -->
+<section id="dashboard" class="dashboard">
+<h2>🎯 仪表盘 (TL;DR)</h2>
+
+<p>三家公司全部位于 <strong>输配电与电网设备产业链</strong>，覆盖三种不同的商业模式：<strong>金盘=数据中心干变 + SST 新故事</strong>、<strong>华明=分接开关全球寡头 + 缓步出海</strong>、<strong>思源=一二次综合 + 海外爆发</strong>。本对比聚焦"15 五年 4 万亿电网投资 + 北美变压器短缺 + AI 数据中心电力配套"三重红利下"应该买哪个"。</p>
+
+<div class="ranking-podium">
+  <div class="podium">
+    <div class="medal">🛡️</div>
+    <div class="name">华明装备</div>
+    <div class="reason">逻辑最硬：分接开关三寡头、物理时间护城河 30 年</div>
+  </div>
+  <div class="podium">
+    <div class="medal">🚀</div>
+    <div class="name">思源电气</div>
+    <div class="reason">弹性最大：营收 +37% / 净利 +54% / 海外 +86%，PEG ≈ 1</div>
+  </div>
+  <div class="podium">
+    <div class="medal">⚓</div>
+    <div class="name">华明装备</div>
+    <div class="reason">安全最高：分接开关嵌入式真锁定 + 60% 毛利稳态</div>
+  </div>
+</div>
+
+<p><strong>关键洞察：</strong></p>
+<ul>
+  <li>华明装备同时占"逻辑最硬"和"安全最高"两项第一——但代价是估值已在 5Y 92% 分位<sup class="fn">[1]</sup>，弹性受限，机构目标价 38.3 元相对现价空间有限。</li>
+  <li>思源电气是<strong>综合最均衡的标的</strong>：弹性第一、逻辑第二、安全第二，且增速已经在财报兑现（不是预期）。</li>
+  <li>金盘科技是<strong>纯弹性增强工具</strong>：AIDC +337%、SST 首发量产<sup class="fn">[2]</sup>、5Y PE 分位仅 30%，但 AIDC 收入仅占总营收 13%，故事漂亮但兑现路径长。</li>
+</ul>
+</section>
+
+<!-- ============================================ -->
+<section id="stocks">
+<h2>🎴 3 个标的速览</h2>
+
+<div class="stocks-grid">
+  <div class="stock-card A">
+    <div class="name">金盘科技</div>
+    <div class="code">688676.SH · 海南</div>
+    <div>主业：干式变压器 + 储能升压 + 数据中心电力配套 + 风电干变</div>
+    <div style="margin-top:8px;">2025 营收 73.0 亿 (+5.8%) / 归母 6.6 亿 (+14.9%)<sup class="fn">[3]</sup></div>
+    <div>AIDC 收入 9.74 亿 (+337%) / 海外大单 6.96 亿</div>
+    <div style="margin-top:8px;">PE-TTM 65x ｜ 5Y 分位 30%</div>
+  </div>
+  <div class="stock-card B">
+    <div class="name">华明装备</div>
+    <div class="code">002270.SZ · 上海</div>
+    <div>主业：分接开关（变压器核心部件）+ 数控机床</div>
+    <div style="margin-top:8px;">2025 营收 24.27 亿 (+4.5%) / 归母 7.10 亿 (+15.5%)<sup class="fn">[4]</sup></div>
+    <div>电力设备毛利率 59.61% / 海外占比 20.41%</div>
+    <div style="margin-top:8px;">PE-TTM 34x ｜ 5Y 分位 92%</div>
+  </div>
+  <div class="stock-card C">
+    <div class="name">思源电气</div>
+    <div class="code">002028.SZ · 上海</div>
+    <div>主业：开关（GIS）+ 变压器 + 智能配电 + 一二次综合</div>
+    <div style="margin-top:8px;">2025 营收 212.05 亿 (+37%) / 归母 31.63 亿 (+54%)<sup class="fn">[5]</sup></div>
+    <div>海外 58 亿 (+86%) / 海外占比 27%+ / 净利率 14.92%</div>
+    <div style="margin-top:8px;">PE-TTM ~50x ｜ PEG ≈ 1</div>
+  </div>
+</div>
+</section>
+
+<!-- ============================================ -->
+<section id="backdrop">
+<h2>🌐 行业大背景：三重红利共振</h2>
+
+<table>
+  <tr><th>红利来源</th><th>2025-2030 量化指标</th><th>对三家的相对受益度</th></tr>
+  <tr>
+    <td class="dim">国内电网投资</td>
+    <td>15 五年电网投资 4 万亿，比 14 五年 +40%<sup class="fn">[6]</sup>；主网/特高压重启 + 配网智能化</td>
+    <td>思源（主网）≈ 华明（分接开关随变压器） &gt; 金盘（干变小占比）</td>
+  </tr>
+  <tr>
+    <td class="dim">海外电网替换</td>
+    <td>2025 中国变压器出口 903.6 亿美元，+34.83%<sup class="fn">[6]</sup>；北美变压器短缺持续到 2028+；沙特跃居中国 #1 出口国（&gt;60 亿元，×2）</td>
+    <td>思源（海外 +86%）&gt; 华明（海外 +45% 占比 20%）&gt; 金盘（海外大单但客户集中）</td>
+  </tr>
+  <tr>
+    <td class="dim">AI 数据中心电力</td>
+    <td>全球数据中心耗电 2030 达 945 TWh，CAGR ~15%<sup class="fn">[6]</sup>；HVDC 800V 架构需 SST/干变配套</td>
+    <td>金盘（AIDC +337% + SST 首发）&gt; 思源（变压器侧间接受益）&gt; 华明（弱相关）</td>
+  </tr>
+</table>
+
+<div class="judgment">
+  <strong>行业整体判断：</strong>电网设备指数 PE-TTM 39x、5Y 分位 85%——<strong>整体已不便宜</strong>。增量收益不再来自"行业整体重估"，而是来自<strong>个股结构性差异</strong>（海外占比、新技术、寡头位置）。因此这次对比的真正意义：在"赛道贵了"的前提下，找<strong>差异化驱动最强的那一个</strong>。
+</div>
+</section>
+
+<!-- ============================================ -->
+<!-- L1: 现象 / 故事 -->
+<!-- ============================================ -->
+<section id="layer1">
+<h2>L1 · 现象（故事）— 谁的故事最硬？</h2>
+
+<table>
+  <tr><th>维度</th><th>金盘科技</th><th>华明装备</th><th>思源电气</th></tr>
+  <tr>
+    <td class="dim">一句话故事</td>
+    <td>AI 数据中心电力配套国产替代 + SST 下一代技术先发</td>
+    <td>变压器分接开关全球寡头 #2，海外份额缓慢提升</td>
+    <td>一二次综合电力设备，主网 + 海外 + AI 三引擎共驱</td>
+  </tr>
+  <tr>
+    <td class="dim">核心论点（基石）</td>
+    <td>AIDC +337% 的爆发可持续，SST 在 HVDC800V 架构中独占先发</td>
+    <td>三寡头格局（MR/华明/日立 占 ~80%）已稳定 10+ 年，难以打破</td>
+    <td>2025 营收 +37%、净利 +54%、海外 +86%——已经兑现，不是预期</td>
+  </tr>
+  <tr>
+    <td class="dim">论点反问测试</td>
+    <td>如果 AIDC 增速回落到 +50%（仍是高增），故事还值这个估值吗？SST 还有 1-2 年量产爬坡，需要客户认证</td>
+    <td>如果出海增速从 +45% 回到 +20%，"出海弹性"故事破灭，剩下的是 4% 营收增长的稳态</td>
+    <td>如果 2026 海外增速从 +86% 降到 +30%（仍属高增），市场会否担心去年是单一大单的高基数？</td>
+  </tr>
+  <tr>
+    <td class="dim">故事的主观性</td>
+    <td>中等：AIDC 数据真实但占比 13%，SST 尚未规模收入</td>
+    <td>低：三寡头格局是事实，出海增速是已发生的</td>
+    <td>低：所有数字都是 2025 已实现的报表数据</td>
+  </tr>
+  <tr>
+    <td class="dim">相对位置</td>
+    <td><span class="pill yellow">🟡 中</span></td>
+    <td><span class="pill green">🟢 强</span></td>
+    <td><span class="pill green">🟢 强</span></td>
+  </tr>
+</table>
+
+<div class="judgment">
+  <strong>判断依据：</strong>
+  <ul>
+    <li><strong>金盘 🟡</strong>：故事漂亮但主要看点（AIDC + SST）占总营收 &lt; 15%，剩下 85% 是传统干变 + 风电，故事和报表分离度最高。</li>
+    <li><strong>华明 🟢</strong>：故事最朴素（寡头），但<strong>每一个论点都可被独立验证</strong>（市占率、毛利率、海外金额）。</li>
+    <li><strong>思源 🟢</strong>：增长本身就是故事，<strong>故事和报表是同一件事</strong>——这是最强的硬度。</li>
+  </ul>
+</div>
+<div class="uncertainty">
+  ⚠️ <strong>不确定性</strong>：金盘海外大客户 F 的真实身份未披露——如果是单一超大客户（如某 hyperscaler），故事评分应下调；如果是 EPC 集成商，评分维持。
+</div>
+</section>
+
+<!-- ============================================ -->
+<!-- L2: 商业 / 合同 -->
+<!-- ============================================ -->
+<section id="layer2">
+<h2>L2 · 商业（合同）— 谁的合同最硬？</h2>
+
+<table>
+  <tr><th>维度</th><th>金盘科技</th><th>华明装备</th><th>思源电气</th></tr>
+  <tr>
+    <td class="dim">核心合同 / 客户</td>
+    <td>2025-12 海外客户 F 6.96 亿数据中心订单；维斯塔斯/西门子歌美飒/金风等风电干变长协；国内 AIDC 集成商订单</td>
+    <td>国网 / 南网招标供应 + 国际变压器厂（ABB / 西门子 / TBEA）OEM 嵌入；分接开关嵌入到变压器内部，随变压器一起销售</td>
+    <td>国网 / 南网主网招标（GIS、变压器、智能配电）+ 海外 EPC + 沙特/中东/东南亚直销</td>
+  </tr>
+  <tr>
+    <td class="dim">法律措辞强度</td>
+    <td>单一大单+ 多个分散订单；6.96 亿是确定合同（已公告），但客户名称未披露 — 中等</td>
+    <td>OEM 嵌入式 = 实质上的长期采购框架（一旦认证不会换）；电网招标制 — 强</td>
+    <td>主网招标制 + 海外 EPC 总包合同 — 中强（招标按项目）</td>
+  </tr>
+  <tr>
+    <td class="dim">合同期限 + 续约</td>
+    <td>风电主供长协（年度滚动）；数据中心单项目 1-2 年；SST 尚无长期合同</td>
+    <td>变压器寿命 30 年 → 分接开关嵌入后实质锁定到产品退役；OEM 客户切换成本极高</td>
+    <td>主网招标是 1-2 年项目周期，但客户黏性高（电网公司+EPC 复购率高）</td>
+  </tr>
+  <tr>
+    <td class="dim">违约成本归属</td>
+    <td>金盘违约成本高（替换供应商需重新认证 1 年）；客户违约对金盘冲击大（订单集中）</td>
+    <td>客户违约成本极高（拆变压器 + 重新认证 + 影响整个变压器交付）</td>
+    <td>双方对称：电网项目违约对双方都是大事</td>
+  </tr>
+  <tr>
+    <td class="dim">相对位置</td>
+    <td><span class="pill yellow">🟡 中</span></td>
+    <td><span class="pill green">🟢 强</span></td>
+    <td><span class="pill green">🟢 强</span></td>
+  </tr>
+</table>
+
+<div class="judgment">
+  <strong>判断依据：</strong>
+  <ul>
+    <li><strong>华明 🟢</strong>：合同硬度第一来源不是法律措辞，而是<strong>嵌入式产品的物理切换成本</strong>——一旦认证进入某变压器厂的 BOM，至少 10 年内不会换。</li>
+    <li><strong>思源 🟢</strong>：主网招标制看似不锁定，但电网公司+EPC 客户的<strong>项目复购率极高</strong>（同一变电站升级、同一客户多项目）。</li>
+    <li><strong>金盘 🟡</strong>：单大单 + 客户分散，没有像华明那样的"嵌入式锁定"，也没有思源的客户体量加持。</li>
+  </ul>
+</div>
+</section>
+
+<!-- ============================================ -->
+<!-- L3: 战略 / 对手 -->
+<!-- ============================================ -->
+<section id="layer3">
+<h2>L3 · 战略（对手）— 谁与对手更对称？</h2>
+
+<table>
+  <tr><th>维度</th><th>金盘科技</th><th>华明装备</th><th>思源电气</th></tr>
+  <tr>
+    <td class="dim">前五大客户集中度</td>
+    <td>未单独披露；估算中等偏高（数据中心客户少数大单 + 风电前 5 大厂）</td>
+    <td>客户高度分散（OEM 嵌入到全球数十家变压器厂）</td>
+    <td>未单独披露；国网 + 南网两大主客户占国内主要份额，但海外快速分散化</td>
+  </tr>
+  <tr>
+    <td class="dim">客户对我方收入占比 vs 我方对客户成本占比</td>
+    <td>客户（hyperscaler）对金盘收入占比可能很大；金盘对其总成本占比 &lt; 0.1% — <strong>我方弱势</strong></td>
+    <td>客户（变压器厂）对华明收入占比中等；华明分接开关占变压器 BOM ~3-5%，但是关键件 — <strong>对称</strong></td>
+    <td>电网公司对思源收入占比大；思源对电网总投资占比 &lt; 1% — <strong>对称偏弱势</strong></td>
+  </tr>
+  <tr>
+    <td class="dim">对手"去依赖化"动机</td>
+    <td>Hyperscaler 高度倾向多供应商，金盘需要持续证明性能/产能；ABB / 西门子等老牌玩家也在切入 AIDC</td>
+    <td>MR（德国，#1）/日立能源（#3，前 ABB），两家都在防守，但难以颠覆三寡头格局</td>
+    <td>中国西电 / 特变 / 平高在主网+海外都是直接对手，但行业蛋糕大到不必死磕</td>
+  </tr>
+  <tr>
+    <td class="dim">对称性</td>
+    <td>不对称（我方弱势）</td>
+    <td>对称</td>
+    <td>对称</td>
+  </tr>
+  <tr>
+    <td class="dim">相对位置</td>
+    <td><span class="pill yellow">🟡 中</span></td>
+    <td><span class="pill green">🟢 强</span></td>
+    <td><span class="pill green">🟢 强</span></td>
+  </tr>
+</table>
+
+<div class="judgment">
+  <strong>判断依据：</strong>
+  <ul>
+    <li><strong>华明 🟢</strong>：分接开关市场全球总盘子 ~80-100 亿元，三寡头都不可能放弃这块业务（成本结构特殊）。<strong>结构稳定 = 对手不会撕破脸</strong>。</li>
+    <li><strong>思源 🟢</strong>：电网行业的招标制 = 天然分散，没有"对手集中扶持竞品"的动机。</li>
+    <li><strong>金盘 🟡</strong>：数据中心客户体量是金盘的 100 倍以上，金盘没有议价权；hyperscaler 的"多供应商"策略意味着金盘需要持续投入认证才能保持位置。</li>
+  </ul>
+</div>
+</section>
+
+<!-- ============================================ -->
+<!-- L4: 技术 / 物理时间 -->
+<!-- ============================================ -->
+<section id="layer4">
+<h2>L4 · 技术 / 物理时间 — 谁的护城河物理时间最长？</h2>
+
+<table>
+  <tr><th>维度</th><th>金盘科技</th><th>华明装备</th><th>思源电气</th></tr>
+  <tr>
+    <td class="dim">关键产能 / 认证周期</td>
+    <td>干变产能扩张 1-2 年；数据中心客户验证 1-2 年；SST 认证 + 客户导入预计 2026-2027</td>
+    <td>分接开关高压等级认证 3-5 年（含变压器厂 OEM 验证）；产品寿命 30 年</td>
+    <td>主网 GIS / 变压器客户认证 2-3 年；1000kV GIS 计划 2027 上市（即将进入下一代竞争）</td>
+  </tr>
+  <tr>
+    <td class="dim">客户切换周期</td>
+    <td>风电客户切换 1 年；数据中心客户更换供应商需重新认证 + 项目验证 ~ 1 年</td>
+    <td>变压器厂一旦完成分接开关认证，<strong>变压器全寿命周期不再切换</strong>（30 年）</td>
+    <td>变电站设备一旦投运，<strong>20-30 年不更换</strong>；但新增/扩建项目按招标分配</td>
+  </tr>
+  <tr>
+    <td class="dim">历史压缩此时间案例</td>
+    <td>无重大压缩案例；SST 是新技术，时间窗口刚开始</td>
+    <td>过去 30 年没有任何新进入者成功打破三寡头；进入门槛极高</td>
+    <td>中国西电 / 思源 / 平高 等国内厂 2000-2015 通过国产化加速取代 ABB/西门子，约用了 15 年</td>
+  </tr>
+  <tr>
+    <td class="dim">对手追赶时间</td>
+    <td>2-3 年（干变门槛中等，SST 是相对新赛道，技术领先窗口可能只有 1-2 年）</td>
+    <td>5-10+ 年（三寡头格局是历史沉淀，新进入者难以越过认证关）</td>
+    <td>2-3 年同梯队互相追赶；外资追赶可能需要 5+ 年（要重新本地化）</td>
+  </tr>
+  <tr>
+    <td class="dim">相对位置</td>
+    <td><span class="pill yellow">🟡 中</span></td>
+    <td><span class="pill green">🟢 强</span></td>
+    <td><span class="pill yellow">🟡 中</span></td>
+  </tr>
+</table>
+
+<div class="judgment">
+  <strong>判断依据：</strong>
+  <ul>
+    <li><strong>华明物理时间护城河顶级</strong>：30 年产品寿命 × 10 年寡头稳定历史 × 5 年认证周期 — <strong>这是输配电板块最硬的护城河之一</strong>。</li>
+    <li><strong>思源 🟡</strong>：1000kV GIS 是技术高地，但中国西电是同级别对手，差异化主要靠规模和海外渠道，物理时间护城河中等。</li>
+    <li><strong>金盘 🟡</strong>：干变本身门槛中等，AIDC 干变略有先发，但 SST 这条新赛道的时间窗口可能只有 1-2 年——SST 火了之后大厂会快速跟进。</li>
+  </ul>
+</div>
+<div class="uncertainty">
+  ⚠️ <strong>不确定性</strong>：SST 是真"颠覆"还是只是新一代产品，目前业内争议较大。如果 HVDC 800V 真成为数据中心标准（而不是 415V 沿用），金盘 L4 评级有望升至 🟢。
+</div>
+</section>
+
+<!-- ============================================ -->
+<!-- L5: 生态 / 切换成本 -->
+<!-- ============================================ -->
+<section id="layer5">
+<h2>L5 · 生态（切换成本）— 谁的客户切换成本最高？</h2>
+
+<table>
+  <tr><th>维度</th><th>金盘科技</th><th>华明装备</th><th>思源电气</th></tr>
+  <tr>
+    <td class="dim">客户已沉没投入</td>
+    <td>风电厂的型号兼容性测试 + AIDC 项目集成测试</td>
+    <td>变压器厂的产品 BOM 重新认证 + 国网历史采购档案</td>
+    <td>变电站的设备测试报告 + 电网调度系统的接口认证</td>
+  </tr>
+  <tr>
+    <td class="dim">切换的一次性成本</td>
+    <td>中等：重新认证 1 年 + 项目重新走流程</td>
+    <td>极高：必须拆变压器或新设计 BOM + 重新走 3-5 年认证 + 影响整批变压器交付</td>
+    <td>中等：新项目按招标分，已建变电站只有改造时才面临切换</td>
+  </tr>
+  <tr>
+    <td class="dim">切换的心理 / 决策成本</td>
+    <td>中等：项目经理决策</td>
+    <td>极高：变压器厂高管 + 工程师双重决策</td>
+    <td>高：电网公司+ EPC 联合决策，且需评估调度风险</td>
+  </tr>
+  <tr>
+    <td class="dim">锁定类型</td>
+    <td>半锁定（认证 + 项目）</td>
+    <td><strong>真锁定</strong>（嵌入式 + 30 年寿命）</td>
+    <td>半锁定（项目级别，非产品级别）</td>
+  </tr>
+  <tr>
+    <td class="dim">相对位置</td>
+    <td><span class="pill yellow">🟡 中</span></td>
+    <td><span class="pill green">🟢 强</span></td>
+    <td><span class="pill yellow">🟡 中</span></td>
+  </tr>
+</table>
+
+<div class="judgment">
+  <strong>判断依据：</strong>
+  <ul>
+    <li><strong>华明的锁定是真锁定</strong>：嵌入式产品 + 30 年寿命 = 客户切换需要重建底层基础设施（拆变压器或重新设计 BOM）。这是输配电板块"切换成本"维度的最高级别。</li>
+    <li><strong>思源</strong>：变电站设备投运后 20-30 年不换是事实，但思源每个新项目都需要重新投标，<strong>锁定在项目层，不在产品层</strong>。</li>
+    <li><strong>金盘</strong>：与思源类似，但项目复购率较思源低（数据中心客户的下一代项目可能换供应商）。</li>
+  </ul>
+</div>
+</section>
+
+<!-- ============================================ -->
+<!-- L6: 估值 / 赔率 -->
+<!-- ============================================ -->
+<section id="layer6">
+<h2>L6 · 估值 — 谁的弹性最大？谁的下沿最硬？</h2>
+
+<table>
+  <tr><th>维度</th><th>金盘科技</th><th>华明装备</th><th>思源电气</th></tr>
+  <tr>
+    <td class="dim">当前估值水平</td>
+    <td>PE-TTM 65x；远期 2025/26/27 PE 56.8/43.2/35.6<sup class="fn">[7]</sup></td>
+    <td>PE-TTM 34x，5Y 分位 92%（历史高位）<sup class="fn">[8]</sup>；机构目标价 38.3 元</td>
+    <td>PE-TTM ~50x；2025 净利+54% → PEG ≈ 1</td>
+  </tr>
+  <tr>
+    <td class="dim">5Y PE 分位</td>
+    <td>30%（相对低位）</td>
+    <td>92%（相对高位）</td>
+    <td>未直接披露；增速远超 PE 提升幅度，相对位置中等偏低</td>
+  </tr>
+  <tr>
+    <td class="dim">已定价 / 未定价的里程碑</td>
+    <td>已定价：2024-2025 业绩；未定价：AIDC 维持 +200% 增速、SST 规模收入、海外占比超 30%</td>
+    <td>已定价：寡头格局 + 高毛利；未定价：海外占比突破 30%、新兴市场（中东 / 美洲）放量</td>
+    <td>已定价：2025 业绩超预期；未定价：1000kV GIS 2027 上市、海外维持 +50% 以上</td>
+  </tr>
+  <tr>
+    <td class="dim">最坏情况下行空间</td>
+    <td>30-40%（PE 回到 40x + 增速回落到 +20%）</td>
+    <td>20-30%（PE 回到 25x，盈利稳定支撑）</td>
+    <td>25-35%（PE 回到 30x，但盈利继续高增可对冲）</td>
+  </tr>
+  <tr>
+    <td class="dim">下一个 6 个月催化剂</td>
+    <td>SST 元神 ONE 商业化进展<sup class="fn">[2]</sup>；下一个海外大单；2026 Q1 / Q2 AIDC 收入增速</td>
+    <td>2025 年报披露 + 海外印尼/土耳其工厂爬坡；分接开关全球市占率提升</td>
+    <td>2025 年报 + 2026 Q1 季报；海外新增大单；1000kV GIS 客户认证</td>
+  </tr>
+  <tr>
+    <td class="dim">上行 / 下行赔率</td>
+    <td>3:1（弹性最大但兑现路径长）</td>
+    <td>1.5:1（稳健但弹性受限）</td>
+    <td>2.5:1（已兑现+继续兑现，赔率较好）</td>
+  </tr>
+  <tr>
+    <td class="dim"><strong>弹性</strong>相对位置</td>
+    <td><span class="pill green">🟢 强</span></td>
+    <td><span class="pill red">🔴 弱</span></td>
+    <td><span class="pill green">🟢 强</span></td>
+  </tr>
+  <tr>
+    <td class="dim"><strong>安全</strong>相对位置</td>
+    <td><span class="pill yellow">🟡 中</span></td>
+    <td><span class="pill yellow">🟡 中</span></td>
+    <td><span class="pill yellow">🟡 中</span></td>
+  </tr>
+</table>
+
+<div class="judgment">
+  <strong>判断依据：</strong>
+  <ul>
+    <li><strong>金盘弹性 🟢</strong>：5Y PE 分位 30% + AIDC/SST 未充分定价，反弹空间大；但 PE-TTM 65x 绝对估值高，下行也痛。</li>
+    <li><strong>华明弹性 🔴</strong>：5Y 92% 分位 + 机构目标价 38.3 元（已接近现价）+ 增速 +15% → 上行空间被估值锁住。</li>
+    <li><strong>思源弹性 🟢</strong>：业绩兑现的弹性是最优质的——市场只能继续给估值。</li>
+    <li><strong>安全维度三家都是 🟡</strong>：电网设备板块整体 PE-TTM 39x、5Y 分位 85% 偏高，没有真正"便宜"的标的；华明的寡头位置弥补了高分位，思源大市值有底，金盘 5Y 分位低弥补了高 PE。</li>
+  </ul>
+</div>
+</section>
+
+<!-- ============================================ -->
+<!-- L7: 类比 / 历史剧本 -->
+<!-- ============================================ -->
+<section id="layer7">
+<h2>L7 · 类比 — 谁的历史剧本最有利？</h2>
+
+<table>
+  <tr><th>维度</th><th>金盘科技</th><th>华明装备</th><th>思源电气</th></tr>
+  <tr>
+    <td class="dim">最接近的历史案例</td>
+    <td>2018-2020 阳光电源（逆变器出海+储能）；2020-2021 中科曙光（算力配套）</td>
+    <td>ABB 分接开关业务 1990-2010 长牛；MR 集团（德国，全球 #1）的稳态扩张</td>
+    <td>2010-2015 国电南瑞（主网龙头）；2018-2021 三一重工（海外突破）</td>
+  </tr>
+  <tr>
+    <td class="dim">历史案例兑现度</td>
+    <td>阳光电源 3 年 5 倍；中科曙光 2 年 3 倍 — 但都是高 Beta 周期股</td>
+    <td>分接开关历史上从未出现过"短期爆发"，都是 5-10 年长牛</td>
+    <td>国电南瑞从 100 亿涨到 1000 亿 ~ 5 年；三一重工海外业务从 20% 到 50% 占比用了 4-5 年</td>
+  </tr>
+  <tr>
+    <td class="dim">与历史案例的关键差异</td>
+    <td>金盘的 SST 是真"颠覆"还是"新一代产品"？AIDC 客户更分散，单点击穿风险大于阳光电源</td>
+    <td>华明的出海加速度（2022→2025 海外 ×3）<strong>快于历史 MR/ABB 的扩张节奏</strong>——这是潜在 alpha</td>
+    <td>思源海外增速 +86% 比国电南瑞快得多；规模相当于 2014 年的国电南瑞</td>
+  </tr>
+  <tr>
+    <td class="dim">差异往哪个方向倾斜</td>
+    <td>中性偏负：SST 故事可能被同行追赶</td>
+    <td>正向：出海速度快于历史 → 弹性可能高于历史预期</td>
+    <td>正向：海外爆发 + 主网重启 = 双引擎，历史上少见</td>
+  </tr>
+  <tr>
+    <td class="dim">相对位置</td>
+    <td><span class="pill green">🟢 强</span></td>
+    <td><span class="pill yellow">🟡 中</span></td>
+    <td><span class="pill green">🟢 强</span></td>
+  </tr>
+</table>
+
+<div class="judgment">
+  <strong>判断依据：</strong>
+  <ul>
+    <li><strong>金盘 🟢</strong>：类比对象（阳光电源/中科曙光）历史兑现度高，但金盘的 AIDC 占比目前只有 13%，需要看到比阳光电源更长的成长曲线。</li>
+    <li><strong>华明 🟡</strong>：类比都是"长牛"型，没有短期爆发剧本——估值受限。但出海加速度高于历史，这是<strong>容易被低估的潜在 alpha</strong>。</li>
+    <li><strong>思源 🟢</strong>：类比对象是 A 股最优质的成长股之一（国电南瑞 5 年 10 倍），且思源海外更快、AI 共驱新增。</li>
+  </ul>
+</div>
+</section>
+
+<!-- ============================================ -->
+<!-- L8: 结构 / 行业位置 -->
+<!-- ============================================ -->
+<section id="layer8">
+<h2>L8 · 结构 — 谁在结构中的位置最稳？</h2>
+
+<table>
+  <tr><th>维度</th><th>金盘科技</th><th>华明装备</th><th>思源电气</th></tr>
+  <tr>
+    <td class="dim">行业终局</td>
+    <td>干变：分散市场（前 5 家占 ~50%）；AIDC 干变：尚未定型；SST：新赛道，2-3 家寡头形成中</td>
+    <td>分接开关：稳定三寡头（MR / 华明 / 日立 ~80%）<sup class="fn">[4]</sup></td>
+    <td>主网设备：寡头化分散（中国西电 / 平高 / 思源 / 特变 / 国电南瑞 ~60%）</td>
+  </tr>
+  <tr>
+    <td class="dim">决定结构的底层力量</td>
+    <td>技术认证 + 集成能力 + 服务网络</td>
+    <td>认证壁垒 + 嵌入式锁定 + 全球分销渠道</td>
+    <td>资质 + 规模 + 海外渠道 + 主网招投标资格</td>
+  </tr>
+  <tr>
+    <td class="dim">当前竞争阶段</td>
+    <td>AIDC 干变：混战（多家进入中）；SST：早期</td>
+    <td>稳态（已 10+ 年）</td>
+    <td>整合 + 海外突破阶段</td>
+  </tr>
+  <tr>
+    <td class="dim">标的位置</td>
+    <td>干变国内 #2-3；AIDC 干变 #1（先发但份额不稳）；SST 首发</td>
+    <td>分接开关全球 <strong>#2</strong>（仅次于德国 MR）</td>
+    <td>主网二梯队头部 <strong>#3-4</strong>（中国西电/特变/思源/平高 第二梯队领先者）</td>
+  </tr>
+  <tr>
+    <td class="dim">位置稳固性</td>
+    <td>不稳：AIDC 干变 #1 容易被特变 / 西门子追赶；SST 先发 1-2 年后竞争加剧</td>
+    <td>极稳：三寡头格局过去 10 年没变化</td>
+    <td>稳中向上：海外 +86% 持续拉大与同梯队的差距</td>
+  </tr>
+  <tr>
+    <td class="dim">相对位置</td>
+    <td><span class="pill yellow">🟡 中</span></td>
+    <td><span class="pill green">🟢 强</span></td>
+    <td><span class="pill yellow">🟡 中</span></td>
+  </tr>
+</table>
+
+<div class="judgment">
+  <strong>判断依据：</strong>
+  <ul>
+    <li><strong>华明 🟢</strong>：分接开关的寡头格局是<strong>三家公司里唯一已经"终局已定"的</strong>——这意味着估值的天花板由"赛道增长"决定，而不是"市占率竞争"。</li>
+    <li><strong>思源 🟡</strong>：在二梯队头部，海外业务正在拉开差距，但和中国西电/特变还有规模差距（200 亿 vs 600+ 亿）。</li>
+    <li><strong>金盘 🟡</strong>：干变赛道分散 + AIDC 干变格局未稳定 + SST 新赛道未成型。<strong>结构是金盘最大的短板</strong>——故事再好，结构不稳就难以独享溢价。</li>
+  </ul>
+</div>
+</section>
+
+<!-- ============================================ -->
+<!-- 三大问题汇总 -->
+<!-- ============================================ -->
+<section id="q1">
+<h2>📊 谁的逻辑最硬？（确定性）</h2>
+
+<table>
+  <tr><th>标的</th><th>L2 合同</th><th>L4 物理时间</th><th>L8 结构</th><th>L3 战略</th><th>L5 生态</th><th><strong>综合</strong></th></tr>
+  <tr>
+    <td class="dim">金盘科技</td>
+    <td><span class="pill yellow">🟡</span></td>
+    <td><span class="pill yellow">🟡</span></td>
+    <td><span class="pill yellow">🟡</span></td>
+    <td><span class="pill yellow">🟡</span></td>
+    <td><span class="pill yellow">🟡</span></td>
+    <td><span class="pill yellow">🟡 五项全黄</span></td>
+  </tr>
+  <tr>
+    <td class="dim">华明装备</td>
+    <td><span class="pill green">🟢</span></td>
+    <td><span class="pill green">🟢</span></td>
+    <td><span class="pill green">🟢</span></td>
+    <td><span class="pill green">🟢</span></td>
+    <td><span class="pill green">🟢</span></td>
+    <td><span class="pill green">🟢 五项全绿</span></td>
+  </tr>
+  <tr>
+    <td class="dim">思源电气</td>
+    <td><span class="pill green">🟢</span></td>
+    <td><span class="pill yellow">🟡</span></td>
+    <td><span class="pill yellow">🟡</span></td>
+    <td><span class="pill green">🟢</span></td>
+    <td><span class="pill yellow">🟡</span></td>
+    <td><span class="pill green">🟢 两绿三黄</span></td>
+  </tr>
+</table>
+
+<div class="decision-card">
+  <h3>结论</h3>
+  <p><strong>华明装备逻辑最硬</strong>——五项确定性维度全部 🟢，核心来自：(1) 三寡头格局稳定 10+ 年；(2) 嵌入式产品 + 30 年寿命真锁定；(3) 60% 毛利率验证议价权。<strong>风险点在 L7 类比</strong>：历史剧本告诉我们"分接开关从未出现过短期爆发"，所以"逻辑最硬"对应的是"温和稳定"而不是"暴利"。</p>
+  <p><strong>思源电气逻辑次硬</strong>，弱点在 L4（同梯队对手追赶可能）和 L5（招标制非真锁定）。</p>
+</div>
+</section>
+
+<section id="q2">
+<h2>🚀 谁的弹性最大？（上行空间）</h2>
+
+<table>
+  <tr><th>标的</th><th>L1 故事</th><th>L6 估值-弹性</th><th>L7 类比</th><th>L8 结构阶段</th><th><strong>综合</strong></th></tr>
+  <tr>
+    <td class="dim">金盘科技</td>
+    <td><span class="pill yellow">🟡</span></td>
+    <td><span class="pill green">🟢</span></td>
+    <td><span class="pill green">🟢</span></td>
+    <td><span class="pill yellow">🟡</span></td>
+    <td><span class="pill green">🟢 弹性大但路径长</span></td>
+  </tr>
+  <tr>
+    <td class="dim">华明装备</td>
+    <td><span class="pill green">🟢</span></td>
+    <td><span class="pill red">🔴</span></td>
+    <td><span class="pill yellow">🟡</span></td>
+    <td><span class="pill green">🟢</span></td>
+    <td><span class="pill yellow">🟡 估值锁住上行</span></td>
+  </tr>
+  <tr>
+    <td class="dim">思源电气</td>
+    <td><span class="pill green">🟢</span></td>
+    <td><span class="pill green">🟢</span></td>
+    <td><span class="pill green">🟢</span></td>
+    <td><span class="pill yellow">🟡</span></td>
+    <td><span class="pill green">🟢 三绿一黄</span></td>
+  </tr>
+</table>
+
+<div class="decision-card">
+  <h3>结论</h3>
+  <p><strong>思源电气弹性最大</strong>——核心来自：(1) 已经兑现的高增长（不是预期）；(2) 估值合理（PEG ≈ 1）；(3) 海外+主网+AI 三引擎共驱，催化剂密集；(4) 历史类比（国电南瑞 5 年 10 倍 + 三一重工出海突破）都是正向的。<strong>需要的催化剂</strong>：2025 年报继续验证 + 2026 Q1 海外维持 +50% 以上 + 1000kV GIS 客户认证。</p>
+  <p><strong>金盘科技弹性次之</strong>，但兑现路径更长——AIDC 增速能否维持、SST 商业化时点、海外大单连续性都需要继续验证。</p>
+</div>
+</section>
+
+<section id="q3">
+<h2>⚓ 谁的安全边际最高？（下行保护）</h2>
+
+<table>
+  <tr><th>标的</th><th>L6 估值-下沿</th><th>L8 位置</th><th>L5 切换成本</th><th>L2 合同</th><th><strong>综合</strong></th></tr>
+  <tr>
+    <td class="dim">金盘科技</td>
+    <td><span class="pill yellow">🟡</span></td>
+    <td><span class="pill yellow">🟡</span></td>
+    <td><span class="pill yellow">🟡</span></td>
+    <td><span class="pill yellow">🟡</span></td>
+    <td><span class="pill yellow">🟡 四项全黄</span></td>
+  </tr>
+  <tr>
+    <td class="dim">华明装备</td>
+    <td><span class="pill yellow">🟡</span></td>
+    <td><span class="pill green">🟢</span></td>
+    <td><span class="pill green">🟢</span></td>
+    <td><span class="pill green">🟢</span></td>
+    <td><span class="pill green">🟢 三绿一黄</span></td>
+  </tr>
+  <tr>
+    <td class="dim">思源电气</td>
+    <td><span class="pill yellow">🟡</span></td>
+    <td><span class="pill yellow">🟡</span></td>
+    <td><span class="pill yellow">🟡</span></td>
+    <td><span class="pill green">🟢</span></td>
+    <td><span class="pill yellow">🟡 一绿三黄</span></td>
+  </tr>
+</table>
+
+<div class="decision-card">
+  <h3>结论</h3>
+  <p><strong>华明装备安全边际最高</strong>——核心来自：(1) 寡头位置稳固，份额不会被颠覆；(2) 真锁定（嵌入式 + 30 年寿命）确保下行时收入不流失；(3) 60% 毛利率稳态意味着即使行业回调，盈利韧性强。最坏情况下行 20-30%（PE 从 34x 回到 25x），而盈利侧基本不动。</p>
+  <p><strong>注意</strong>：华明"安全最高"不是因为估值低（5Y 分位 92% 偏高），而是因为<strong>盈利韧性强</strong>——这是一种特殊的安全边际。</p>
+</div>
+</section>
+
+<!-- ============================================ -->
+<!-- 决策矩阵 -->
+<!-- ============================================ -->
+<section id="matrix">
+<h2>🎯 决策矩阵</h2>
+
+<table>
+  <tr><th></th><th>逻辑最硬（确定性）</th><th>弹性最大（上行）</th><th>安全最高（下行）</th></tr>
+  <tr><td class="dim">🥇 第一名</td><td><strong>华明装备</strong></td><td><strong>思源电气</strong></td><td><strong>华明装备</strong></td></tr>
+  <tr><td class="dim">🥈 第二名</td><td>思源电气</td><td>金盘科技</td><td>思源电气</td></tr>
+  <tr><td class="dim">🥉 第三名</td><td>金盘科技</td><td>华明装备</td><td>金盘科技</td></tr>
+</table>
+
+<div class="judgment">
+  <strong>三种典型组合的处置</strong>：
+  <ul>
+    <li><strong>华明装备同时占两项第一</strong>（逻辑+安全）→ 这是真正的"压舱石"标的，但代价是弹性受限。<strong>警惕"太完美"</strong>：5Y 分位 92% 已透支了部分预期，需观察出海加速度能否突破历史模式。</li>
+    <li><strong>思源电气是综合最均衡</strong>（一二二）→ 弹性第一 + 逻辑第二 + 安全第二，<strong>没有明显短板</strong>——这种组合在 A 股稀缺。</li>
+    <li><strong>金盘科技三项均为第三</strong>（但都不是 🔴）→ 不应排除，而应作为"<strong>纯弹性增强工具</strong>"（pure beta），仓位控制在组合的 10-20%。</li>
+  </ul>
+</div>
+
+<h3>不同市场环境下的权重建议</h3>
+
+<table>
+  <tr><th>市场环境</th><th>优先看</th><th>推荐组合</th></tr>
+  <tr>
+    <td class="dim">强势市场 / AI 数据中心热度高</td>
+    <td>弹性 &gt; 逻辑 &gt; 安全</td>
+    <td>思源 50% + 金盘 30% + 华明 20%</td>
+  </tr>
+  <tr>
+    <td class="dim">震荡市 / 赛道分化（当前 2026-05）</td>
+    <td>逻辑 &gt; 安全 &gt; 弹性</td>
+    <td><strong>思源 50% + 华明 35% + 金盘 15%</strong>（推荐）</td>
+  </tr>
+  <tr>
+    <td class="dim">熊市 / 风险偏好低</td>
+    <td>安全 &gt; 逻辑 &gt; 弹性</td>
+    <td>华明 60% + 思源 30% + 现金 10%</td>
+  </tr>
+  <tr>
+    <td class="dim">出海加速 + 主网重启</td>
+    <td>逻辑 + 弹性 → 思源</td>
+    <td>思源 60% + 华明 30% + 金盘 10%</td>
+  </tr>
+</table>
+</section>
+
+<!-- ============================================ -->
+<!-- 跟踪变量 -->
+<!-- ============================================ -->
+<section id="tracking">
+<h2>🔁 跟踪变量与排序触发条件</h2>
+
+<h3>必须跟踪的 7 个关键变量</h3>
+
+<table>
+  <tr><th>变量</th><th>影响哪一层</th><th>触发什么排序变化</th></tr>
+  <tr>
+    <td>金盘 AIDC 收入 2026 Q1/Q2 增速</td>
+    <td>L1, L6</td>
+    <td>如增速跌破 +100% → 金盘"弹性"从 🟢 降为 🟡</td>
+  </tr>
+  <tr>
+    <td>金盘 SST 商业化时间表（2026 Q3 vs 2027）</td>
+    <td>L4, L7</td>
+    <td>如 2026 Q3 实现规模订单 → 金盘"逻辑"从 🟡 升为 🟢</td>
+  </tr>
+  <tr>
+    <td>华明海外收入占比突破 30%</td>
+    <td>L1, L8</td>
+    <td>突破 30% → 华明"弹性"从 🔴 升为 🟡，"逻辑"维持 🟢</td>
+  </tr>
+  <tr>
+    <td>华明 PE 回落到 5Y 50% 分位（PE ~ 28x）</td>
+    <td>L6</td>
+    <td>回落到 28x → 华明"弹性"从 🔴 升为 🟢（罕见的"逻辑+弹性+安全"三优）</td>
+  </tr>
+  <tr>
+    <td>思源 1000kV GIS 客户认证（2026-2027）</td>
+    <td>L4</td>
+    <td>完成认证 → 思源"逻辑"从两绿三黄升为三绿两黄</td>
+  </tr>
+  <tr>
+    <td>思源海外 2026 Q1/Q2 增速</td>
+    <td>L1, L6</td>
+    <td>维持 +50% 以上 → 思源所有评级稳定；跌破 +30% → 重评"弹性"</td>
+  </tr>
+  <tr>
+    <td>电网设备指数 PE-TTM 回落到 30x 以下</td>
+    <td>L6 (三家共同)</td>
+    <td>整体回调 → 安全维度全部上调一档，是真正的加仓窗口</td>
+  </tr>
+</table>
+
+<h3>排序变化的触发条件（明确的 if-then）</h3>
+
+<ul>
+  <li>如果华明出海加速度超过历史（海外收入 2026 突破 8 亿，占比突破 25%），<strong>华明在"弹性"从 🔴 升为 🟡</strong>，会同时占三项前 2，是真正的"组合大赢家"。</li>
+  <li>如果思源 2026 Q1/Q2 海外增速跌破 +30%，<strong>"弹性"从 🟢 降为 🟡</strong>，组合中思源权重应下调到 30%。</li>
+  <li>如果金盘 AIDC 增速跌破 +50% 且 SST 推迟到 2027 后才量产，<strong>金盘所有维度都需要重新评估</strong>，组合中金盘权重应下调到 5%。</li>
+  <li>如果国网 15 五年投资节奏不及预期（实际增速 &lt; +30%），<strong>三家"L1 故事"都需要下调</strong>，但思源受影响最大（主网占比高）。</li>
+</ul>
+</section>
+
+<!-- ============================================ -->
+<!-- 数据来源 -->
+<!-- ============================================ -->
+<section id="sources" class="footnotes">
+<h2>📚 数据来源</h2>
+
+<ol>
+  <li><strong>华明装备 5Y PE 分位 92%</strong>：理杏仁(2026-04-01)；机构目标价 38.3 元 — <a href="http://www.eeo.com.cn/2026/0401/824494.shtml">经济观察网 2026-04-01</a>。</li>
+  <li><strong>金盘科技 SST 元神 ONE</strong>：金盘科技 2026-01-27 公告；HVDC800V 2.4MW 效率 &gt;98%。来源 — <a href="https://stock.hexun.com/2025-08-30/221205541.html">和讯网 2025-08-30 公司点评</a>。</li>
+  <li><strong>金盘科技 2025 年度业绩</strong>：营收 73.0 亿 (+5.8%) / 归母 6.6 亿 (+14.9%) / AIDC 收入 9.74 亿 (+337%) / 海外订单 6.96 亿 — <a href="http://dataclouds.cninfo.com.cn/shgonggao/2025/2025-08-29/a9d9415e840011f0beb4fa163e957f7a.pdf">2025 半年报</a> + <a href="http://stock.finance.sina.com.cn/stock/go.php/vReport_Show/kind/search/rptid/798982980349/index.phtml">2024 年报点评</a>。</li>
+  <li><strong>华明装备 2025 业绩 + 寡头格局</strong>：营收 24.27 亿 / 归母 7.10 亿 / 电力设备毛利率 59.61% / 全球 #2、三寡头 ~80% — <a href="https://pdf.dfcfw.com/pdf/H3_AP202510301771859078_1.pdf?1761834194000.pdf=">国信证券 2025-10-30 研报</a> + <a href="https://www.fxbaogao.com/detail/4989338">国泰海通研报</a>。</li>
+  <li><strong>思源电气 2025 业绩</strong>：营收 212.05 亿 (+37%) / 归母 31.63 亿 (+54%) / 海外 58 亿 (+86%) / 海外毛利率 35.24% — <a href="https://stock.hexun.com/2026-01-16/223181797.html">和讯网 2026-01-16 业绩快报点评</a> + <a href="http://money.finance.sina.com.cn/corp/view/vCB_AllBulletinDetail.php?stockid=002028&id=12112020">思源电气 2025 年度报告</a>。</li>
+  <li><strong>行业大背景</strong>：15 五年电网投资 4 万亿 (+40%)；2025 变压器出口 903.6 亿美元 (+34.83%)；沙特跃居 #1 出口国；数据中心耗电 2030 达 945 TWh — <a href="https://www.21jingji.com/article/20260313/herald/a96af591e54bd40308da6ddd813b750f.html">21 经济网 2026-03-13</a> + <a href="https://pdf.dfcfw.com/pdf/H3_AP202602051819794078_1.pdf">东方财富 AIDC 与电力设备 2026 年度策略报告</a>。</li>
+  <li><strong>金盘科技估值</strong>：PE-TTM 65x；5Y 分位 30%；2025-27 EPS 1.74/2.28/2.77，对应 PE 56.8/43.2/35.6 — <a href="https://www.lixinger.com/equity/company/detail/sh/688676/688676/fundamental/valuation/pe-ttm">理杏仁估值数据</a>。</li>
+  <li><strong>华明装备估值</strong>：PE-TTM 34.17x；5Y 分位 91.98%；机构目标价 38.3 元 — <a href="https://www.lixinger.com/equity/company/detail/sz/002270/2270">理杏仁</a> + 经济观察网。</li>
+  <li><strong>思源电气估值</strong>：2026-05-06 收盘 206 元，市值 1593 亿，EPS-TTM 4.06 → PE ~50x — <a href="https://caifuhao.eastmoney.com/news/20260507001559623015980">东方财富 2026-05-07</a>。</li>
+  <li><strong>2026 券商观点</strong>：国信证券、中信证券、东方证券均看好电力设备出海，覆盖思源/金盘/华明 — <a href="https://k.sina.com.cn/article_7857201856_1d45362c001902vbhk.html">汪毅 2026 电力设备出海展望</a> + <a href="https://www.fxbaogao.com/detail/5291772">东方证券《北美 AI 电荒》</a>。</li>
+</ol>
+
+<h3>WebSearch 调用记录</h3>
+<ul>
+  <li>S1: 金盘科技 2025 年报 数据中心 干式变压器 海外订单 — 关键事实命中</li>
+  <li>S2: 华明装备 2025 年报 有载分接开关 市占率 海外业务 — 关键事实命中</li>
+  <li>S3: 思源电气 2025 年报 海外订单 GIS 变压器 业绩 — 关键事实命中</li>
+  <li>S4: 2026 中国电网投资 海外电网 北美变压器短缺 数据中心 — 行业大背景命中</li>
+  <li>S5: 金盘 华明 思源 PE PB 估值 2026 券商目标价 — 估值数据 + 券商观点命中</li>
+  <li>S6: 思源电气 002028 市盈率 PE 2026年5月 股价 — 股价 / 市值命中</li>
+  <li>S7: 金盘科技 华明装备 市盈率 PE PB 2026 当前股价 5年分位 — 5Y 分位命中</li>
+</ul>
+<p style="color:var(--muted);font-size:12px;margin-top:12px;">WebSearch 总次数：7 / 预算 8。报告生成日：2026-05-19。</p>
+
+</section>
+
+</div>
+</body>
+</html>
