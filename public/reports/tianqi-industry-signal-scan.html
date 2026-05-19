@@ -1,0 +1,611 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>天齐锂业产业信号扫描 · 2026-05 · industry-signal-screener</title>
+<style>
+  :root {
+    --green: #10b981;
+    --yellow: #f59e0b;
+    --red: #ef4444;
+    --bg: #fafafa;
+    --card: #ffffff;
+    --text: #1f2937;
+    --muted: #6b7280;
+    --border: #e5e7eb;
+    --accent: #2563eb;
+    --code-bg: #f3f4f6;
+  }
+  * { box-sizing: border-box; }
+  body {
+    font-family: -apple-system, "PingFang SC", "Microsoft YaHei", "Helvetica Neue", sans-serif;
+    line-height: 1.7;
+    color: var(--text);
+    background: var(--bg);
+    margin: 0;
+    padding: 0;
+  }
+  .toc {
+    position: fixed;
+    top: 24px;
+    left: 24px;
+    width: 240px;
+    max-height: calc(100vh - 48px);
+    overflow-y: auto;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 18px 16px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.04);
+    font-size: 13px;
+    z-index: 100;
+  }
+  .toc h3 {
+    margin: 0 0 12px 0;
+    font-size: 13px;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    font-weight: 600;
+  }
+  .toc ul { list-style: none; padding: 0; margin: 0; }
+  .toc li { margin: 2px 0; }
+  .toc a {
+    display: block;
+    padding: 5px 8px;
+    color: var(--text);
+    text-decoration: none;
+    border-radius: 6px;
+    transition: all 0.15s;
+    border-left: 2px solid transparent;
+  }
+  .toc a:hover {
+    background: #eff6ff;
+    color: var(--accent);
+    border-left-color: var(--accent);
+  }
+  .toc .toc-section {
+    font-weight: 600;
+    margin-top: 8px;
+    color: var(--accent);
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+  .container {
+    margin-left: 296px;
+    max-width: 980px;
+    padding: 32px 32px 80px 32px;
+  }
+  h1 {
+    font-size: 28px;
+    margin: 0 0 8px 0;
+    line-height: 1.3;
+  }
+  h2 {
+    font-size: 22px;
+    margin: 36px 0 16px 0;
+    padding-bottom: 8px;
+    border-bottom: 2px solid var(--border);
+    scroll-margin-top: 20px;
+  }
+  h3 {
+    font-size: 17px;
+    margin: 24px 0 12px 0;
+    scroll-margin-top: 20px;
+  }
+  .meta {
+    color: var(--muted);
+    font-size: 14px;
+    margin-bottom: 24px;
+  }
+  .dashboard {
+    background: linear-gradient(135deg, #f0fdfa 0%, #ecfeff 100%);
+    border: 1px solid #99f6e4;
+    border-radius: 12px;
+    padding: 20px 24px;
+    margin: 20px 0 32px 0;
+  }
+  .dashboard h2 {
+    margin-top: 0;
+    border-bottom: none;
+    color: #0f766e;
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 14px 0;
+    background: var(--card);
+    font-size: 14px;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.03);
+  }
+  th, td {
+    padding: 10px 12px;
+    text-align: left;
+    border-bottom: 1px solid var(--border);
+    vertical-align: top;
+  }
+  th {
+    background: #f9fafb;
+    font-weight: 600;
+    color: var(--text);
+    border-bottom: 2px solid var(--border);
+  }
+  tr:last-child td { border-bottom: none; }
+  td.dim {
+    background: #fafafa;
+    font-weight: 600;
+    width: 22%;
+  }
+  .pill {
+    display: inline-block;
+    padding: 2px 9px;
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: 600;
+    margin-right: 4px;
+  }
+  .green { background: #d1fae5; color: #065f46; }
+  .yellow { background: #fef3c7; color: #92400e; }
+  .red { background: #fee2e2; color: #991b1b; }
+  .signal-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-left: 5px solid var(--border);
+    border-radius: 8px;
+    padding: 14px 18px;
+    margin: 14px 0;
+  }
+  .signal-card.g { border-left-color: var(--green); }
+  .signal-card.y { border-left-color: var(--yellow); }
+  .signal-card.r { border-left-color: var(--red); }
+  .signal-card .head {
+    font-weight: 700;
+    font-size: 15px;
+    margin-bottom: 6px;
+  }
+  .judgment {
+    background: #fefce8;
+    border-left: 4px solid var(--yellow);
+    padding: 12px 16px;
+    margin: 14px 0;
+    border-radius: 0 8px 8px 0;
+    font-size: 14px;
+  }
+  .judgment strong { color: #854d0e; }
+  .uncertainty {
+    background: #fef2f2;
+    border-left: 4px solid var(--red);
+    padding: 10px 14px;
+    margin: 10px 0;
+    border-radius: 0 8px 8px 0;
+    font-size: 13px;
+    color: #7f1d1d;
+  }
+  .ok-block {
+    background: #ecfdf5;
+    border-left: 4px solid var(--green);
+    padding: 10px 14px;
+    margin: 10px 0;
+    border-radius: 0 8px 8px 0;
+    font-size: 13px;
+    color: #065f46;
+  }
+  sup.fn {
+    color: var(--accent);
+    font-weight: 600;
+    cursor: pointer;
+  }
+  code {
+    background: var(--code-bg);
+    padding: 1px 6px;
+    border-radius: 4px;
+    font-family: "SF Mono", Menlo, Consolas, monospace;
+    font-size: 13px;
+    color: #be185d;
+  }
+  .decision-card {
+    background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+    border: 1px solid #fbbf24;
+    border-radius: 12px;
+    padding: 18px 22px;
+    margin: 20px 0;
+  }
+  .decision-card h3 { margin-top: 0; color: #78350f; }
+  .grade-podium {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 8px;
+    margin: 14px 0;
+  }
+  .grade-cell {
+    text-align: center;
+    padding: 10px 8px;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    font-size: 12px;
+  }
+  .grade-cell .lbl { color: var(--muted); margin-bottom: 4px; }
+  .grade-cell .val { font-size: 18px; font-weight: 700; }
+  @media (max-width: 1100px) {
+    .toc { display: none; }
+    .container { margin-left: 0; }
+    .grade-podium { grid-template-columns: repeat(2, 1fr); }
+  }
+  html { scroll-behavior: smooth; }
+  .footnotes {
+    margin-top: 60px;
+    padding: 24px;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    font-size: 13px;
+  }
+  .footnotes h2 { margin-top: 0; }
+  .footnotes a { color: var(--accent); text-decoration: none; word-break: break-all; }
+  .footnotes a:hover { text-decoration: underline; }
+  .disclaimer {
+    margin-top: 30px;
+    padding: 14px 18px;
+    background: #fff7ed;
+    border: 1px dashed #fb923c;
+    border-radius: 8px;
+    color: #9a3412;
+    font-size: 13px;
+  }
+</style>
+</head>
+<body>
+
+<nav class="toc">
+  <h3>📑 目录</h3>
+  <ul>
+    <li><a href="#dashboard">🎯 仪表盘 (TL;DR)</a></li>
+    <li class="toc-section">产业信号矩阵</li>
+    <li><a href="#layer1">1️⃣ 需求端</a></li>
+    <li><a href="#layer2">2️⃣ 供应链</a></li>
+    <li><a href="#layer3">3️⃣ 竞争格局</a></li>
+    <li><a href="#layer4">4️⃣ 客户行为</a></li>
+    <li><a href="#layer5">5️⃣ 政策 / 监管</a></li>
+    <li class="toc-section">辅助 / 决策</li>
+    <li><a href="#supplement">📊 补充描述</a></li>
+    <li><a href="#tracking">👀 关键观察变量</a></li>
+    <li><a href="#action">🎯 操作建议</a></li>
+    <li class="toc-section">附录</li>
+    <li><a href="#framework-fit">🛠️ 框架适用性</a></li>
+    <li><a href="#sources">📚 数据来源</a></li>
+  </ul>
+</nav>
+
+<div class="container">
+
+<h1>天齐锂业产业信号扫描</h1>
+<div class="meta">
+  天齐锂业 (002466.SZ / 09696.HK) · 模式 B 单股产业扫描<br>
+  框架：industry-signal-screener v2（产业层为主评级 + 周期股估值口径 + 资金面作为间接产业信号）<br>
+  报告生成日：2026-05-19 ｜ 数据截至：2026-05-14
+</div>
+
+<!-- ============================================ -->
+<section id="dashboard" class="dashboard">
+<h2>🎯 仪表盘 (TL;DR)</h2>
+
+<p><strong>综合评级：<span class="pill yellow">🟡 黄（偏 🟢）</span></strong>　&mdash;　产业层 5 维度评分为 <strong>3 绿 2 黄</strong>，按 SKILL.md 标准本应为 🟢；但叠加 <strong>v2 changelog 教训</strong>（周期股的资金面应作为产业信号间接证据），近期主力连续大额净流出 + 股价已从 52 周底部 +147% + "产业最好"的叙事接近极致，<strong>综合下调一档至 🟡</strong>。</p>
+
+<p><strong>一句话结论：</strong>产业基本面（锂价 19 万+、储能去库、SQM 投资收益爆发）<strong>是确凿的</strong>，但市场已经先于产业兑现部分预期——<strong>问题不再是"产业拐点是否成立"，而是"还剩多少未定价的产业 alpha"</strong>。</p>
+
+<div class="grade-podium">
+  <div class="grade-cell"><div class="lbl">需求端</div><div class="val"><span class="pill green">🟢</span></div></div>
+  <div class="grade-cell"><div class="lbl">供应链</div><div class="val"><span class="pill green">🟢</span></div></div>
+  <div class="grade-cell"><div class="lbl">竞争格局</div><div class="val"><span class="pill green">🟢</span></div></div>
+  <div class="grade-cell"><div class="lbl">客户行为</div><div class="val"><span class="pill yellow">🟡</span></div></div>
+  <div class="grade-cell"><div class="lbl">政策监管</div><div class="val"><span class="pill yellow">🟡</span></div></div>
+</div>
+
+<p><strong>三个关键洞察：</strong></p>
+<ul>
+  <li><strong>产业层确认：</strong>2026 Q1 营收 +98.44% / 归母 +1699.12% / 锂价 7.5 万 → 17 万 / SQM 投资收益继续放量<sup class="fn">[1]</sup>——这些都是<strong>已发生的事实</strong>，不是预期。</li>
+  <li><strong>v2 changelog 警示：</strong>主力资金连续净流出（5-7 -20.91 亿、5-14 -9.64 亿）<sup class="fn">[2]</sup> + 股价从 28.57 → 81.19 → 70.69（已回落 13%）—— 这是翔鹭钨业 case 中暴露的"产业极佳 + 资金派发"组合，<strong>本应是产业层的间接预警信号</strong>。</li>
+  <li><strong>结构性支撑仍在：</strong>Greenbushes（全球品位 #1 / 成本最低 / 资源量 288 万吨 LCE）+ SQM 22.16% 股权（智利国有化后仍按合资保留权益）—— 这是<strong>不可复制的资产</strong>，不会因为短期股价波动消失。</li>
+</ul>
+</section>
+
+<!-- ============================================ -->
+<section id="layer1">
+<h2>1️⃣ 需求端信号 — <span class="pill green">🟢 绿</span></h2>
+
+<div class="signal-card g">
+  <div class="head">关键数据（带时间戳）</div>
+  <ul>
+    <li><strong>2026-04 CATL 中国动力电池装机</strong> 29.06 GWh，市占率 47.2%（环比 +1.1pp），<strong>BYD</strong> 10.49 GWh / 17.1%<sup class="fn">[3]</sup>；</li>
+    <li><strong>2026 Q1 全球 EV 电池</strong>：CATL 40.7%，BYD 13.7%（CATL 全球地位继续巩固）<sup class="fn">[3]</sup>；</li>
+    <li><strong>储能爆发</strong>：CATL 587Ah、BYD 2710Ah 大电芯量产 + CATL 与 HyperStrong 签 60 GWh 储能大单（3 年）<sup class="fn">[3]</sup>；</li>
+    <li><strong>瑞银 2026-05-07 报告</strong>：储能把 2026 锂供需推向缺口，将 2026 中国碳酸锂均价预测上调 18% 至 <strong>20 万元/吨</strong>，5-6 月可能触及 25 万<sup class="fn">[4]</sup>。</li>
+  </ul>
+</div>
+
+<div class="judgment">
+  <strong>信号判断：</strong>需求端是 2026 锂周期最强支撑。储能从"动力电池附属"升级为"独立增量"，<strong>587Ah / 2710Ah 大电芯 + 60 GWh 大单</strong>意味着电池厂在锁未来 3 年储能产能，对应的锂盐需求是确定性的。CATL/BYD 全球市占率持续提升 → 行业集中度对上游议价有利。
+</div>
+
+<div class="uncertainty">
+  ⚠️ <strong>潜在反向信号：</strong>CATL 2026 钠离子电池量产用于 EV（续航 370+ 英里）<sup class="fn">[3]</sup>——这是产业层的潜在"替代信号"。但目前钠电能量密度只够覆盖低端 EV 和储能场景，<strong>2-3 年内对锂需求的实际侵蚀有限</strong>。若 2027 后钠电渗透率突破 10%，需要重新评估。
+</div>
+</section>
+
+<!-- ============================================ -->
+<section id="layer2">
+<h2>2️⃣ 供应链信号 — <span class="pill green">🟢 绿</span></h2>
+
+<div class="signal-card g">
+  <div class="head">关键数据（带时间戳）</div>
+  <ul>
+    <li><strong>2026-05-07 碳酸锂 MMLC 现货指数</strong> 190,295 元/吨，电池级均价 190,750 元/吨，月环比 <strong>+19.6%</strong><sup class="fn">[4]</sup>；</li>
+    <li><strong>2026-05-07 周度库存</strong> 102,673 吨，环比 -920 吨（-0.9%），<strong>库存天数仅 25.1 天</strong>（历史低位）<sup class="fn">[4]</sup>；</li>
+    <li><strong>价格轨迹</strong>：2026-01 ~12 万 → 2026-04 17 万 → 2026-05 19 万——4 个月 +58%<sup class="fn">[1]</sup>；</li>
+    <li><strong>天齐 2025 全年</strong>：Greenbushes 锂精矿产量 135 万吨、销量 81 万吨（+9.8%）<sup class="fn">[5]</sup>。</li>
+  </ul>
+</div>
+
+<div class="judgment">
+  <strong>信号判断：</strong>价格、库存、期货全面共振向上。"<strong>库存 25 天</strong>" 是周期股最硬的"产业信号 anchor"——历史上锂价大顶之前都伴随库存超 60 天，本轮远未到。当前是<strong>典型的"去库 + 现货溢价 + 期货 backwardation"</strong>组合。
+</div>
+
+<div class="ok-block">
+  ✅ <strong>对天齐的直接含义：</strong>Greenbushes 是全球品位最高的锂矿（1.5% Li2O，开采成本约 350-400 美元/吨 LCE），按当前 19 万元/吨的销售价 → <strong>毛利率可恢复到 70% 以上</strong>。2026 Q1 净利 18.76 亿仅是开始，若锂价维持 18-20 万，全年净利预期可达 60-80 亿。
+</div>
+</section>
+
+<!-- ============================================ -->
+<section id="layer3">
+<h2>3️⃣ 竞争格局信号 — <span class="pill green">🟢 绿（相对）/ 🟡 黄（绝对）</span></h2>
+
+<div class="signal-card g">
+  <div class="head">关键数据（带时间戳）</div>
+  <ul>
+    <li><strong>2025 中国碳酸锂产量</strong> 97.6 万吨，同比 <strong>+39.3%</strong>——国内江西锂云母 + 青海/西藏盐湖大幅放量<sup class="fn">[6]</sup>；</li>
+    <li><strong>中国锂资源储量</strong> 全球占比从 6% → <strong>16.5%</strong>，排名世界第六 → 第二（2025-01 中地质调查局公告）<sup class="fn">[6]</sup>；</li>
+    <li><strong>南美格局</strong>：智利 SQM 合同 2030 到期，2031 后核心阿塔卡马锂业务移交 Codelco 合并报表<sup class="fn">[6]</sup>；Albemarle 合同 2043 才到期，独立运营；</li>
+    <li><strong>天齐的位置</strong>：Greenbushes（澳洲）51% 股权 + SQM 22.16% 股权 = 全球独占的"高品位硬岩矿 + 低成本盐湖"双资产组合。</li>
+  </ul>
+</div>
+
+<div class="judgment">
+  <strong>信号判断：</strong>
+  <ul>
+    <li><strong>相对维度 🟢</strong>：天齐拥有全球唯二的"硬岩 + 盐湖"完整组合（另一个是 Albemarle）。在锂价 19 万 + 的背景下，<strong>这种资产组合的稀缺溢价被重新定价</strong>。</li>
+    <li><strong>绝对维度 🟡</strong>：行业 CR3 集中度被中国国内供给 +39.3% 稀释。<strong>中长期看，江西锂云母（成本 6-8 万）+ 盐湖卤水（成本 4-6 万）会拉低全行业毛利中枢</strong>——天齐的成本优势仍在，但行业整体的毛利率不会回到 2022 年的疯狂区间。</li>
+  </ul>
+  <strong>综合判断：🟢</strong>——产业层位置 + 利润分配（v2 changelog 升级的通用原则）显示天齐处于"<strong>吃肉</strong>"位置（上游矿端）。这与翔鹭钨业（中游冶炼，只能吃 14%）形成鲜明对比。
+</div>
+</section>
+
+<!-- ============================================ -->
+<section id="layer4">
+<h2>4️⃣ 客户 / 经销商行为 — <span class="pill yellow">🟡 黄</span></h2>
+
+<div class="signal-card y">
+  <div class="head">关键数据（带时间戳）</div>
+  <ul>
+    <li><strong>长协机制</strong>：2024 锂价低位时长协被广泛打破，2025-26 行业以<strong>现货定价为主</strong>，长协覆盖率较 2022 年高峰已明显下降——天齐与 CATL / BYD / LG 等的长协细节<strong>未在公开年报中详细披露</strong>；</li>
+    <li><strong>客户锁产能信号</strong>：CATL × HyperStrong 60 GWh 储能大单本身意味着<strong>电池厂在锁产能</strong>，但这传导到锂盐端是否同步锁长协，<strong>公开信息有限</strong>；</li>
+    <li><strong>2026 Q1 天齐销售均价</strong>：锂产品均价较 2024 Q1 大幅增长（24 Q1 ~7.5 万 → 26 Q1 17 万）——这反映<strong>现货价上涨直接传导到天齐报表</strong>，说明客户接受了涨价<sup class="fn">[1]</sup>。</li>
+  </ul>
+</div>
+
+<div class="judgment">
+  <strong>信号判断：</strong>客户行为信号有限，标记 🟡。<strong>积极面</strong>：客户接受涨价（Q1 均价 17 万说明真实出货价已传导）；<strong>消极面</strong>：长协机制尚未完全恢复 → 价格弹性更大，但盈利可见性低于 2022 年。这也是<strong>本轮锂周期估值溢价（PE 倍数）低于 2021-22 年的核心原因</strong>。
+</div>
+
+<div class="uncertainty">
+  ⚠️ <strong>数据缺口（按 SKILL.md "不许编造" 原则诚实标注）：</strong>
+  <ul>
+    <li>CATL / BYD 锂盐长协具体条款 — <strong>未在公开渠道找到</strong>；</li>
+    <li>CATL 锂盐自给率（其参股的合作矿企贡献比例）—— <strong>未查到 2025/26 最新数据</strong>；</li>
+    <li>建议跟踪：天齐 2026 半年报披露的"前 5 大客户占比"变化、CATL 2026 H1 业绩会上关于上游成本指引的措辞。</li>
+  </ul>
+</div>
+</section>
+
+<!-- ============================================ -->
+<section id="layer5">
+<h2>5️⃣ 政策 / 监管信号 — <span class="pill yellow">🟡 黄</span></h2>
+
+<div class="signal-card y">
+  <div class="head">关键数据（带时间戳）</div>
+  <ul>
+    <li><strong>智利锂矿国有化进展</strong>：2026 年初智利正式推进锂矿国有化，<strong>SQM 阿塔卡马盐湖核心业务自 2031 起移交 Codelco 合并报表</strong>，按合资框架天齐仍保留 22.16% 权益<sup class="fn">[6]</sup>；</li>
+    <li><strong>2024 新版矿业税</strong>：智利 2024-01-01 起施行，SQM 2024 Q1 单季缴纳约 11 亿美元资源税<sup class="fn">[6]</sup>——<strong>这部分已计入 SQM 利润，对天齐投资收益的拖累已经反映</strong>；</li>
+    <li><strong>中国矿权</strong>：2025-01 中地质调查局宣布锂矿储量从全球第六升至第二（+1000% 资源量）—— 这是<strong>政策层面释放找矿成果</strong>，长期看会增加国内中长期供给；</li>
+    <li><strong>中美博弈</strong>：锂作为新能源战略资源未列入主要管制清单，<strong>暂未受地缘冲击</strong>。</li>
+  </ul>
+</div>
+
+<div class="judgment">
+  <strong>信号判断：</strong>政策方向偏中性。<strong>智利国有化</strong>对天齐是"结构变化"而非"风险事件"——按目前披露的合资框架天齐 22.16% 权益不变，但<strong>需关注 Codelco-SQM 合资细则</strong>（Codelco 是否享有更多决策权、分红优先权等）。<strong>中国国内供给政策</strong>偏利空（边际供给增加）但传导到价格的速度较慢（卤水/锂云母放量需 3-5 年）。
+</div>
+</section>
+
+<!-- ============================================ -->
+<section id="supplement">
+<h2>📊 补充描述（按 SKILL.md，不进评级 / 简要）</h2>
+
+<table>
+  <tr>
+    <th>维度</th>
+    <th>当前状态</th>
+    <th>v2 changelog 标注</th>
+  </tr>
+  <tr>
+    <td class="dim">估值（PB / 股息率为主）</td>
+    <td>市值约 1100-1200 亿（5-14 收盘 70.69 元）<sup class="fn">[2]</sup>；2025 净资产约 460 亿 → PB ~2.4-2.6x，仍处历史中位偏下；股息率：2025 净利 4.63 亿对应分红率 30% 假设下 ~0.12%——周期股不看股息率，看 PB</td>
+    <td>周期股按 PB 看，<strong>2.4-2.6x PB 不算贵</strong>（2022 年高点 PB ~7x，2024 年低点 PB ~1.5x）</td>
+  </tr>
+  <tr>
+    <td class="dim">资金面（v2 升级为间接产业信号）</td>
+    <td>主力近 3 个交易日累计净流出约 -35 亿（5-7 -20.91 亿、5-13 -4.37 亿、5-14 -9.64 亿）<sup class="fn">[2]</sup>；股价从 52 周高 81.19 回落至 70.69（-13%）；近一年涨 150%，市值重回千亿</td>
+    <td><strong>⚠️ 与翔鹭钨业 case 高度相似</strong>：产业层很好 + 机构开始派发——这是产业信号的间接预警，建议综合评级 <span class="pill green">🟢</span> → <span class="pill yellow">🟡</span></td>
+  </tr>
+  <tr>
+    <td class="dim">情绪面</td>
+    <td>"净利润暴涨 17 倍的锂业一哥，依旧走在危险边缘" 类标题增多（36 氪 2026-04-27）；雪球关注度回升但未到 2022 年高峰</td>
+    <td>叙事极致点出现 → 历史上锂周期顶部前 3-6 个月常见</td>
+  </tr>
+</table>
+
+<div class="uncertainty">
+  ⚠️ <strong>关于 PB 5Y 分位</strong>：未在公开搜索结果中找到精确数值，建议在理杏仁 / 万得查询。粗略估算（2022 年高点 PB ~7x、2024 年低点 ~1.5x、当前 ~2.5x）→ <strong>当前 PB 5Y 分位约 40-50%</strong>，属中位区间。
+</div>
+</section>
+
+<!-- ============================================ -->
+<section id="tracking">
+<h2>👀 关键观察变量（接下来 3-6 个月）</h2>
+
+<table>
+  <tr><th>变量</th><th>影响哪一维度</th><th>触发什么评级变化</th></tr>
+  <tr>
+    <td>碳酸锂现货价突破 20 万元/吨且站稳 2 周</td>
+    <td>需求端 + 供应链</td>
+    <td>瑞银预测兑现 → 综合维持 🟢，但要警惕 "<strong>产业最好就是股价最贵</strong>" 的反身性</td>
+  </tr>
+  <tr>
+    <td>库存天数突破 35 天 / 重回 50 天</td>
+    <td>供应链</td>
+    <td>累库信号 → 供应链 🟢 降为 🟡 → 综合下调</td>
+  </tr>
+  <tr>
+    <td>CATL 2026 H1 业绩会上对锂盐成本指引</td>
+    <td>客户行为</td>
+    <td>若主动提示"锂价已透支"或"考虑加大长协" → 客户行为 🟡 → 🟢 / 🔴</td>
+  </tr>
+  <tr>
+    <td>钠离子电池在 EV 端渗透率（2026 全年）</td>
+    <td>需求端</td>
+    <td>突破 5% → 需求端 🟢 → 🟡（钠电真正侵蚀锂需求边际）</td>
+  </tr>
+  <tr>
+    <td>Codelco-SQM 合资细则披露（智利政府公告）</td>
+    <td>政策 + 竞争格局</td>
+    <td>若 Codelco 享有显著超额权益（&gt;50% 决策权）→ 政策 🟡 → 🔴</td>
+  </tr>
+  <tr>
+    <td>主力资金净流入回归 / 北向加仓</td>
+    <td>资金面（间接产业信号）</td>
+    <td>连续 5 个交易日净流入 → 综合 🟡 → 🟢；继续单边流出 → 🟡 → 🔴</td>
+  </tr>
+  <tr>
+    <td>2026 半年报披露</td>
+    <td>全部</td>
+    <td>若净利 &gt; 35 亿（年化 70 亿 +）+ 锂价维持 → 综合维持 🟢；若 Q2 增速急降 → 重评</td>
+  </tr>
+</table>
+
+<h3>"已经能看到但市场还没反应" 的信号</h3>
+<ul>
+  <li><strong>Greenbushes 2025 销量 81 万吨 vs 产量 135 万吨</strong>—— 销量/产量缺口 54 万吨 = <strong>库存增厚 8-10 万吨 LCE</strong>。这部分库存在 19 万元锂价下的潜在变现价值 <strong>~150-190 亿元</strong>，市场对此<strong>定价不充分</strong>。</li>
+  <li><strong>SQM 22.16% 股权的 mark-to-market</strong>：SQM 2025 业绩快速恢复，且智利国有化框架"<strong>2031 后仍保留权益</strong>"——这一长期资产价值在当前估值中被低估。</li>
+</ul>
+
+<h3>"市场已 price in 但还没落地" 的预期</h3>
+<ul>
+  <li><strong>锂价回到 25 万/吨</strong>（瑞银上限预测）—— 当前股价已隐含锂价 18-20 万的中性预期，<strong>若实际锂价跌回 15 万以下，股价下行空间显著</strong>。</li>
+  <li><strong>SQM 国有化损失</strong>—— 市场情绪面已经反复消化，<strong>实际落地条款若优于预期反而是利好</strong>。</li>
+</ul>
+</section>
+
+<!-- ============================================ -->
+<section id="action">
+<h2>🎯 操作建议（按 SKILL.md，不给买卖明确指令）</h2>
+
+<div class="decision-card">
+  <h3>未持有</h3>
+  <p><strong>不建议追高。</strong>当前位置（52 周高位回落 13%、近一年 +150%、主力派发）属"产业层 + 资金面分歧"区间。如果非要建仓：</p>
+  <ul>
+    <li><strong>触发条件 1（产业 + 估值）</strong>：等碳酸锂价回踩到 16-17 万、PB 回到 2.0x 以下、且月度库存重新进入去库通道；</li>
+    <li><strong>触发条件 2（资金面）</strong>：等主力资金从单边流出转为连续 5 日净流入；</li>
+    <li><strong>仓位建议</strong>：首仓不超过组合 5%，留 5% 等"<strong>产业最佳 + 股价回踩</strong>"的二次确认机会。</li>
+  </ul>
+</div>
+
+<div class="decision-card">
+  <h3>已持有</h3>
+  <p><strong>不建议在 5 月当下大幅减仓，但要主动管理风险。</strong>当前的"产业层 🟢 + 资金面 🟡"是结构性分歧期：</p>
+  <ul>
+    <li>核心仓位（建仓成本低 / 已浮盈 100% +）：可保留至 2026 半年报披露后再决策；</li>
+    <li>追高仓位（5 月新入场 / 成本 75 元 +）：可考虑部分止盈（10-20%）以应对短期回撤；</li>
+    <li>跟踪节奏：关注上方"关键观察变量"中前 3 项的实时变化。</li>
+  </ul>
+</div>
+
+<div class="judgment">
+  <strong>核心立场：</strong>"产业层告诉你<strong>风险/机会的结构</strong>，不告诉你<strong>会涨/会跌</strong>"（SKILL.md 原话）。当前结构是：<strong>产业 alpha 仍在</strong>（锂价 + 储能需求 + 矿端高毛利）+ <strong>市场已部分定价</strong>（资金派发、PB 中位）。这种状态下<strong>持有的赔率 &gt; 加仓的赔率</strong>，但<strong>清仓的代价 &gt; 持有的代价</strong>——这就是 🟡 评级的真实含义。
+</div>
+</section>
+
+<!-- ============================================ -->
+<section id="framework-fit">
+<h2>🛠️ 框架适用性自检（v2 实战 #3：天齐锂业）</h2>
+
+<p>按 SKILL.md "实战 changelog" 要求，记录本次扫描暴露的框架问题，供 v3 改造参考：</p>
+
+<h3>框架表现 ✅</h3>
+<ul>
+  <li><strong>v2 升级有效</strong>：周期股看 PB / 资金面作为间接产业信号 / 产业链位置 + 利润分配前置——这三条 v2 改造在本次都直接派上用场。</li>
+  <li><strong>产业链位置分析</strong>：天齐在上游（吃肉位置）vs 翔鹭钨业在中游（吃骨头位置）的对比清晰还原。</li>
+  <li><strong>"已经能看到但市场还没反应"</strong> 这一栏抓到了 Greenbushes 销量/产量缺口 54 万吨这一关键信号——这是市场较少关注但产业层可见的 alpha。</li>
+</ul>
+
+<h3>框架不足 ⚠️</h3>
+<ul>
+  <li><strong>锂电资源行业模板未建</strong>：SKILL.md 当前覆盖半导体设备 + AI 算力，锂周期目前只能套通用 5 维原则。建议 v3 新增<strong>「小金属 / 战略资源（锂 / 钨 / 锑 / 稀土）」</strong>专用模板，核心信号 = 主产品现货价 + 库存天数 + 矿权政策 + 上中下游利润分配 + 边际供给来源（西澳 / 智利 / 中国本土的相对成本）。</li>
+  <li><strong>"双资产组合"的稀缺溢价</strong>没有明确入框架：天齐 Greenbushes + SQM 是全球独占（仅 Albemarle 类似），这种"组合稀缺性" 在产业层应有溢价权重，但目前 5 维度没有专门位置。</li>
+  <li><strong>SQM 这种"投资收益主要贡献"的情形</strong>：天齐归母净利的 30-50% 来自 SQM 投资收益，而 SQM 自身受智利政策、南美季节性影响，<strong>不能完全套用国内 5 维矩阵</strong>。建议 v3 在多业务公司处理中新增 "<strong>联营/合营公司的产业层穿透分析</strong>"。</li>
+  <li><strong>反身性提示不足</strong>：周期股有强反身性（股价↑→ 融资便利 → 产能扩张 → 周期顶部）。本次扫描虽然在"已 price in 但还没落地"中提到了，但<strong>框架本身缺少反身性专项检查项</strong>。</li>
+</ul>
+
+<h3>教训（2-3 条可复用的结构性认知）</h3>
+<ol>
+  <li><strong>周期股的"产业最好"信号需要叠加"资金面派发"二次确认</strong>。单看产业层会错过"产业极佳 + 股价见顶"的常见组合。</li>
+  <li><strong>战略资源股的护城河不是技术，是<strong>矿权 + 资产组合稀缺性</strong></strong>——Greenbushes 不可复制，这是天齐最硬的资产，远比短期锂价波动重要。</li>
+  <li><strong>"库存天数"是周期股最强的产业 anchor</strong>，比"价格"和"业绩"都领先 1-3 个月。本次扫描中 25 天的库存天数是 🟢 评级的核心证据。</li>
+</ol>
+</section>
+
+<!-- ============================================ -->
+<section id="sources" class="footnotes">
+<h2>📚 数据来源</h2>
+
+<ol>
+  <li><strong>天齐锂业 2026 Q1 业绩</strong>：营收 51.28 亿 (+98.44%) / 归母 18.76 亿 (+1699.12%) / 扣非 18.16 亿 (+3987.18%) / 锂产品均价大幅上涨 — <a href="https://www.stcn.com/article/detail/3830697.html">证券时报 2026-04-28</a> + <a href="https://www.cs.com.cn/ssgs/01/2026/04/28/detail_2026042810007735.html">中证网 2026-04-28</a> + <a href="https://finance.eastmoney.com/a/202604203710826375.html">东方财富 2026-04-20</a>。</li>
+  <li><strong>天齐股价 + 资金面</strong>：2026-05-14 收盘 70.69 元 / 52 周 28.57-81.19 / 5-7 主力净流出 20.91 亿 / 5-14 净流出 9.64 亿 — <a href="https://stock.stockstar.com/RB2026050800007911.shtml">证券之星 2026-05-08</a> + <a href="https://stock.stockstar.com/RB2026051500009358.shtml">证券之星 2026-05-15</a>。</li>
+  <li><strong>动力电池 + 储能数据</strong>：CATL 2026-04 装机 29.06 GWh / 市占率 47.2%；CATL × HyperStrong 60 GWh 储能大单；CATL 钠电池 EV 量产 — <a href="https://cnevpost.com/2026/05/11/top-battery-makers-apr-2026-share-china/">CnEVPost 2026-05-11</a> + <a href="https://cnevpost.com/2026/05/06/global-ev-battery-market-share-jan-mar-2026/">CnEVPost 2026-05-06</a>。</li>
+  <li><strong>碳酸锂价格 + 库存</strong>：MMLC 现货 190,295 元 (+19.6% MoM) / 库存 102,673 吨 (-0.9% WoW) / 库存天数 25.1 天 / 瑞银上调 2026 均价至 20 万 — <a href="https://news.smm.cn/news/103892629">SMM 2026-05-08</a> + <a href="https://www.wkjyqh.com/ueditor/jsp/upload/file/20260508/1778236710643086926.pdf">五矿期货 2026-05-08 碳酸锂月报</a>。</li>
+  <li><strong>天齐 2025 年报</strong>：营收 103.46 亿 (-20.8%) / 归母 4.63 亿 (+105.85% 扭亏) / Greenbushes 产量 135 万吨 / 销量 81 万吨 (+9.8%) / 资产负债率 28.04% / 经营现金流 29.61 亿 — <a href="https://stock.stockstar.com/RB2026032900001727.shtml">证券之星 2026-03-29 年报简析</a> + <a href="https://www.stcn.com/article/detail/3705603.html">证券时报 2025 年报报道</a>。</li>
+  <li><strong>智利国有化 + 中国锂矿政策</strong>：SQM 2031 移交 Codelco 合并报表 / SQM 合同 2030 到期 / Albemarle 2043 到期 / 中国 2025 储量全球占比 16.5% / 2025 国内碳酸锂产量 97.6 万吨 (+39.3%) — <a href="https://file.iyanbao.com/pdf/8d47d-5824e92c-40dc-47f3-8f06-35c85d8dbf68.pdf">安信证券智利国有化研报</a> + <a href="https://news.goalfore.cn/topstories/detail/67597.html">国复咨询 智利锂矿国有化</a>。</li>
+</ol>
+
+<h3>WebSearch 调用记录</h3>
+<ul>
+  <li>S1: 天齐锂业 002466 2025 年报 Greenbushes SQM 业绩 — ✅ 关键事实命中</li>
+  <li>S2: 碳酸锂价格 2026 年 5 月 现货 库存 期货 SMM — ✅ 一手价格数据命中</li>
+  <li>S3: 2026 动力电池排产 储能 CATL BYD 锂盐采购 自给率 长协 — ✅ 需求端命中（自给率/长协部分未查到，已标注）</li>
+  <li>S4: 2026 智利锂矿 国有化 SQM Albemarle 资源税 中国锂矿政策 — ✅ 政策命中</li>
+  <li>S5: 天齐锂业 PB 市净率 5 年分位 北向资金 — ⚠️ 股价/资金面命中，PB 5Y 分位未查到（已标注估算）</li>
+  <li>S6: 天齐锂业 2026 Q1 一季报 SQM 投资收益 — ✅ Q1 业绩命中</li>
+</ul>
+<p style="color:var(--muted);font-size:12px;margin-top:12px;">WebSearch 总次数：6 / 预算 8。报告生成日：2026-05-19。</p>
+
+<div class="disclaimer">
+  📌 本报告基于公开信息的产业链信号扫描，仅用于辅助风险/机会识别，<strong>不构成投资建议</strong>。投资决策请基于自身研究和专业意见。
+</div>
+
+</section>
+
+</div>
+</body>
+</html>
