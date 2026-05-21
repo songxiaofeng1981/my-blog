@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>天齐锂业 vs 中矿资源 - 产业信号横向对比(2026/5)</title>
+<style>
+  :root{
+    --bg:#fafafa; --fg:#222; --muted:#666; --line:#e5e5e5;
+    --green:#16a34a; --yellow:#d97706; --red:#dc2626;
+    --accent:#1d4ed8; --code-bg:#f4f4f5;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0;background:var(--bg);color:var(--fg);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+    font-size:15px;line-height:1.7;}
+  .layout{display:flex;max-width:1400px;margin:0 auto;}
+  /* 浮动 TOC */
+  nav.toc{
+    position:sticky;top:0;align-self:flex-start;
+    width:280px;max-height:100vh;overflow-y:auto;
+    padding:24px 18px;border-right:1px solid var(--line);
+    background:#fff;font-size:13px;
+  }
+  nav.toc h2{font-size:14px;margin:0 0 12px;letter-spacing:.5px;color:var(--muted);text-transform:uppercase;}
+  nav.toc ul{list-style:none;padding:0;margin:0;}
+  nav.toc li{margin:2px 0;}
+  nav.toc a{color:#333;text-decoration:none;display:block;padding:4px 8px;border-left:2px solid transparent;border-radius:0 3px 3px 0;}
+  nav.toc a:hover{background:#f0f5ff;color:var(--accent);border-left-color:var(--accent);}
+  nav.toc .lvl-1{font-weight:600;margin-top:8px;}
+  nav.toc .lvl-2{padding-left:14px;}
+  nav.toc .lvl-3{padding-left:28px;font-size:12px;color:#555;}
+  nav.toc .lvl-4{padding-left:42px;font-size:12px;color:#777;}
+  nav.toc .lvl-5{padding-left:56px;font-size:11.5px;color:#888;}
+  nav.toc .lvl-6{padding-left:70px;font-size:11.5px;color:#999;}
+  nav.toc .lvl-7{padding-left:84px;font-size:11px;color:#aaa;}
+  nav.toc .lvl-8{padding-left:98px;font-size:11px;color:#bbb;}
+  /* 正文 */
+  main{flex:1;padding:32px 48px 80px;max-width:1100px;}
+  h1,h2,h3,h4,h5,h6{scroll-margin-top:20px;font-weight:600;}
+  h1{font-size:28px;border-bottom:2px solid var(--fg);padding-bottom:10px;margin-top:0;}
+  h2{font-size:22px;border-bottom:1px solid var(--line);padding-bottom:6px;margin-top:48px;}
+  h3{font-size:18px;margin-top:32px;}
+  h4{font-size:16px;margin-top:24px;color:#333;}
+  h5{font-size:15px;margin-top:18px;color:#444;}
+  h6{font-size:14px;margin-top:14px;color:#555;font-weight:600;}
+  .h7{font-size:13.5px;margin:12px 0 6px;color:#666;font-weight:600;}
+  .h8{font-size:13px;margin:10px 0 4px;color:#777;font-weight:600;}
+  table{width:100%;border-collapse:collapse;margin:16px 0;font-size:14px;background:#fff;}
+  th,td{border:1px solid var(--line);padding:8px 10px;text-align:left;vertical-align:top;}
+  th{background:#f0f0f0;font-weight:600;}
+  .tag{display:inline-block;padding:2px 8px;border-radius:10px;font-size:12px;font-weight:600;}
+  .green{background:#dcfce7;color:var(--green);}
+  .yellow{background:#fef3c7;color:var(--yellow);}
+  .red{background:#fee2e2;color:var(--red);}
+  .source{font-size:12px;color:var(--muted);font-style:italic;}
+  blockquote{border-left:3px solid var(--accent);padding:8px 14px;margin:14px 0;background:#f0f5ff;color:#333;}
+  code{background:var(--code-bg);padding:1px 5px;border-radius:3px;font-size:13px;}
+  .meta{color:var(--muted);font-size:13px;margin-bottom:24px;}
+  .disclaimer{margin-top:48px;padding:14px;border:1px dashed #999;background:#fff;font-size:13px;color:#555;}
+  ul,ol{padding-left:22px;}
+  li{margin:4px 0;}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+  .card{background:#fff;border:1px solid var(--line);padding:14px 18px;border-radius:6px;}
+  .card h4{margin-top:0;}
+  .anchor-spacer{height:0;}
+  /* 锚点跳转视觉提示 */
+  :target{background:#fffbeb;animation:flash 1.2s ease-out;}
+  @keyframes flash{from{background:#fde68a}to{background:#fffbeb}}
+  @media(max-width:900px){
+    .layout{flex-direction:column}
+    nav.toc{position:relative;width:100%;max-height:none;border-right:none;border-bottom:1px solid var(--line);}
+    main{padding:24px 16px;}
+    .grid2{grid-template-columns:1fr;}
+  }
+</style>
+</head>
+<body>
+<div class="layout">
+<nav class="toc" id="toc">
+  <h2>目录(8 层可锚)</h2>
+  <ul>
+    <li class="lvl-1"><a href="#sec-1">1. 总览</a></li>
+    <li class="lvl-2"><a href="#sec-1-1">1.1 一句话结论</a></li>
+    <li class="lvl-2"><a href="#sec-1-2">1.2 横向评级表</a></li>
+    <li class="lvl-2"><a href="#sec-1-3">1.3 查询方法与信息源</a></li>
+
+    <li class="lvl-1"><a href="#sec-2">2. 行业层:锂周期反转中</a></li>
+    <li class="lvl-2"><a href="#sec-2-1">2.1 锂价走势</a></li>
+    <li class="lvl-3"><a href="#sec-2-1-1">2.1.1 现货价</a></li>
+    <li class="lvl-4"><a href="#sec-2-1-1-1">2.1.1.1 电池级碳酸锂</a></li>
+    <li class="lvl-5"><a href="#sec-2-1-1-1-1">2.1.1.1.1 工业级对比</a></li>
+    <li class="lvl-6"><a href="#sec-2-1-1-1-1-1">2.1.1.1.1.1 月内波动区间</a></li>
+    <li class="lvl-7"><a href="#sec-2-1-1-1-1-1-1">2.1.1.1.1.1.1 价格指数</a></li>
+    <li class="lvl-8"><a href="#sec-2-1-1-1-1-1-1-1">2.1.1.1.1.1.1.1 数据源</a></li>
+    <li class="lvl-3"><a href="#sec-2-1-2">2.1.2 期货合约</a></li>
+    <li class="lvl-3"><a href="#sec-2-1-3">2.1.3 距离 2025 底部涨幅</a></li>
+    <li class="lvl-2"><a href="#sec-2-2">2.2 需求端</a></li>
+    <li class="lvl-2"><a href="#sec-2-3">2.3 库存</a></li>
+    <li class="lvl-2"><a href="#sec-2-4">2.4 政策面</a></li>
+
+    <li class="lvl-1"><a href="#sec-3">3. 天齐锂业(002466) 五维矩阵</a></li>
+    <li class="lvl-2"><a href="#sec-3-1">3.1 需求端</a></li>
+    <li class="lvl-2"><a href="#sec-3-2">3.2 供应链</a></li>
+    <li class="lvl-2"><a href="#sec-3-3">3.3 竞争格局</a></li>
+    <li class="lvl-2"><a href="#sec-3-4">3.4 客户/经销商行为</a></li>
+    <li class="lvl-2"><a href="#sec-3-5">3.5 政策/监管</a></li>
+    <li class="lvl-2"><a href="#sec-3-6">3.6 综合产业评级</a></li>
+
+    <li class="lvl-1"><a href="#sec-4">4. 中矿资源(002738) 五维矩阵</a></li>
+    <li class="lvl-2"><a href="#sec-4-1">4.1 需求端</a></li>
+    <li class="lvl-2"><a href="#sec-4-2">4.2 供应链</a></li>
+    <li class="lvl-2"><a href="#sec-4-3">4.3 竞争格局</a></li>
+    <li class="lvl-2"><a href="#sec-4-4">4.4 客户/经销商行为</a></li>
+    <li class="lvl-2"><a href="#sec-4-5">4.5 政策/监管</a></li>
+    <li class="lvl-2"><a href="#sec-4-6">4.6 综合产业评级</a></li>
+
+    <li class="lvl-1"><a href="#sec-5">5. 横向对比与关键差异</a></li>
+    <li class="lvl-2"><a href="#sec-5-1">5.1 产业链位置</a></li>
+    <li class="lvl-2"><a href="#sec-5-2">5.2 资源禀赋</a></li>
+    <li class="lvl-2"><a href="#sec-5-3">5.3 财务质量</a></li>
+    <li class="lvl-2"><a href="#sec-5-4">5.4 弹性 vs 稳健</a></li>
+
+    <li class="lvl-1"><a href="#sec-6">6. 补充描述(不进评级)</a></li>
+    <li class="lvl-2"><a href="#sec-6-1">6.1 估值</a></li>
+    <li class="lvl-2"><a href="#sec-6-2">6.2 资金面</a></li>
+    <li class="lvl-2"><a href="#sec-6-3">6.3 情绪面</a></li>
+
+    <li class="lvl-1"><a href="#sec-7">7. 关键观察变量</a></li>
+    <li class="lvl-2"><a href="#sec-7-1">7.1 接下来 3-6 个月</a></li>
+    <li class="lvl-2"><a href="#sec-7-2">7.2 已能看到但市场没反应</a></li>
+    <li class="lvl-2"><a href="#sec-7-3">7.3 已 price in 待落地</a></li>
+
+    <li class="lvl-1"><a href="#sec-8">8. 框架自检与免责</a></li>
+    <li class="lvl-2"><a href="#sec-8-1">8.1 框架适用性</a></li>
+    <li class="lvl-2"><a href="#sec-8-2">8.2 数据缺口</a></li>
+    <li class="lvl-2"><a href="#sec-8-3">8.3 免责声明</a></li>
+  </ul>
+</nav>
+
+<main>
+
+<h1 id="sec-1">天齐锂业 vs 中矿资源 — 产业信号横向对比</h1>
+<p class="meta">报告日期:2026/5/20 · 模式:A 组合对比 · 框架:industry-signal-screener(SKILL.md)· 赛道:小金属/战略资源(锂)— 待建模板首跑</p>
+
+<h2 id="sec-1-1">1.1 一句话结论</h2>
+<blockquote>
+锂周期已在 2025H2 完成底部反转,产业层全面转绿。<strong>天齐锂业(002466)综合评级 🟢</strong>,弹性最大、Q1 净利 18.76 亿(+1699%),但 SQM 智利政策与历史债务包袱是结构性风险点;<strong>中矿资源(002738)综合评级 🟢</strong>,Q1 净利 5.08 亿(+277%)、毛利率 57.5% 高于天齐,且从纯锂股向"锂+铯铷+铜锗锌"多金属平台转型,2026 是 Tsumeb 项目兑现年。两只票本周期都在受益侧,差异在"纯锂 β"(天齐) vs "多金属 α"(中矿)。
+</blockquote>
+
+<h2 id="sec-1-2">1.2 横向评级表</h2>
+<table>
+<thead><tr><th>公司</th><th>综合</th><th>需求端</th><th>供应链</th><th>竞争格局</th><th>客户行为</th><th>政策</th></tr></thead>
+<tbody>
+<tr>
+  <td><strong>天齐锂业</strong><br>002466 / 9696.HK</td>
+  <td><span class="tag green">🟢 绿</span></td>
+  <td><span class="tag green">🟢</span></td>
+  <td><span class="tag green">🟢</span></td>
+  <td><span class="tag green">🟢</span></td>
+  <td><span class="tag green">🟢</span></td>
+  <td><span class="tag yellow">🟡</span></td>
+</tr>
+<tr>
+  <td><strong>中矿资源</strong><br>002738</td>
+  <td><span class="tag green">🟢 绿</span></td>
+  <td><span class="tag green">🟢</span></td>
+  <td><span class="tag green">🟢</span></td>
+  <td><span class="tag green">🟢</span></td>
+  <td><span class="tag green">🟢</span></td>
+  <td><span class="tag yellow">🟡</span></td>
+</tr>
+</tbody>
+</table>
+
+<h2 id="sec-1-3">1.3 查询方法与信息源</h2>
+<ul>
+<li><strong>一手</strong>:巨潮资讯网 2025 年报/2026Q1 季报、港交所披露易、广州期货交易所 LC 主力合约。</li>
+<li><strong>行业</strong>:上海有色 SMM 锂价指数、SMM 周度库存数据(2026/5/13 升级)、中汽协/动力电池联盟产销数据。</li>
+<li><strong>政策</strong>:津巴布韦矿业部 2026/2/25 公告、上海证券报国内整改报道、五矿证券 2025/11 锂业 2026 展望。</li>
+<li><strong>卖方</strong>:东吴/国信/西部/中信建投/天风/太平洋/海证期货研报(用于交叉验证,不用作主信源)。</li>
+</ul>
+
+<hr>
+
+<h2 id="sec-2">2. 行业层:锂周期反转中</h2>
+
+<h3 id="sec-2-1">2.1 锂价走势</h3>
+
+<h4 id="sec-2-1-1">2.1.1 现货价</h4>
+<h5 id="sec-2-1-1-1">2.1.1.1 电池级碳酸锂</h5>
+<h6 id="sec-2-1-1-1-1">2.1.1.1.1 工业级对比</h6>
+<div class="h7" id="sec-2-1-1-1-1-1">2.1.1.1.1.1 月内波动区间</div>
+<div class="h8" id="sec-2-1-1-1-1-1-1">2.1.1.1.1.1.1 价格指数</div>
+<div class="h8" id="sec-2-1-1-1-1-1-1-1">2.1.1.1.1.1.1.1 数据源</div>
+
+<ul>
+<li><strong>电池级碳酸锂</strong>:2026/5/18 基准价 <strong>19.10 万/吨</strong>;5/7 SMM 现货 19.05 万/吨;近期指数 184,171,日波动 -5,000(-0.026%)。<span class="source">(SMM 上海有色 2026/5)</span></li>
+<li><strong>工业级碳酸锂</strong>:2026/5/18 报 <strong>18.80 万/吨</strong>,与电池级价差约 3,000 元/吨。<span class="source">(SMM 2026/5/18)</span></li>
+<li><strong>月内波动</strong>:5 月初到 5 月中,电池级在 17.3—19.1 万/吨之间震荡;5 月中下行 5,000 元属阶段性调整,非趋势反转。<span class="source">(SMM 周度数据 2026/5)</span></li>
+<li><strong>价格指数</strong>:SMM 电池级指数 188,705。</li>
+<li><strong>数据源</strong>:SMM(<a href="https://hq.smm.cn/h5/Li2CO3-battery-price">hq.smm.cn</a>)、Mysteel(<a href="https://www.mysteel.com/mmlc/">mysteel.com/mmlc</a>)、生意社(100ppi)。</li>
+</ul>
+
+<h4 id="sec-2-1-2">2.1.2 期货合约</h4>
+<ul>
+<li>广期所 LC2609 主力合约 2026/5/7 收 <strong>199,060 元/吨</strong>,环比上月 +24.9%。</li>
+<li>5/14 LC2609 收 <strong>191,760 元/吨</strong>,日跌 4.99%,触发盘面快速调整。<span class="source">(新浪财经 2026/5/14)</span></li>
+<li>市场情绪:"估值高位下消息面扰动放大",显示市场对单边上涨的边际敏感度提升 — 但**这是顶部前的典型博弈节奏,不是产业拐点信号**。</li>
+</ul>
+
+<h4 id="sec-2-1-3">2.1.3 距离 2025 底部涨幅</h4>
+<ul>
+<li>碳酸锂 2025 年低点 5.85 万/吨 → 2026/5 ≈ 19 万/吨,<strong>涨幅 +224%</strong>。<span class="source">(stcn.com 锂矿企业重启赚钱模式 2026/4/22)</span></li>
+<li>这是 2022 年 60 万顶 → 2024H2 6 万底 → 2026Q1 反转的**周期股二阶反转**信号。</li>
+</ul>
+
+<h3 id="sec-2-2">2.2 需求端</h3>
+<ul>
+<li><strong>新能源车</strong>:2026/4 中国新能源乘用车批发销量 <strong>122 万辆</strong>(比亚迪 31.41 万、吉利 13.56 万)。<span class="source">(乘联会 2026/5/8)</span></li>
+<li><strong>锂电排产</strong>:2026/4 锂电池排产 <strong>235 GWh</strong>,环比 +15.6%,同比 +38.2%,创新高。<span class="source">(新浪财经 2026/4/10)</span></li>
+<li><strong>储能占比</strong>:2026/4 储能电池排产占比 <strong>41.3%</strong>,首次破 40%,较去年同期 +12.5pct。储能成最大增量。<span class="source">(同上)</span></li>
+<li><strong>2026 全球碳酸锂需求</strong>:机构预测 <strong>200-207 万吨,同比 +27-30%</strong>;中信建投把全球锂电需求从 3031GWh 上调至 <strong>3163GWh,+38.3%</strong>。<span class="source">(SMM、中信建投 2026/4)</span></li>
+<li><strong>储能出口</strong>:2025 前 10 月出口额近 660 亿美元,超 EV 540 亿美元 — 储能成最具竞争力的清洁技术出口品。<span class="source">(电池中国/SMM)</span></li>
+</ul>
+
+<h3 id="sec-2-3">2.3 库存</h3>
+<table>
+<thead><tr><th>时点</th><th>总库存</th><th>冶炼厂</th><th>下游</th><th>其他/贸易</th></tr></thead>
+<tbody>
+<tr><td>2026/1/8</td><td>~10.99 万吨</td><td>1.84 万吨</td><td>3.65 万吨</td><td>5.50 万吨</td></tr>
+<tr><td>2026/3/12</td><td>9.90 万吨</td><td>1.63 万吨</td><td>4.56 万吨</td><td>3.70 万吨</td></tr>
+<tr><td>2026/5 上旬</td><td><strong>10.27 万吨</strong></td><td>1.88 万吨(+3.63%)</td><td>4.06 万吨(-12.18%)</td><td>4.33 万吨(+20.24%)</td></tr>
+</tbody></table>
+<p class="source">来源:SMM 周度样本库存(2026/5/13 起样本覆盖度升级至 70-80%)。</p>
+<ul>
+<li><strong>读法</strong>:下游库存连续下降(-12.18% 4 月环比),冶炼厂略增,贸易商加库 — 显示<strong>下游主动消化、贸易商追多</strong>,典型"加价惜售 + 看涨投机"组合。</li>
+<li><strong>风险点</strong>:贸易库存 +20% 是典型情绪指标。如果终端排产放缓,贸易盘很快变压盘。</li>
+</ul>
+
+<h3 id="sec-2-4">2.4 政策面</h3>
+<ul>
+<li><strong>津巴布韦(2026/2/25)</strong>:矿业部宣布<strong>立即暂停所有原矿及锂精矿出口</strong>(含在途货物),倒逼下游本地化。**有当地锂盐/硫酸锂产能**的企业可申请豁免。原则上计划 2027 年禁所有精矿出口。<span class="source">(上海证券报 2026/2/27)</span></li>
+<li><strong>江西宜春(2026/3-5)</strong>:4 家瓷土矿采矿权出让收益评估报告公示,5 月进入临时停产换证,主矿种由"陶瓷土"变更为"锂云母",短期复产难。<span class="source">(上海证券报 2026/4/14)</span></li>
+<li><strong>双重挤压</strong>:国内整改 + 海外限出口 → 短期供给收缩,机构估算"影响全球锂市约 1 个月",中长期 2026 或现供需缺口。</li>
+<li><strong>智利</strong>:SQM 和 Albemarle 扩产,智利政府推动"公私合营",外资节奏受影响。**这点关联天齐(持 SQM 21.9%)**。<span class="source">(SMM 锂业大周期重启 2026/1/26)</span></li>
+</ul>
+
+<hr>
+
+<h2 id="sec-3">3. 天齐锂业(002466) 五维矩阵</h2>
+
+<h3 id="sec-3-1">3.1 需求端 <span class="tag green">🟢 绿</span></h3>
+<ul>
+<li>Q1 2026 营收 <strong>51.28 亿元(+98.44%)</strong>,锂产品销售均价较上年同期"明显增长"。<span class="source">(天齐 2026Q1 季报,cninfo 2026/4/28)</span></li>
+<li>主要客户为锂电池龙头(宁德、LG 化学等),搭乘 235 GWh 排产红利。</li>
+<li>2026 全球锂电需求 +38%(中信建投上调),需求端连续 4 季度环比改善。</li>
+<li><strong>信号判断</strong>:需求端无短板,周期反转中订单饱满。</li>
+</ul>
+
+<h3 id="sec-3-2">3.2 供应链 <span class="tag green">🟢 绿</span></h3>
+<ul>
+<li><strong>Greenbushes 锂辉石矿</strong>:截至 2024/12/31 矿产资源量 4.40 亿吨(LCE 约 1,600 万吨),储量 1.72 亿吨(LCE 约 810 万吨)— **全球品位最高、成本最低的锂辉石矿之一**。<span class="source">(天齐 2024 年报)</span></li>
+<li>2025H1 矿石总开采量 269.41 万吨(化学级 258.72 万吨),稳定运行。<span class="source">(天齐 2025 半年报)</span></li>
+<li><strong>SQM 股权</strong>:21.9% 持股,SQM Q1 2026 业绩同比大增,贡献投资收益成为 Q1 18.76 亿净利的关键支撑。<span class="source">(天齐 2026Q1 季报)</span></li>
+<li><strong>信号判断</strong>:上游资源端=最优级别,锂周期反转中"成本曲线最左侧的票" → 弹性最大。</li>
+</ul>
+
+<h3 id="sec-3-3">3.3 竞争格局 <span class="tag green">🟢 绿</span></h3>
+<ul>
+<li>2025 年锂矿龙头排序(净利):盐湖股份 89.47 亿 > 藏格矿业 > **天齐锂业 4.63 亿**(扭亏)— 在化学级锂辉石提锂阵营中天齐居一线。<span class="source">(新浪财经 2026/4/16)</span></li>
+<li>**产业链位置**:上游(矿端)毛利率 39.47% vs 电池端(赣锋锂业锂电池系列)毛利率 14.17%。<strong>矿端吃 80% 利润,这是周期反转期的结构性 alpha</strong>。<span class="source">(各公司 2025 财报)</span></li>
+<li>SQM(智利)+ Greenbushes(澳洲)双海外资源 → 中美贸易摩擦下,资源出口端弹性。</li>
+<li><strong>信号判断</strong>:位居"成本曲线最左 + 产业链最上 + 全球分布最广"三角形顶点,竞争格局难以撼动。</li>
+</ul>
+
+<h3 id="sec-3-4">3.4 客户/经销商行为 <span class="tag green">🟢 绿</span></h3>
+<ul>
+<li>Q1 业绩预告:净利预增 1530.31%—1818.01% → 实际 1699.12% — 公司主动给的预告区间正中靶心,管理层信心强。<span class="source">(中国基金报 2026/4/20、新浪 2026/4/27)</span></li>
+<li>9 家机构 90 天内评级:5 买入 + 4 增持,目标均价 93.96 元(现价 ~74)。卖方一致看好。<span class="source">(投资有道 2026/5)</span></li>
+<li>**注意逆向信号**:5/13 主力资金净卖出 4.37 亿,5/6 净卖出 6,185 万 — 机构在涨势中分批兑现 → 不是顶部信号,但说明<strong>主升浪后段博弈加剧</strong>。<span class="source">(证券之星 2026/5/6、搜狐 2026/5/13)</span></li>
+</ul>
+
+<h3 id="sec-3-5">3.5 政策/监管 <span class="tag yellow">🟡 黄</span></h3>
+<ul>
+<li><strong>SQM-Codelco 合伙诉讼</strong>:天齐子公司天齐智利就 SQM 与 Codelco 合伙协议起诉,**2026Q1 被智利最高法院驳回上诉**。公司表示"不涉具体金额,不影响当期利润",但本质是<strong>智利公私合营推进 + 外资话语权被稀释</strong>的信号 — **长期看是结构性弱化**。<span class="source">(天齐 2026Q1 季报)</span></li>
+<li>江西/津巴布韦政策对天齐**有限直接受益**(天齐不在江西/津巴布韦布局),但**通过推升全球锂价间接受益**。</li>
+<li>美国对华关税战:天齐在国内+澳洲+智利的产能布局,部分对冲。</li>
+<li><strong>信号判断</strong>:政策面**国内利好不受益、海外利空被驳回但本质未变**,整体保守评 🟡。</li>
+</ul>
+
+<h3 id="sec-3-6">3.6 综合产业评级 <span class="tag green">🟢 绿</span></h3>
+<ul>
+<li>5 维:4 绿 + 1 黄,综合 🟢。</li>
+<li><strong>核心 alpha</strong>:Greenbushes + SQM 双轮上游资源,锂周期反转最大β受益者。</li>
+<li><strong>核心风险</strong>:① SQM 智利政策结构性风险(虽 Q1 不影响利润但长期话语权弱化);② 历史债务包袱(2025 中报有息负债 170.93 亿,带息债务比 70%);③ 单一锂品种暴露 — 周期反转一旦阶段性见顶,弹性也最大。</li>
+</ul>
+
+<hr>
+
+<h2 id="sec-4">4. 中矿资源(002738) 五维矩阵</h2>
+
+<h3 id="sec-4-1">4.1 需求端 <span class="tag green">🟢 绿</span></h3>
+<ul>
+<li>Q1 2026 营收 13.76 亿元(-10.44% 同比,但<strong>锂盐价格 +200% 带飞利润</strong>);归母净利 <strong>5.08 亿(+276.68%)</strong>,扣非 4.82 亿(+1028.56%)。<span class="source">(新浪财经 2026/4/29)</span></li>
+<li>Q1 毛利率 <strong>57.52%</strong>(同比 +35.24pct),净利率 39.97%(同比 +31.24pct) — **单位盈利能力强于天齐 2025 年报 39.47% 毛利率**。<span class="source">(西部证券 2026Q1 点评)</span></li>
+<li>下游同样吃 235 GWh + 储能 41.3% 红利;铯铷盐对接半导体/航天/特种合金,需求独立于锂周期。</li>
+</ul>
+
+<h3 id="sec-4-2">4.2 供应链 <span class="tag green">🟢 绿</span></h3>
+<ul>
+<li><strong>津巴布韦 Bikita</strong>:4 万吨/年锂辉石精矿 + 30 万吨/年透锂长石精矿,矿石处理 400 万吨/年。</li>
+<li><strong>加拿大 Tanco</strong>:1.8 万吨/年锂辉石精矿,Tanco 100 万吨/年扩产推进。**铯铷盐资源在 Tanco**。</li>
+<li>合计锂资源 ~314 万吨 LCE(截至 2023 年末);锂盐产能目标 2026 年 9.6 万吨(国内 6.6 万 + 海外一体化 3 万)。<span class="source">(国盛/东吴/天风研报)</span></li>
+<li><strong>铯铷盐</strong>:全球龙头,2024 营收 14 亿(+7%)、毛利 11 亿、毛利率 78%(从 64% 提升)— **这是被市场低估的现金奶牛**。<span class="source">(中泰证券 2025/11)</span></li>
+<li><strong>信号判断</strong>:锂端规模虽小于天齐,但**铯铷盐独立现金流 + Tsumeb 新增锗镓锌产能**形成"三条腿"。</li>
+</ul>
+
+<h3 id="sec-4-3">4.3 竞争格局 <span class="tag green">🟢 绿</span></h3>
+<ul>
+<li>**核心变量:从纯锂股转多金属平台**。Tsumeb 冶炼厂 2025/12/15 一期点火试运行,设计 33 吨/年锗 + 11 吨/年镓 + 10,900 吨/年锌。2026 一期全面投产,二期同步开工。<span class="source">(新浪财经 2025/12/15)</span></li>
+<li>**锗、镓本身是 2023 年中国出口管制名单的战略小金属** — 中矿在海外建产能=供给端**反向稀缺资源**,逻辑独立于锂周期。</li>
+<li>2024/12 起额外宣布 8 亿美元非洲投资计划,赞比亚 Kitumba 铜矿项目推进 — **从锂矿公司变国际多金属矿商**。<span class="source">(21 经济网 2024/12/27)</span></li>
+<li><strong>产业链位置</strong>:同样上游(矿+冶),Q1 毛利率 57.5% 印证位置吃肉。但相比天齐,**资源体量仍小一个数量级**,赔率高但 β 略低于天齐。</li>
+</ul>
+
+<h3 id="sec-4-4">4.4 客户/经销商行为 <span class="tag green">🟢 绿</span></h3>
+<ul>
+<li>2026Q1 业绩预增区间 271%-308% → 实际 276.68% — 落在预告下沿,但**扣非 +1028% 远超预期**(说明非经常性损益减少 → 主业更扎实)。<span class="source">(新浪财经 2026/4/9、4/21)</span></li>
+<li>Tsumeb 冶炼厂"如期点火 → 2026 全面投产 → 二期同步启动",节奏稳健,管理层执行力强于同体量同业。</li>
+<li>2025Q3 单季净利 +488% 已是反转信号,2026Q1 +277% 持续验证。</li>
+<li>**注意**:Q1 营收 -10.44% 同比 — 锂盐量价齐升的"价升"明显,"量"端可能因津巴布韦短期出口管制有调整。需在 H1 报里验证。</li>
+</ul>
+
+<h3 id="sec-4-5">4.5 政策/监管 <span class="tag yellow">🟡 黄</span></h3>
+<ul>
+<li><strong>津巴布韦 2026/2/25 暂停原矿/精矿出口</strong>:**对中矿是双向影响** — ① 短期看 Bikita 出口或受限(原矿/精矿出口暂停);② 中矿本就有<strong>当地硫酸锂产能</strong>(项目 2.5 万吨/年),可申请豁免、向下游延伸,**长期反而是利好**。<span class="source">(上海证券报 2026/2/27)</span></li>
+<li>美国对锗、镓的高度敏感:中矿在纳米比亚生产锗、镓,**绕开中国对锗镓出口管制限制**,在美对华博弈中是<strong>稀缺供给</strong>。</li>
+<li>江西宜春整改:中矿不持锂云母矿,**间接受益**(锂价上涨)。</li>
+<li><strong>信号判断</strong>:政策面利空+利好交织,**短期津巴布韦原矿管制是要密切跟踪的关键变量**,综合评 🟡。</li>
+</ul>
+
+<h3 id="sec-4-6">4.6 综合产业评级 <span class="tag green">🟢 绿</span></h3>
+<ul>
+<li>5 维:4 绿 + 1 黄,综合 🟢。</li>
+<li><strong>核心 alpha</strong>:三线布局(锂+铯铷+铜锗锌)分散单一品种风险,Q1 毛利率 57.5% 强于天齐,2026 是 Tsumeb 兑现年。</li>
+<li><strong>核心风险</strong>:① 津巴布韦原矿出口管制短期或影响 Bikita 出货节奏(可豁免但需等审批);② 多金属转型期 capex 大(8 亿美元非洲计划),融资压力需跟踪;③ 资源体量 314 万吨 LCE 仅为天齐的 ~40%,β 弹性略低。</li>
+</ul>
+
+<hr>
+
+<h2 id="sec-5">5. 横向对比与关键差异</h2>
+
+<h3 id="sec-5-1">5.1 产业链位置</h3>
+<table>
+<thead><tr><th></th><th>天齐锂业</th><th>中矿资源</th></tr></thead>
+<tbody>
+<tr><td>位置</td><td>上游矿+盐厂,最上游</td><td>上游矿+盐+冶,从锂矿公司向多金属冶炼平台延伸</td></tr>
+<tr><td>资源类型</td><td>纯锂(锂辉石+盐湖股权)</td><td>锂+铯铷+铜+锗+镓+锌</td></tr>
+<tr><td>核心矿山</td><td>Greenbushes(澳洲,LCE 810 万吨储量)+ SQM 21.9% 股权</td><td>Bikita(津巴布韦)+ Tanco(加拿大)合计 LCE 314 万吨 + Tsumeb 冶炼(纳米比亚)</td></tr>
+<tr><td>2025 毛利率</td><td>39.47%(年报)</td><td>57.52%(2026Q1)/ 锂盐 25H1 10.89% + 铯铷 78%</td></tr>
+</tbody>
+</table>
+
+<h3 id="sec-5-2">5.2 资源禀赋</h3>
+<ul>
+<li>**天齐胜在体量**:Greenbushes 是全球最优锂辉石矿,矿端成本 < 400 美元/吨 LCE(行业最低梯队)。锂周期反转中**单吨利润最大**。</li>
+<li>**中矿胜在多元**:锗+镓在中国对外出口管制后供给反向稀缺,Tsumeb 是<strong>跨周期资产</strong>。铯铷盐 78% 毛利率构成"基本盘"。</li>
+</ul>
+
+<h3 id="sec-5-3">5.3 财务质量</h3>
+<table>
+<thead><tr><th></th><th>天齐锂业</th><th>中矿资源</th></tr></thead>
+<tbody>
+<tr><td>资产负债率</td><td>28.04%(2025 末)</td><td>未查到具体数字(2026Q1)</td></tr>
+<tr><td>有息负债</td><td>170.93 亿(2025 中报),带息债务比 70%</td><td>较低,但 8 亿美元非洲计划在融资</td></tr>
+<tr><td>经营现金流</td><td>2025 年 29.61 亿</td><td>未查到 2025 全年精确数据</td></tr>
+<tr><td>2026Q1 净利</td><td>18.76 亿(+1699%)</td><td>5.08 亿(+277%)</td></tr>
+</tbody>
+</table>
+<ul>
+<li>**天齐绝对额碾压**(3.7 倍),但中矿单位盈利效率更高。</li>
+<li>天齐 170 亿有息负债是历史 SQM 收购杠杆遗产,锂价高位时是"加杠杆放大利润",锂价回调时是"加杠杆放大亏损"— 这是 2024 年巨亏 79 亿的根因之一。</li>
+</ul>
+
+<h3 id="sec-5-4">5.4 弹性 vs 稳健</h3>
+<ul>
+<li><strong>买天齐</strong> = 买"锂价单边上涨 + SQM 智利产能扩张" — 弹性最大,赔率最高,但波动也最大。Q1 1699% 增速就是证明。</li>
+<li><strong>买中矿</strong> = 买"锂周期 + 锗镓战略小金属 + 铯铷现金流" — 多元化对冲,弹性略低但抗周期更强。Q1 277% 增速 + 毛利率 57.5% 印证。</li>
+<li>**典型场景**:
+  <ul>
+    <li>如果你认为锂周期还有 6-12 个月主升 → 天齐弹性更大</li>
+    <li>如果你认为锂价见顶在即但战略小金属(锗镓)逻辑持续 → 中矿抗回撤</li>
+    <li>如果想长期持有跨周期标的 → 中矿多金属平台更优</li>
+  </ul>
+</li>
+</ul>
+
+<hr>
+
+<h2 id="sec-6">6. 补充描述(不进评级)</h2>
+
+<h3 id="sec-6-1">6.1 估值</h3>
+<ul>
+<li>天齐市值 ~<strong>1313 亿</strong>(2026/5/4),股价 ~74-82 元;9 家机构目标均价 93.96 元。</li>
+<li>中矿市值 ~<strong>613 亿</strong>,股价 ~85 元;12 个月目标均价 55.67 元(机构整体偏保守,可能没充分 price in Tsumeb 投产)。</li>
+<li>**周期股看 PB 而非 PE**(SKILL.md v2 翔鹭钨业案例教训):本次未抓到精确 PB 数据,需补充。但参考历史,锂矿周期高点 PB 常在 5-8x,周期低点 1-2x。</li>
+</ul>
+
+<h3 id="sec-6-2">6.2 资金面</h3>
+<ul>
+<li>天齐 5 月主力资金净卖出明显(5/13 单日 -4.37 亿),5 月 6 日 -6,185 万 — 涨势中机构兑现。</li>
+<li>中矿资金面未查到精确日度数据,但目标价 12 个月均值低于现价说明机构态度<strong>偏谨慎</strong>。</li>
+</ul>
+
+<h3 id="sec-6-3">6.3 情绪面</h3>
+<ul>
+<li>SMM、新浪、第一财经 5 月文章大量出现"超级锂周期来了"、"翻倍"、"碳酸锂供需重构"等叙事 — **典型的散户/媒体进入阶段叙事**。</li>
+<li>对照 SKILL.md 因果链:专业资金 → 卖方 → 机构调仓(已发生 → 见天齐主力资金净卖出)→ 媒体/散户(刚进入)→ 暴跌(尚未到)。<strong>当前位于因果链的第 4 阶段</strong>,意味着需密切监测下一阶段。</li>
+</ul>
+
+<hr>
+
+<h2 id="sec-7">7. 关键观察变量</h2>
+
+<h3 id="sec-7-1">7.1 接下来 3-6 个月若发生变化将改变评级的产业信号</h3>
+<ol>
+<li><strong>锂价</strong>(产业链 anchor):若电池级跌破 17 万/吨且连续 2 周 → 警惕周期阶段性见顶</li>
+<li><strong>SMM 周度库存</strong>:总库存连续 4 周累库 → 需求端走弱信号(目前下游去库,所以现在是绿)</li>
+<li><strong>云厂/储能招标价</strong>:储能系统价格若从单边下跌转为企稳 → 储能商盈利模型确认 → 锂需求二阶导成立</li>
+<li><strong>津巴布韦出口豁免审批</strong>:中矿 Bikita 是否能拿到精矿出口许可证 → 直接决定 Q2 Bikita 出货量</li>
+<li><strong>SQM Q2 业绩</strong>:智利公私合营推进对 SQM 量价的影响 → 直接影响天齐投资收益</li>
+<li><strong>江西宜春复产进度</strong>:5 月停产换证若能 6-8 月完成 → 国内供给压力消解</li>
+</ol>
+
+<h3 id="sec-7-2">7.2 已能看到但市场没充分反应的信号</h3>
+<ul>
+<li><strong>中矿 Tsumeb 一期 2026 全面投产</strong>:卖方目标价均值 55.67 远低于现价 85,说明 Tsumeb 锗镓 2026 产能未被充分 price in。<strong>这是中矿的隐藏 alpha</strong>。</li>
+<li><strong>中矿铯铷盐 78% 毛利率</strong>:绝大多数研报把中矿叙事仍按"纯锂股"算估值,忽略了铯铷的现金奶牛属性。</li>
+<li><strong>津巴布韦政策长期是利好中矿(本地化优势)</strong>:中矿在津巴布韦有硫酸锂产能,出口管制反而帮中矿对竞品筑高墙。</li>
+</ul>
+
+<h3 id="sec-7-3">7.3 市场已 price in 但还没落地的预期</h3>
+<ul>
+<li><strong>天齐 2026 全年净利预期</strong>:如果按 Q1 18.76 亿外推,2026 全年 ~70-80 亿 → 隐含 PE ~16-18 倍 → 已 price in。**进一步上涨需要 H2 业绩超预期或锂价站上 25 万**。</li>
+<li><strong>2026 锂供需缺口</strong>:机构普遍预测出现缺口,但缺口量级(5-15 万吨)有分歧。落地见 Q3 海外项目兑现度。</li>
+<li><strong>中矿 8 亿美元非洲投资</strong>:已宣布,但 Kitumba 铜矿等项目仍在前期,**实际 capex 落地节奏 + 融资方式**是未来季度的关键披露点。</li>
+</ul>
+
+<hr>
+
+<h2 id="sec-8">8. 框架自检与免责</h2>
+
+<h3 id="sec-8-1">8.1 框架适用性</h3>
+<ul>
+<li><strong>SKILL.md 未建锂矿模板</strong>,本次首跑参考"小金属/战略资源"通用原则 + 翔鹭钨业 v2 案例的"产业链位置 + 利润分配"前置经验。</li>
+<li>**5 维矩阵在锂矿赛道高度适用**:锂价(产业链 anchor)与白酒批价、半导体设备 capex、AI 算力 capex 是<strong>同构信号</strong>。</li>
+<li>**新发现**:多金属公司(中矿)和单一品种公司(天齐)的产业评级口径需分立。中矿应做"业务分部产业信号拆分":锂、铯铷、铜锗各自打分再加权。本次未做(数据维度不全),v3 建议补。</li>
+<li>**回到 SKILL.md v2 #2 翔鹭钨业的教训**:"产业链位置 > 产业景气度"。本次两家都在上游位置吃肉,所以两家都受益。如果对比对象包括赣锋(电池端)、宁德(电池端),结论会截然不同。</li>
+</ul>
+
+<h3 id="sec-8-2">8.2 数据缺口</h3>
+<ul>
+<li>中矿 2026Q1 资产负债率精确数字(未抓到)</li>
+<li>两家 PB 时序数据(理杏仁等付费数据源)</li>
+<li>SQM 2026Q1 完整披露(SQM 季报披露时间晚于天齐 Q1)</li>
+<li>Greenbushes 2025 年单吨成本(需从 2025 年报全文挖)</li>
+<li>Bikita 2025-2026 实际出货量月度数据(SMM 等付费源)</li>
+</ul>
+
+<h3 id="sec-8-3">8.3 免责声明</h3>
+<div class="disclaimer">
+本报告基于公开信息的产业链信号扫描,仅用于辅助风险/机会识别,<strong>不构成投资建议</strong>。
+锂矿是高波动周期股,产业层信号给出"风险/机会的结构",不预测股价路径。
+即使产业层全绿,股价也可能阶段性大幅回撤;即使产业层转黄,股价也可能因叙事余热继续上涨。
+投资决策请基于自身研究和专业意见。<br><br>
+报告作者:Claude(industry-signal-screener)| 数据采集时间:2026/5/20 | 主要信源:SMM、巨潮、广期所、上海证券报、各家 2025 年报与 2026Q1 季报
+</div>
+
+</main>
+</div>
+</body>
+</html>
