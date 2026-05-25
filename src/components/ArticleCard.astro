@@ -17,11 +17,14 @@ const formattedDate = new Intl.DateTimeFormat('zh-CN', {
 
 <article class="group relative flex flex-col rounded-xl border border-ink-200 bg-white p-6 shadow-sm transition-all duration-200 hover:border-brand-300 hover:shadow-md">
   {post.data.tags.length > 0 && (
-    <div class="mb-3 flex flex-wrap gap-1.5">
+    <div class="relative z-10 mb-3 flex flex-wrap gap-1.5">
       {post.data.tags.map(tag => (
-        <span class="rounded-md bg-gold-50 px-2 py-0.5 text-xs font-medium text-gold-700 ring-1 ring-gold-200">
+        <a
+          href={`${base}/tags/${tag}`}
+          class="rounded-md bg-gold-50 px-2 py-0.5 text-xs font-medium text-gold-700 ring-1 ring-gold-200 transition-colors hover:bg-gold-100 hover:text-gold-800"
+        >
           {tag}
-        </span>
+        </a>
       ))}
     </div>
   )}

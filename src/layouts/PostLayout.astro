@@ -34,9 +34,12 @@ const formattedDate = new Intl.DateTimeFormat('zh-CN', {
       {tags.length > 0 && (
         <div class="mb-4 flex flex-wrap gap-2">
           {tags.map(tag => (
-            <span class="rounded-md bg-gold-50 px-2.5 py-0.5 text-xs font-medium text-gold-700 ring-1 ring-gold-200">
+            <a
+              href={`${base}/tags/${tag}`}
+              class="rounded-md bg-gold-50 px-2.5 py-0.5 text-xs font-medium text-gold-700 ring-1 ring-gold-200 transition-colors hover:bg-gold-100 hover:text-gold-800"
+            >
               {tag}
-            </span>
+            </a>
           ))}
         </div>
       )}
