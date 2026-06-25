@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { getCollection } from 'astro:content';
+import { formatDateZh } from '../../utils/date';
 
 export async function getStaticPaths() {
   const allPosts = await getCollection('posts', ({ data }) => !data.draft);
@@ -25,12 +26,6 @@ export async function getStaticPaths() {
 const { tag, posts } = Astro.props;
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 const showSearch = posts.length > 30;
-
-const dateFormatter = new Intl.DateTimeFormat('zh-CN', {
-  year: 'numeric',
-  month: 'long',
-  day: 'numeric',
-});
 ---
 
 <BaseLayout title={`标签：${tag}`}>
@@ -96,7 +91,7 @@ const dateFormatter = new Intl.DateTimeFormat('zh-CN', {
               </p>
 
               <time datetime={post.data.date.toISOString()} class="text-xs text-ink-400">
-                {dateFormatter.format(post.data.date)}
+                {formatDateZh(post.data.date)}
               </time>
             </article>
           ))}
